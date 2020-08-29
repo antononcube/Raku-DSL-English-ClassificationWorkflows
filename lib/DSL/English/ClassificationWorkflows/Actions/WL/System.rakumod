@@ -31,34 +31,17 @@
 use v6;
 use DSL::English::ClassificationWorkflows::Grammar;
 
+use DSL::Shared::Actions::English::WL::PipelineCommand;
+use DSL::Shared::Actions::WL::CommonStructures;
+use DSL::Shared::Actions::WL::PredicateSpecification;
+
 unit module DSL::English::ClassificationWorkflows::Actions::WL::System;
 
-class DSL::English::ClassificationWorkflows::Actions::WL::System {
+class DSL::English::ClassificationWorkflows::Actions::WL::System
+        is DSL::Shared::Actions::WL::PredicateSpecification
+        is DSL::Shared::Actions::WL::CommonStructures {
 
     method TOP($/) { make $/.values[0].made; }
-
-    # General
-    method dataset-name($/) { make $/.Str; }
-    method variable-name($/) { make $/.Str; }
-    method list-separator($/) { make ','; }
-    method variable-names-list($/) { make $<variable-name>>>.made; }
-    method quoted-variable-names-list($/) { make $<quoted-variable-name>>>.made.join(', '); }
-    method mixed-quoted-variable-names-list($/) { make $<mixed-quoted-variable-name>>>.made.join(', '); }
-    method integer-value($/) { make $/.Str; }
-    method number-value($/) { make $/.Str; }
-    method wl-expr($/) { make $/.Str; }
-    method quoted-variable-name($/) { make $/.values[0].made; }
-    method mixed-quoted-variable-name($/) { make $/.values[0].made; }
-    method single-quoted-variable-name($/) { make '"' ~ $<variable-name>.made ~ '"'; }
-    method double-quoted-variable-name($/) { make '"' ~ $<variable-name>.made ~ '"'; }
-
-    # Trivial
-    method trivial-parameter($/) { make $/.values[0].made; }
-    method trivial-parameter-none($/) { make 'None'; }
-    method trivial-parameter-empty($/) { make '{}'; }
-    method trivial-parameter-automatic($/) { make 'Automatic'; }
-    method trivial-parameter-false($/) { make 'False'; }
-    method trivial-parameter-true($/) { make 'True'; }
 
     # Load data
     method data-load-command($/) { make $/.values[0].made; }
@@ -72,12 +55,25 @@ class DSL::English::ClassificationWorkflows::Actions::WL::System {
         if $<split-fraction> {
           make 'ClConSplitData[ ' ~ $<split-fraction>.made ~ ' ]';
         } else {
-          make 'ClConSplitData[ 0.7 ]';
+          make 'ClConSplitData[ 0.75 ]';
         }
     }
-    method split-data-spec($/) {
-        make 'ClConSplitData[ 0.7 ]';
+
+    method split-data-spec($/) { make 'ClConSplitData[ ' ~ $<split-data-element-list>.made ~ ' ]'; }
+
+    method split-data-element-list($/) { make $<split-data-element>>>.made.join(', '); }
+    method split-data-element($/) { make $/.values[0].made; }
+
+    method split-training-fraction($/)   { make '"TrainingFraction" -> ' ~ $<number-value>.made; }
+    method split-validation-fraction($/) { make '"ValidationFraction" -> ' ~ $<number-value>.made; }
+    method split-method($/) {
+        if $<proportional-adjective> {
+            make 'Method -> "LabelsProportional"';
+        } else {
+            make 'Method -> "Random"';
+        }
     }
+    method split-class-label-column($/) { make '"ClassLabelColumn" -> ' ~ $<variable-name>.made; }
 
     # Data summary command
     method data-summary-command($/) { make $/.values[0].made; }
