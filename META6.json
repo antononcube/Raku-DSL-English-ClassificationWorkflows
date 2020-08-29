@@ -1,0 +1,26 @@
+{
+    "perl" : "6.d",
+    "name" : "DSL::English::ClassificationWorkflows",
+    "api"  : "1",
+    "auth" : "github:antononcube",
+    "version" : "0.1.0",
+    "description" : "Classification workflows building by natural language commands.",
+    "authors" : [ "Anton Antonov" ],
+    "license" : "GPL-3.0-or-later",
+    "provides" : {
+        "DSL::English::ClassificationWorkflows" : "lib/DSL/English/ClassificationWorkflows.rakumod",
+        "DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard" : "lib/DSL/English/ClassificationWorkflows/Actions/Bulgarian/Standard.rakumod",
+        "DSL::English::ClassificationWorkflows::Actions::WL::ClCon" : "lib/DSL/English/ClassificationWorkflows/Actions/WL/ClCon.rakumod",
+        "DSL::English::ClassificationWorkflows::Actions::WL::System" : "lib/DSL/English/ClassificationWorkflows/Actions/WL/System.rakumod",
+        "DSL::English::ClassificationWorkflows::Grammar" : "lib/DSL/English/ClassificationWorkflows/Grammar.rakumod",
+        "DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases" : "lib/DSL/English/ClassificationWorkflows/Grammar/ClassificationPhrases.rakumod"
+    },
+    "depends" : [ "DSL::Shared" ],
+    "build-depends" : [ ],
+    "test-depends" : [ ],
+    "resources" : [ ],
+    "tags": [
+      "classification", "classifier", "parser", "interpreter", "monad", "workflow", "pipeline"
+    ],
+    "source-url" : "https://github.com/antononcube/Raku-DSL-English-ClassificationWorkflows.git"
+}
