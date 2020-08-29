@@ -61,16 +61,16 @@ grammar DSL::English::ClassificationWorkflows::Grammar
     rule use-data-table { [ <.use-verb> | <.using-preposition> ] <.the-determiner>? <.data>? <variable-name> }
 
     # Split data command
-    rule split-data-command { <split-data-simple> | <split-data-spec> }
+    rule split-data-command { <split-data-spec> | <split-data-simple> }
     rule split-data-phrase { <.split-directive> <.the-determiner>? <.data> }
     rule split-data-simple { <.split-data-phrase> [ <.with-preposition> <.the-determiner>? <.fraction-noun>? <split-fraction=.number-value> ]? }
-    rule split-data-spec { <.split-data-phrase> <split-data-element-list> }
+    rule split-data-spec { <.split-data-phrase> <.with-preposition> <split-data-element-list> }
     rule split-data-element-list { <split-data-element>+ % <.list-separator> }
     rule split-data-element { <split-training-fraction> | <split-testing-fraction> | <split-validation-fraction> | <split-method> }
-    rule split-training-fraction { <.training-adjective> <.fraction-noun>? <number-value> }
-    rule split-testing-fraction { <.testing-adjective> <.fraction-noun>? <number-value> }
+    rule split-training-fraction { <.training-adjective>? <.fraction-noun>? <number-value> }
     rule split-validation-fraction { <.validation-adjective> <.fraction-noun>? <number-value> }
-    rule split-method { <class-noun>? <label-noun>? <proportional-adjective> | <random-adjective> }
+    rule split-method { <.method-noun> [ <.class-noun>? <.label-noun>? <proportional-adjective> | <random-adjective> ] }
+    rule split-class-label-column { <.class-noun>? <.label-noun> <variable-name> }
 
     # Data summary command
     rule data-summary-command { <data-summary-simple> }
