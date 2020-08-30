@@ -33,4 +33,19 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     rule classifier-info-phrase { <classifier-noun> [ <info-noun> | <information-noun> ] }
     rule reduce-dimension-phrase { <reduce-verb> <dimension> }
     rule roc-phrase { <receiver-noun> <operating-adjective> <characteristic-noun> | <roc-noun> }
+
+    # WL classifier names
+    rule wl-classifier-name {
+        <decision-tree-classifier-name> |
+        <gradient-boosted-trees-classifier-name> |
+        <logistic-regression-classifier-name> |
+        <nearest-neighbors-classifier-name> |
+        <neural-network-classifier-name> |
+        <support-vector-machine-classifier-name> }
+    rule decision-tree-classifier-name { 'decision' 'tree' | 'DecisionTree' }
+    rule gradient-boosted-trees-classifier-name { 'gradient' 'boosted' 'trees' | 'GradientBoostedTrees' }
+    rule logistic-regression-classifier-name { 'logistic' 'regression' | 'LogisticRegression' }
+    rule nearest-neighbors-classifier-name { 'nearest' 'neighbors' | 'NearestNeighbors' }
+    rule neural-network-classifier-name { 'neural' 'network' | 'NeuralNetwork' }
+    rule support-vector-machine-classifier-name { 'support' 'vector' 'machine' | 'SupportVectorMachine' }
 }

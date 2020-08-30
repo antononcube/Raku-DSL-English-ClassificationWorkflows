@@ -82,7 +82,10 @@ grammar DSL::English::ClassificationWorkflows::Grammar
 
     # Make classifier command
     rule make-classifier-command { <make-classifier-simple> }
-    rule make-classifier-simple { <create-directive> <classifier-noun> }
+    rule make-classifier-simple {
+        <.create-directive> <.a-determiner>? <.classifier-noun> <.using-preposition>? <classifier-method-spec>? |
+        <.create-directive> <.a-determiner>? <classifier-method-spec> <.classifier-noun> }
+    rule classifier-method-spec { <wl-classifier-name> | <mixed-quoted-variable-name> }
 
     # Classifier info commands
     rule classifier-info-command { <classifier-info-simple> }

@@ -83,11 +83,18 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
 
     # Make classifier command
     method make-classifier-command($/) { make $/.values[0].made; }
-    method make-classifier-simple($/){ make 'ClConMakeClassifier[]'; }
+    method make-classifier-simple($/){
+        if $<classifier-method-spec> {
+            make 'ClConMakeClassifier[ ' ~ $<classifier-method-spec>.made ~ ' ]';
+        } else {
+            make 'ClConMakeClassifier[]';
+        }
+    }
+    method classifier-method-spec($/) { make $/.values[0].made; }
 
     # Classifier info command
     method classifier-info-command($/) { make $/.values[0].made; }
-    method classifier-info-simple($/){ make 'CClConEchoFunctionContext[ClassifierInformation[#classifier] &]'; }
+    method classifier-info-simple($/){ make 'ClConEchoFunctionContext[ClassifierInformation[#["classifier"]] &]'; }
 
     # Classifier measurements command
     method classifier-measurements-command($/) { make $/.values[0].made; }
@@ -99,7 +106,7 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
 
     # Pipeline command
     method pipeline-command($/) { make $/.values[0].made; }
-    method take-pipeline-value($/) { make 'obj'; }
+    method take-pipeline-value($/) { make 'ClConTakeValue[]'; }
     method echo-pipeline-value($/) { make 'ClConEchoValue[]'; }
 
     method echo-command($/) { make 'ClConEcho[ ' ~ $<echo-message-spec>.made ~ ' ]'; }
@@ -107,4 +114,13 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
     method echo-words-list($/) { make '"' ~ $<variable-name>>>.made.join(' ') ~ '"'; }
     method echo-variable($/) { make $/.Str; }
     method echo-text($/) { make $/.Str; }
+
+    # WL classifier names
+    method wl-classifier-name($/) { make '"' ~ $/.values[0].made ~ '"'; }
+    method decision-tree-classifier-name($/) { make 'DecisionTree'; }
+    method gradient-boosted-trees-classifier-name($/) { make 'GradientBoostedTrees'; }
+    method logistic-regression-classifier-name($/) { make 'LogisticRegression'; }
+    method nearest-neighbors-classifier-name($/) { make 'NearestNeighbors'; }
+    method neural-network-classifier-name($/) { make 'NeuralNetwork'; }
+    method support-vector-machine-classifier-name($/) { make 'SupportVectorMachine'; }
 }
