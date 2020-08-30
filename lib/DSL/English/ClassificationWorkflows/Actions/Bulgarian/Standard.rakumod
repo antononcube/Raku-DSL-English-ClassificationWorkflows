@@ -31,34 +31,15 @@
 use v6;
 use DSL::English::ClassificationWorkflows::Grammar;
 
+use DSL::Shared::Actions::English::WL::PipelineCommand;
+use DSL::Shared::Actions::CommonStructures;
+
 unit module DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard;
 
-class DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard {
+class DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard
+        is DSL::Shared::Actions::CommonStructures {
 
     method TOP($/) { make $/.values[0].made; }
-
-	# General
-	method dataset-name($/) { make $/.Str; }
-	method variable-name($/) { make $/.Str; }
-	method list-separator($/) { make ','; }
-	method variable-names-list($/) { make $<variable-name>>>.made.join(', '); }
-	method quoted-variable-names-list($/) { make $<quoted-variable-name>>>.made.join(', '); }
-	method mixed-quoted-variable-names-list($/) { make $<mixed-quoted-variable-name>>>.made.join(', '); }
-	method integer-value($/) { make $/.Str; }
-	method number-value($/) { make $/.Str; }
-	method wl-expr($/) { make $/.Str.substr(1,*-1); }
-	method quoted-variable-name($/) { make $/.values[0].made; }
-	method mixed-quoted-variable-name($/) { make $/.values[0].made; }
-	method single-quoted-variable-name($/) { make '"' ~ $<variable-name>.made ~ '"'; }
-	method double-quoted-variable-name($/) { make '"' ~ $<variable-name>.made ~ '"'; }
-
-	# Trivial
-	method trivial-parameter($/) { make $/.values[0].made; }
-	method trivial-parameter-none($/) { make 'missing'; }
-	method trivial-parameter-empty($/) { make '[]'; }
-	method trivial-parameter-automatic($/) { make 'Null'; }
-	method trivial-parameter-false($/) { make 'false'; }
-	method trivial-parameter-true($/) { make 'true'; }
 
 	# Load data
 	method data-load-command($/) { make $/.values[0].made; }
@@ -72,16 +53,29 @@ class DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard {
         if $<split-fraction> {
           make 'раздели данните с пропорцията ' ~ $<split-fraction>.made;
         } else {
-          make 'раздели данните с пропорцията 0.7';
+          make 'раздели данните с пропорцията 0.75';
         }
     }
-    method split-data-spec($/) {
-        make 'раздели данните с пропорцията 0.7';
+
+    method split-data-spec($/) { make 'раздели данните с ' ~ $<split-data-element-list>.made; }
+
+    method split-data-element-list($/) { make $<split-data-element>>>.made.join(', '); }
+    method split-data-element($/) { make $/.values[0].made; }
+
+    method split-training-fraction($/)   { make 'тренировачна част ' ~ $<number-value>.made; }
+    method split-validation-fraction($/) { make 'валидираща част ' ~ $<number-value>.made; }
+    method split-method($/) {
+        if $<proportional-adjective> {
+            make 'пропорционален метод на разделяне';
+        } else {
+            make 'случаен метод на разделяне';
+        }
     }
+    method split-class-label-column($/) { make 'колона с етикети ' ~ $<variable-name>.made; }
 
     # Data summary command
     method data-summary-command($/) { make $/.values[0].made; }
-    method data-summary-simple($/){ make 'опиши на данните'; }
+    method data-summary-simple($/){ make 'опиши данните'; }
 
     # Reduce dimension command
     method reduce-dimension-command($/) { make $/.values[0].made; }
