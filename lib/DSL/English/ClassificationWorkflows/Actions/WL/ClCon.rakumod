@@ -33,12 +33,10 @@ use DSL::English::ClassificationWorkflows::Grammar;
 
 use DSL::Shared::Actions::English::WL::PipelineCommand;
 use DSL::Shared::Actions::WL::CommonStructures;
-use DSL::Shared::Actions::WL::PredicateSpecification;
 
 unit module DSL::English::ClassificationWorkflows::Actions::WL::ClCon;
 
 class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
-        is DSL::Shared::Actions::WL::PredicateSpecification
         is DSL::Shared::Actions::WL::CommonStructures {
 
     method TOP($/) { make $/.values[0].made; }
