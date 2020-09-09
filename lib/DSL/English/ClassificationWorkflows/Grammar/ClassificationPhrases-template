@@ -1,11 +1,11 @@
 use v6;
 
-use DSL::Shared::Roles::English::CommonParts;
+use DSL::Shared::Roles::English::PipelineCommand;
 use DSL::Shared::Utilities::FuzzyMatching;
 
 # Data query specific phrases
 role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
-        does DSL::Shared::Roles::English::CommonParts {
+        does DSL::Shared::Roles::English::PipelineCommand {
     # Tokens
     token characteristic-noun { 'characteristic' }
     token class-noun { 'class' }

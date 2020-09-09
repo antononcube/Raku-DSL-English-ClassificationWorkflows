@@ -30,8 +30,6 @@
 
 use v6;
 
-use DSL::Shared::Roles::English::CommonParts;
-use DSL::Shared::Roles::English::PipelineCommand;
 use DSL::Shared::Roles::PredicateSpecification;
 use DSL::Shared::Roles::ErrorHandling;
 
@@ -39,8 +37,7 @@ use DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases;
 
 grammar DSL::English::ClassificationWorkflows::Grammar
         does DSL::Shared::Roles::ErrorHandling
-        does DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
-        does DSL::Shared::Roles::English::PipelineCommand {
+        does DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases {
     # TOP
     rule TOP {
         <pipeline-command> |
