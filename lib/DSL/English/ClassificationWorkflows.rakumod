@@ -14,6 +14,8 @@ interpretation of natural language commands that specify classification workflow
 
 unit module DSL::English::ClassificationWorkflows;
 
+use DSL::Shared::Utilities::MetaSpecifications;
+
 use DSL::English::ClassificationWorkflows::Grammar;
 use DSL::English::ClassificationWorkflows::Actions::WL::ClCon;
 use DSL::English::ClassificationWorkflows::Actions::WL::System;
@@ -58,13 +60,19 @@ multi ToClassificationWorkflowCode ( Str $command where not has-semicolon($comma
 
 multi ToClassificationWorkflowCode ( Str $command where has-semicolon($command), Str $target = 'WL-ClCon' ) {
 
-    die 'Unknown target.' unless %targetToAction{$target}:exists;
+    my $specTarget = get-dsl-spec( $command, 'target');
+
+    $specTarget = !$specTarget ?? $target !! $specTarget.value;
+
+    die 'Unknown target.' unless %targetToAction{$specTarget}:exists;
 
     my @commandLines = $command.trim.split(/ ';' \s* /);
 
     @commandLines = grep { $_.Str.chars > 0 }, @commandLines;
 
-    my @cmdLines = map { ToClassificationWorkflowCode($_, $target) }, @commandLines;
+    my @cmdLines = map { ToClassificationWorkflowCode($_, $specTarget) }, @commandLines;
 
-    return @cmdLines.join( %targetToSeparator{$target} ).trim;
+    @cmdLines = grep { $_.^name eq 'Str' }, @cmdLines;
+
+    return @cmdLines.join( %targetToSeparator{$specTarget} ).trim;
 }
