@@ -11,7 +11,8 @@ DSL TARGET WL-ClCon;
 use dfTitanic;
 split data with fraction 0.8, method class label proportional;
 make a gradient boosted trees classifier;
-show rocs';
+show rocs;
+assign pipeline object to clObj120';
 
 say "\n", '=' x 30;
 say '-' x 3, 'WL-ClCon:';

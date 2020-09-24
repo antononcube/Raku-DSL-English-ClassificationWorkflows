@@ -29,15 +29,12 @@
 =end comment
 
 use v6;
+
 use DSL::English::ClassificationWorkflows::Grammar;
-
 use DSL::Shared::Actions::English::WL::PipelineCommand;
-use DSL::Shared::Actions::WL::CommonStructures;
-
-unit module DSL::English::ClassificationWorkflows::Actions::WL::ClCon;
 
 class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
-        is DSL::Shared::Actions::WL::CommonStructures {
+        is DSL::Shared::Actions::English::WL::PipelineCommand {
 
     method TOP($/) { make $/.values[0].made; }
 
@@ -104,17 +101,6 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
     method roc-curves-command($/) { make $/.values[0].made; }
     method roc-curves-simple($/){ make 'ClConROCPlot[]'; }
 
-    # Pipeline command
-    method pipeline-command($/) { make $/.values[0].made; }
-    method take-pipeline-value($/) { make 'ClConTakeValue[]'; }
-    method echo-pipeline-value($/) { make 'ClConEchoValue[]'; }
-
-    method echo-command($/) { make 'ClConEcho[ ' ~ $<echo-message-spec>.made ~ ' ]'; }
-    method echo-message-spec($/) { make $/.values[0].made; }
-    method echo-words-list($/) { make '"' ~ $<variable-name>>>.made.join(' ') ~ '"'; }
-    method echo-variable($/) { make $/.Str; }
-    method echo-text($/) { make $/.Str; }
-
     # WL classifier names
     method wl-classifier-name($/) { make '"' ~ $/.values[0].made ~ '"'; }
     method decision-tree-classifier-name($/) { make 'DecisionTree'; }
@@ -122,5 +108,23 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
     method logistic-regression-classifier-name($/) { make 'LogisticRegression'; }
     method nearest-neighbors-classifier-name($/) { make 'NearestNeighbors'; }
     method neural-network-classifier-name($/) { make 'NeuralNetwork'; }
-    method support-vector-machine-classifier-name($/) { make 'SupportVectorMachine'; }
+    method support-vector-machine-classifier-name($/) { make 'SupportVectorMachine' };
+
+    # Pipeline command overwrites
+    ## Object
+    method assign-pipeline-object-to($/) { make 'ClConAssignTo[ ' ~ $/.values[0].made ~ ' ]'; }
+
+    ## Value
+    method assign-pipeline-value-to($/) { make 'ClConAssignValueTo[ ' ~ $/.values[0].made ~ ' ]'; }
+    method take-pipeline-value($/) { make 'ClConTakeValue[]'; }
+    method echo-pipeline-value($/) { make 'ClConEchoValue[]'; }
+    method echo-pipeline-funciton-value($/) { make 'ClConEchoFunctionValue[ ' ~ $<pipeline-function-spec>.made ~ ' ]'; }
+
+    ## Context
+    method take-pipeline-context($/) { make 'ClConTakeContext[]'; }
+    method echo-pipeline-context($/) { make 'ClConEchoContext[]'; }
+    method echo-pipeline-function-context($/) { make 'ClConEchoFunctionContext[ ' ~ $<pipeline-function-spec>.made ~ ' ]'; }
+
+    ## Echo messages
+    method echo-command($/) { make 'ClConEcho[ ' ~ $<echo-message-spec>.made ~ ' ]'; }
 }
