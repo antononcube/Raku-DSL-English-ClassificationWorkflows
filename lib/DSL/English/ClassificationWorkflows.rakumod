@@ -62,7 +62,7 @@ multi ToClassificationWorkflowCode ( Str $command where has-semicolon($command),
 
     my $specTarget = get-dsl-spec( $command, 'target');
 
-    $specTarget = !$specTarget ?? $target !! $specTarget.value;
+    $specTarget = $specTarget ?? $specTarget<DSLTARGET> !! $target;
 
     die 'Unknown target.' unless %targetToAction{$specTarget}:exists;
 
