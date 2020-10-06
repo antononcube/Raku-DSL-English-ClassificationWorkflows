@@ -14,7 +14,7 @@ interpretation of natural language commands that specify classification workflow
 
 unit module DSL::English::ClassificationWorkflows;
 
-use DSL::Shared::Utilities::MetaSpecifications;
+use DSL::Shared::Utilities::MetaSpecsProcessing;
 
 use DSL::English::ClassificationWorkflows::Grammar;
 use DSL::English::ClassificationWorkflows::Actions::WL::ClCon;
