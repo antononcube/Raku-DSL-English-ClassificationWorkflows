@@ -64,8 +64,8 @@ grammar DSL::English::ClassificationWorkflows::Grammar
     rule split-data-spec { <.split-data-phrase> <.with-preposition> <split-data-element-list> }
     rule split-data-element-list { <split-data-element>+ % <.list-separator> }
     rule split-data-element { <split-training-fraction> | <split-testing-fraction> | <split-validation-fraction> | <split-method> }
-    rule split-training-fraction { <.training-adjective>? <.fraction-noun>? <number-value> }
-    rule split-validation-fraction { <.validation-adjective> <.fraction-noun>? <number-value> }
+    rule split-training-fraction { <.training-adjective>? <.data-noun>? <.fraction-noun>? <number-value> }
+    rule split-validation-fraction { <.validation-adjective> <.data-noun>? <.fraction-noun>? <number-value> }
     rule split-method { <.method-noun> [ <.class-noun>? <.label-noun>? <proportional-adjective> | <random-adjective> ] }
     rule split-class-label-column { <.class-noun>? <.label-noun> <variable-name> }
 
@@ -94,6 +94,6 @@ grammar DSL::English::ClassificationWorkflows::Grammar
 
     # ROC curves command
     rule roc-curves-command { <roc-curves-simple> }
-    rule roc-curves-simple { <display-directive>? <roc-phrase> }
+    rule roc-curves-simple { <display-directive>? [ <roc-phrase> | <rocs-phrase> ] <plots>? }
 
 }

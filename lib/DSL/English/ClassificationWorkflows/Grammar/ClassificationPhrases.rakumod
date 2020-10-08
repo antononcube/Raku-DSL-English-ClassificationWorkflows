@@ -7,7 +7,8 @@ use DSL::Shared::Utilities::FuzzyMatching;
 role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
         does DSL::Shared::Roles::English::PipelineCommand {
     # Tokens
-    token characteristic-noun { 'characteristic' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'characteristic') }> }
+    token characteristic-noun { 'characteristic' | ([\w]+) <?{ $0.Str ne 'characteristics' and is-fuzzy-match( $0.Str, 'characteristic') }> }
+    token characteristics-noun { 'characteristics' | ([\w]+) <?{ $0.Str ne 'characteristic' and is-fuzzy-match( $0.Str, 'characteristics') }> }
     token class-noun { 'class' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'class') }> }
     token classifier-noun { 'classifier' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'classifier') }> }
     token ensemble-noun { 'ensemble' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'ensemble') }> }
@@ -19,9 +20,11 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     token operating-adjective { 'operating' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'operating') }> }
     token proportional-adjective { 'proportional' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'proportional') }> }
     token random-adjective { 'random' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'random') }> }
+    token ratio-noun { 'ratio' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'ratio') }> }
     token receiver-noun { 'receiver' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'receiver') }> }
     token reduce-verb { 'reduces' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'reduces') }> }
-    token roc-noun { 'roc' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'roc') }> }
+    token roc-noun { 'roc' | ([\w]+) <?{ $0.Str ne 'rocs' and is-fuzzy-match( $0.Str, 'roc') }> }
+    token rocs-noun { 'rocs' | ([\w]+) <?{ $0.Str ne 'roc' and is-fuzzy-match( $0.Str, 'roc') }> }
     token split-directive { 'split' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'split') }> | 'divide' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'divide') }> | 'partition' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'partition') }> }
     token split-verb { 'split' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'split') }> }
     token testing-adjective { 'testing' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'testing') }> }
@@ -33,6 +36,7 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     rule classifier-info-phrase { <classifier-noun> [ <info-noun> | <information-noun> ] }
     rule reduce-dimension-phrase { <reduce-verb> <dimension> }
     rule roc-phrase { <receiver-noun> <operating-adjective> <characteristic-noun> | <roc-noun> }
+    rule rocs-phrase { <receiver-noun> <operating-adjective> <characteristics-noun> | <rocs-noun> }
 
     # WL classifier names
     rule wl-classifier-name {
