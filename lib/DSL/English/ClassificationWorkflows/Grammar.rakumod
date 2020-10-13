@@ -35,11 +35,13 @@ use DSL::Shared::Roles::ErrorHandling;
 
 use DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases;
 use DSL::English::ClassificationWorkflows::Grammar::ROCFunctions;
+use DSL::English::ClassificationWorkflows::Grammar::ClassifierProperties;
 
 grammar DSL::English::ClassificationWorkflows::Grammar
         does DSL::Shared::Roles::ErrorHandling
         does DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
-        does DSL::English::ClassificationWorkflows::Grammar::ROCFunctions {
+        does DSL::English::ClassificationWorkflows::Grammar::ROCFunctions
+        does DSL::English::ClassificationWorkflows::Grammar::ClassifierProperties {
     # TOP
     rule TOP {
         <pipeline-command> |
@@ -104,29 +106,25 @@ grammar DSL::English::ClassificationWorkflows::Grammar
     rule classifier-info-simple { <classifier-info-phrase> }
 
     ## Get info property
-    rule classifier-get-info-property { <.display-directive> <.classifier-noun> [ <wl-classifier-info-property> | <classifier-info-property-name> ]}
+    rule classifier-get-info-property { <.display-directive> <.classifier-noun> <classifier-property-list>}
     rule classifier-info { <.display-directive>? <.classifier-noun> [ <.info-noun> | <.information-noun> | <.stats-noun> | <.statistics-noun> ] }
+    rule classifier-property-list { <wl-classifier-info-property>+ % <.list-separator> }
 
     ## (Ensemble counts)
     rule classifier-counts { [ <how-adverb> <many-determiner> | <what-pronoun> <number-of> ] <classifiers-noun> }
 
-    ## WL classifier info property name
-    rule classifier-info-property-name { <accuracy-property> | <number-of-classes-property> | <training-time-property> }
-    rule accuracy-property { <accuracy-noun> }
-    rule training-time-property { <training-adjective> <time-noun> }
-    rule number-of-classes-property { <classes-noun> | <class-noun> <number-noun> }
 
     # Classifier measurement command
     rule classifier-measurements-command { <classifier-measurements-simple> }
     rule classifier-measurements-simple { <classifier-noun> <measurements-noun> }
 
     # ROC plot command
-    rule roc-plots-command { <roc-curves-simple> | <roc-diagrams-command> }
-    rule roc-curves-simple { <display-directive>? [ <roc-phrase> | <rocs-phrase> ] <plots>? }
-    rule roc-diagrams-command { <display-directive> <roc-diagram> [ [ <using-preposition> | <of-preposition> ] <roc-function-list> ]?}
-    rule list-line-diagram { <list-noun>? <line-noun> <diagram-phrase> | 'ListLinePlot' }
-    rule list-line-roc-diagram { <list-noun>? <line-noun> <roc-curve-phrase> <diagram-phrase> }
-    rule roc-diagram { <list-line-roc-diagram> | [ <list-line-diagram> | <diagram-phrase> ] }
-    rule roc-function-list { <roc-function>+ % <list-delimiter> }
+    rule roc-plots-command { <roc-diagrams-command> | <roc-curves-simple> }
+    rule roc-curves-simple { <display-directive>? [ <roc-phrase> | <rocs-phrase> ] <plots-noun>? }
+    rule roc-diagrams-command { [ <.display-directive> <.roc-diagram-phrase> | <.roc-curves-simple> ] [ [ <.using-preposition> | <.of-preposition> ] <roc-functions-list> ]? }
+    rule roc-diagram-phrase { <.list-line-roc-diagram-phrase> | [ <.list-line-diagram-phrase> | <.diagram-phrase> ] }
+    rule list-line-roc-diagram-phrase { <list-noun>? <line-noun> <roc-curve-phrase> <diagram-phrase> }
+    rule list-line-diagram-phrase { <list-noun>? <line-noun> <diagram-phrase> | 'ListLinePlot' }
+    rule roc-functions-list { <roc-function>+ % [ <.list-separator> | <.versus-preposition> ] }
 
 }

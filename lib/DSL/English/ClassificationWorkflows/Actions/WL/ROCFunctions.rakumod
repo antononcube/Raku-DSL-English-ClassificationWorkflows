@@ -1,6 +1,6 @@
 class DSL::English::ClassificationWorkflows::Actions::WL::ROCFunctions {
 
-    method roc-function { $/.values[0].made; }
+    method roc-function($/) { make '"' ~ $/.values[0].made ~ '"'; }
 
     method tpr-roc-func($/) { make 'TPR'; }
     method tnr-roc-func($/) { make 'TNR'; }

@@ -33,10 +33,12 @@ use v6;
 use DSL::English::ClassificationWorkflows::Grammar;
 use DSL::Shared::Actions::English::WL::PipelineCommand;
 use DSL::English::ClassificationWorkflows::Actions::WL::ROCFunctions;
+use DSL::English::ClassificationWorkflows::Actions::WL::ClassifierProperties;
 
 class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
         is DSL::Shared::Actions::English::WL::PipelineCommand
-        is DSL::English::ClassificationWorkflows::Actions::WL::ROCFunctions {
+        is DSL::English::ClassificationWorkflows::Actions::WL::ROCFunctions
+        is DSL::English::ClassificationWorkflows::Actions::WL::ClassifierProperties {
 
     method TOP($/) { make $/.values[0].made; }
 
@@ -94,7 +96,8 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
     # Classifier info command
     method classifier-query-command($/) { make $/.values[0].made; }
     method classifier-info-simple($/){ make 'ClConEchoFunctionContext[ ClassifierInformation[#classifier]& ]'; }
-    method classifier-get-info-property($/){ make 'ClConEchoFunctionContext[ Information[#classifier, "' ~ $/.values[0].made ~ '" ]& ]'; }
+    method classifier-get-info-property($/){ make 'ClConEchoFunctionContext[ Function[{pr}, Information[#classifier, pr]] /@ { ' ~ $/.values[0].made ~ '}& ]'; }
+    method classifier-property-list($/) { make $<wl-classifier-info-property>>>.made.join(', '); }
 
     method classifier-counts($){ make 'ClConEchoFunctionContext[ Length @ #classifier ]'; }
 
@@ -107,10 +110,11 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
     method classifier-measurements-command($/) { make $/.values[0].made; }
     method classifier-measurements-simple($/){ make 'ClConClassifierMeasurements[]'; }
 
-    # ROC curves command
+    # ROC plots command
     method roc-plots-command($/) { make $/.values[0].made; }
-    method roc-diagrams-command($/) { make $/.values[0].made; }
     method roc-curves-simple($/){ make 'ClConROCPlot[]'; }
+    method roc-diagrams-command($/) { make 'ClConROCPlot[ ' ~ $/.values[0].made ~ ' ]'; }
+    method roc-functions-list($/) { make $<roc-function>>>.made.join(', ');}
 
     # WL classifier names
     method wl-classifier-name($/) { make '"' ~ $/.values[0].made ~ '"'; }

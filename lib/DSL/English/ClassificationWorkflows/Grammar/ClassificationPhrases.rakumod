@@ -65,11 +65,4 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     rule random-forest-classifier-name { 'random' 'forest' | 'RandomForest' }
     rule support-vector-machine-classifier-name { 'support' 'vector' 'machine' | 'SupportVectorMachine' }
 
-    # WL classifier info property
-    rule wl-classifier-info-property {
-        'Accuracy' | 'Classes' | 'ClassNumber' | 'EvaluationTime' | 'ExampleNumber' | 'FeatureNumber' |
-        'FunctionMemory' | 'FunctionProperties' | 'LearningCurve' | 'MaxTrainingMemory' |
-        'MeanCrossEntropy' | 'MethodDescription' | 'MethodOption' | 'Properties' | 'TrainingClassPriors' |
-        'TrainingTime' | 'ClassPriors' | 'FeatureNames' | 'FeatureTypes' | 'IndeterminateThreshold' |
-        'Method' | 'PerformanceGoal' | 'UtilityFunction'}
 }
