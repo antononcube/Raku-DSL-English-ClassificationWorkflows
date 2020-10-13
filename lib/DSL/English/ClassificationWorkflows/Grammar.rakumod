@@ -34,10 +34,12 @@ use DSL::Shared::Roles::PredicateSpecification;
 use DSL::Shared::Roles::ErrorHandling;
 
 use DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases;
+use DSL::English::ClassificationWorkflows::Grammar::ROCFunctions;
 
 grammar DSL::English::ClassificationWorkflows::Grammar
         does DSL::Shared::Roles::ErrorHandling
-        does DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases {
+        does DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
+        does DSL::English::ClassificationWorkflows::Grammar::ROCFunctions {
     # TOP
     rule TOP {
         <pipeline-command> |
@@ -46,9 +48,9 @@ grammar DSL::English::ClassificationWorkflows::Grammar
         <data-summary-command> |
         <dimension-reduction-command> |
         <make-classifier-command> |
-        <classifier-info-command> |
+        <classifier-query-command> |
         <classifier-measurements-command> |
-        <roc-curves-command>
+        <roc-plots-command>
     }
 
     # Load data
@@ -78,22 +80,53 @@ grammar DSL::English::ClassificationWorkflows::Grammar
     rule dimension-reduction-simple { <reduce-dimension-phrase> }
 
     # Make classifier command
-    rule make-classifier-command { <make-classifier-simple> }
+    rule make-classifier-command { <make-classifier-simple> | <make-classifier-thorough-command> }
+
+    ## Simple classifier creation
     rule make-classifier-simple {
         <.create-directive> <.a-determiner>? <.classifier-noun> <.using-preposition>? <classifier-method-spec>? |
         <.create-directive> <.a-determiner>? <classifier-method-spec> <.classifier-noun> }
     rule classifier-method-spec { <wl-classifier-name> | <mixed-quoted-variable-name> }
 
+    ## More thorough classifier creation
+    rule make-classifier-thorough-command {
+        <.classifier-creation-opening> [
+        <classifier-algorithm-spec>? <.classifier-noun>? [ <.using-preposition> <library-name> ]? |
+        <.classifier-noun> <.using-preposition> <classifier-algorithm-spec> ]
+        [ <.using-preposition> <train-data-spec> ]? }
+    rule classifier-creation-opening { [ <create-directive> | <train-verb> ] <a-determiner>? }
+    rule classifier-algorithm-spec { <classifier-method-spec> [ [ <.from-preposition> | <.of-preposition> ] <library-name> ]?}
+    rule library-name { <mixed-quoted-variable-name> }
+
     # Classifier info commands
-    rule classifier-info-command { <classifier-info-simple> }
+    rule classifier-query-command { <classifier-info-simple> | <classifier-get-info-property> | <classifier-info> | <classifier-counts> }
+
     rule classifier-info-simple { <classifier-info-phrase> }
+
+    ## Get info property
+    rule classifier-get-info-property { <.display-directive> <.classifier-noun> [ <wl-classifier-info-property> | <classifier-info-property-name> ]}
+    rule classifier-info { <.display-directive>? <.classifier-noun> [ <.info-noun> | <.information-noun> | <.stats-noun> | <.statistics-noun> ] }
+
+    ## (Ensemble counts)
+    rule classifier-counts { [ <how-adverb> <many-determiner> | <what-pronoun> <number-of> ] <classifiers-noun> }
+
+    ## WL classifier info property name
+    rule classifier-info-property-name { <accuracy-property> | <number-of-classes-property> | <training-time-property> }
+    rule accuracy-property { <accuracy-noun> }
+    rule training-time-property { <training-adjective> <time-noun> }
+    rule number-of-classes-property { <classes-noun> | <class-noun> <number-noun> }
 
     # Classifier measurement command
     rule classifier-measurements-command { <classifier-measurements-simple> }
     rule classifier-measurements-simple { <classifier-noun> <measurements-noun> }
 
-    # ROC curves command
-    rule roc-curves-command { <roc-curves-simple> }
+    # ROC plot command
+    rule roc-plots-command { <roc-curves-simple> | <roc-diagrams-command> }
     rule roc-curves-simple { <display-directive>? [ <roc-phrase> | <rocs-phrase> ] <plots>? }
+    rule roc-diagrams-command { <display-directive> <roc-diagram> [ [ <using-preposition> | <of-preposition> ] <roc-function-list> ]?}
+    rule list-line-diagram { <list-noun>? <line-noun> <diagram-phrase> | 'ListLinePlot' }
+    rule list-line-roc-diagram { <list-noun>? <line-noun> <roc-curve-phrase> <diagram-phrase> }
+    rule roc-diagram { <list-line-roc-diagram> | [ <list-line-diagram> | <diagram-phrase> ] }
+    rule roc-function-list { <roc-function>+ % <list-delimiter> }
 
 }

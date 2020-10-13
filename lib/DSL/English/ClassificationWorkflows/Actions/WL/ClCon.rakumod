@@ -32,9 +32,11 @@ use v6;
 
 use DSL::English::ClassificationWorkflows::Grammar;
 use DSL::Shared::Actions::English::WL::PipelineCommand;
+use DSL::English::ClassificationWorkflows::Actions::WL::ROCFunctions;
 
 class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
-        is DSL::Shared::Actions::English::WL::PipelineCommand {
+        is DSL::Shared::Actions::English::WL::PipelineCommand
+        is DSL::English::ClassificationWorkflows::Actions::WL::ROCFunctions {
 
     method TOP($/) { make $/.values[0].made; }
 
@@ -90,15 +92,24 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
     method classifier-method-spec($/) { make $/.values[0].made; }
 
     # Classifier info command
-    method classifier-info-command($/) { make $/.values[0].made; }
-    method classifier-info-simple($/){ make 'ClConEchoFunctionContext[ClassifierInformation[#["classifier"]] &]'; }
+    method classifier-query-command($/) { make $/.values[0].made; }
+    method classifier-info-simple($/){ make 'ClConEchoFunctionContext[ ClassifierInformation[#classifier]& ]'; }
+    method classifier-get-info-property($/){ make 'ClConEchoFunctionContext[ Information[#classifier, "' ~ $/.values[0].made ~ '" ]& ]'; }
+
+    method classifier-counts($){ make 'ClConEchoFunctionContext[ Length @ #classifier ]'; }
+
+    method classifier-info-property-name($/) { make $/.values[0].made; }
+    method accuracy-property($/) { make 'Accuracy'; }
+    method training-time-property($/) { make 'TrainingTime'; }
+    method number-of-classes-property($/) { make 'ClassLabels'; }
 
     # Classifier measurements command
     method classifier-measurements-command($/) { make $/.values[0].made; }
     method classifier-measurements-simple($/){ make 'ClConClassifierMeasurements[]'; }
 
     # ROC curves command
-    method roc-curves-command($/) { make $/.values[0].made; }
+    method roc-plots-command($/) { make $/.values[0].made; }
+    method roc-diagrams-command($/) { make $/.values[0].made; }
     method roc-curves-simple($/){ make 'ClConROCPlot[]'; }
 
     # WL classifier names
