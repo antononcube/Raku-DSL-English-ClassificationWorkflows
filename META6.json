@@ -11,9 +11,11 @@
         "DSL::English::ClassificationWorkflows" : "lib/DSL/English/ClassificationWorkflows.rakumod",
         "DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard" : "lib/DSL/English/ClassificationWorkflows/Actions/Bulgarian/Standard.rakumod",
         "DSL::English::ClassificationWorkflows::Actions::WL::ClCon" : "lib/DSL/English/ClassificationWorkflows/Actions/WL/ClCon.rakumod",
+        "DSL::English::ClassificationWorkflows::Actions::WL::ROCFunctions" : "lib/DSL/English/ClassificationWorkflows/Actions/WL/ROCFunctions.rakumod",
         "DSL::English::ClassificationWorkflows::Actions::WL::System" : "lib/DSL/English/ClassificationWorkflows/Actions/WL/System.rakumod",
         "DSL::English::ClassificationWorkflows::Grammar" : "lib/DSL/English/ClassificationWorkflows/Grammar.rakumod",
-        "DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases" : "lib/DSL/English/ClassificationWorkflows/Grammar/ClassificationPhrases.rakumod"
+        "DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases" : "lib/DSL/English/ClassificationWorkflows/Grammar/ClassificationPhrases.rakumod",
+        "DSL::English::ClassificationWorkflows::Grammar::ROCFunctions" : "lib/DSL/English/ClassificationWorkflows/Grammar/ROCFunctions.rakumod"
     },
     "depends" : [ "DSL::Shared" ],
     "build-depends" : [ ],
