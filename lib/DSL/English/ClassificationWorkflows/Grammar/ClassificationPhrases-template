@@ -7,10 +7,12 @@ use DSL::Shared::Utilities::FuzzyMatching;
 role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
         does DSL::Shared::Roles::English::PipelineCommand {
     # Tokens
+    token accuracy-noun { 'accuracy' }
     token characteristic-noun { 'characteristic' }
     token characteristics-noun { 'characteristics' }
     token class-noun { 'class' }
     token classifier-noun { 'classifier' }
+    token curve { 'curve' }
     token ensemble-noun { 'ensemble' }
     token fraction-noun { 'fraction' }
     token info-noun { 'info' }
@@ -28,6 +30,7 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     token split-directive { 'split' | 'divide' | 'partition' }
     token split-verb { 'split' }
     token testing-adjective { 'testing' }
+    token train-verb { 'train' }
     token training-adjective { 'training' }
     token validation-adjective { 'validation' }
 
@@ -37,19 +40,24 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     rule reduce-dimension-phrase { <reduce-verb> <dimension> }
     rule roc-phrase { <receiver-noun> <operating-adjective> <characteristic-noun> | <roc-noun> }
     rule rocs-phrase { <receiver-noun> <operating-adjective> <characteristics-noun> | <rocs-noun> }
+    rule roc-curve-phrase { [ <roc-phrase> | <rocs-phrase> ] [ <curve-noun> | <curves-noun> ]? }
 
     # WL classifier names
     rule wl-classifier-name {
         <decision-tree-classifier-name> |
         <gradient-boosted-trees-classifier-name> |
         <logistic-regression-classifier-name> |
+        <naive-bayes-classifier-name> |
         <nearest-neighbors-classifier-name> |
         <neural-network-classifier-name> |
+        <random-forest-classifier-name> |
         <support-vector-machine-classifier-name> }
     rule decision-tree-classifier-name { 'decision' 'tree' | 'DecisionTree' }
     rule gradient-boosted-trees-classifier-name { 'gradient' 'boosted' 'trees' | 'GradientBoostedTrees' }
     rule logistic-regression-classifier-name { 'logistic' 'regression' | 'LogisticRegression' }
+    rule naive-bayes-classifier-name { 'naive' 'bayes' | 'NaiveBayes' }
     rule nearest-neighbors-classifier-name { 'nearest' 'neighbors' | 'NearestNeighbors' }
     rule neural-network-classifier-name { 'neural' 'network' | 'NeuralNetwork' }
+    rule random-forest-classifier-name { 'random' 'forest' | 'RandomForest' }
     rule support-vector-machine-classifier-name { 'support' 'vector' 'machine' | 'SupportVectorMachine' }
 }

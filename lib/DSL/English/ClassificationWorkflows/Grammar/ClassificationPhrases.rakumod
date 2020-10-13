@@ -7,15 +7,21 @@ use DSL::Shared::Utilities::FuzzyMatching;
 role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
         does DSL::Shared::Roles::English::PipelineCommand {
     # Tokens
+    token accuracy-noun { 'accuracy' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'accuracy') }> }
     token characteristic-noun { 'characteristic' | ([\w]+) <?{ $0.Str ne 'characteristics' and is-fuzzy-match( $0.Str, 'characteristic') }> }
     token characteristics-noun { 'characteristics' | ([\w]+) <?{ $0.Str ne 'characteristic' and is-fuzzy-match( $0.Str, 'characteristics') }> }
-    token class-noun { 'class' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'class') }> }
-    token classifier-noun { 'classifier' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'classifier') }> }
+    token class-noun { 'class' | ([\w]+) <?{ $0.Str ne 'classes' and is-fuzzy-match( $0.Str, 'class') }> }
+    token classes-noun { 'classes' | ([\w]+) <?{ $0.Str ne 'class' and is-fuzzy-match( $0.Str, 'classes') }> }
+    token classifier-noun { 'classifier' | ([\w]+) <?{ $0.Str ne 'classifiers' and is-fuzzy-match( $0.Str, 'classifier') }> }
+    token classifiers-noun { 'classifiers' | ([\w]+) <?{ $0.Str ne 'classifier' and is-fuzzy-match( $0.Str, 'classifiers') }> }
+    token curve-noun { 'curve' | ([\w]+) <?{ $0.Str ne 'curves' and is-fuzzy-match( $0.Str, 'curve') }> }
+    token curves-noun { 'curves' | ([\w]+) <?{ $0.Str ne 'curve' and is-fuzzy-match( $0.Str, 'curves') }> }
     token ensemble-noun { 'ensemble' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'ensemble') }> }
     token fraction-noun { 'fraction' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'fraction') }> }
     token info-noun { 'info' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'info') }> }
     token information-noun { 'information' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'information') }> }
     token label-noun { 'label' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'label') }> }
+    token line-noun { 'line' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'line') }> }
     token measurements-noun { 'measurements' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'measurements') }> }
     token operating-adjective { 'operating' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'operating') }> }
     token proportional-adjective { 'proportional' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'proportional') }> }
@@ -28,6 +34,7 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     token split-directive { 'split' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'split') }> | 'divide' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'divide') }> | 'partition' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'partition') }> }
     token split-verb { 'split' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'split') }> }
     token testing-adjective { 'testing' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'testing') }> }
+    token train-verb { 'train' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'train') }> }
     token training-adjective { 'training' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'training') }> }
     token validation-adjective { 'validation' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'validation') }> }
 
@@ -37,19 +44,32 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     rule reduce-dimension-phrase { <reduce-verb> <dimension> }
     rule roc-phrase { <receiver-noun> <operating-adjective> <characteristic-noun> | <roc-noun> }
     rule rocs-phrase { <receiver-noun> <operating-adjective> <characteristics-noun> | <rocs-noun> }
+    rule roc-curve-phrase { [ <roc-phrase> | <rocs-phrase> ] [ <curve-noun> | <curves-noun> ]? }
 
     # WL classifier names
     rule wl-classifier-name {
         <decision-tree-classifier-name> |
         <gradient-boosted-trees-classifier-name> |
         <logistic-regression-classifier-name> |
+        <naive-bayes-classifier-name> |
         <nearest-neighbors-classifier-name> |
         <neural-network-classifier-name> |
+        <random-forest-classifier-name> |
         <support-vector-machine-classifier-name> }
     rule decision-tree-classifier-name { 'decision' 'tree' | 'DecisionTree' }
     rule gradient-boosted-trees-classifier-name { 'gradient' 'boosted' 'trees' | 'GradientBoostedTrees' }
     rule logistic-regression-classifier-name { 'logistic' 'regression' | 'LogisticRegression' }
+    rule naive-bayes-classifier-name { 'naive' 'bayes' | 'NaiveBayes' }
     rule nearest-neighbors-classifier-name { 'nearest' 'neighbors' | 'NearestNeighbors' }
     rule neural-network-classifier-name { 'neural' 'network' | 'NeuralNetwork' }
+    rule random-forest-classifier-name { 'random' 'forest' | 'RandomForest' }
     rule support-vector-machine-classifier-name { 'support' 'vector' 'machine' | 'SupportVectorMachine' }
+
+    # WL classifier info property
+    rule wl-classifier-info-property {
+        'Accuracy' | 'Classes' | 'ClassNumber' | 'EvaluationTime' | 'ExampleNumber' | 'FeatureNumber' |
+        'FunctionMemory' | 'FunctionProperties' | 'LearningCurve' | 'MaxTrainingMemory' |
+        'MeanCrossEntropy' | 'MethodDescription' | 'MethodOption' | 'Properties' | 'TrainingClassPriors' |
+        'TrainingTime' | 'ClassPriors' | 'FeatureNames' | 'FeatureTypes' | 'IndeterminateThreshold' |
+        'Method' | 'PerformanceGoal' | 'UtilityFunction'}
 }
