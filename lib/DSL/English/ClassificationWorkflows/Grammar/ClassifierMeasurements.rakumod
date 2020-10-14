@@ -1,3 +1,6 @@
+
+use DSL::Shared::Utilities::FuzzyMatching;
+
 role DSL::English::ClassificationWorkflows::Grammar::ClassifierMeasurements {
 
     rule wl-classifier-measurement {
@@ -60,247 +63,133 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassifierMeasurements {
         <true-positive-number-measure>    |
         <worst-classified-examples-measure>
     }
-    rule accuracy-measure {
-        <accuracy-word>    | 'Accuracy'
-    }
-    rule accuracy-baseline-measure {
-        <accuracy-word> <baseline-word>    | 'AccuracyBaseline'
-    }
-    rule accuracy-rejection-plot-measure {
-        <accuracy-word> <rejection-word> <plot-word>    | 'AccuracyRejectionPlot'
-    }
-    rule area-under-curve-measure {
-        <area-word> <under-word> <curve-word> | 'AreaUnderROCCurve'
-    }
-    rule batch-evaluation-time-measure {
-        <batch-word> <evaluation-word> <time-word>    | 'BatchEvaluationTime'
-    }
-    rule best-classified-examples-measure {
-        <best-word> <classified-word> <examples-word>    | 'BestClassifiedExamples'
-    }
-    rule classic-reliability-diagram-measure {
-        <classic-word> <reliability-word> <diagram-word>    | 'ClassicReliabilityDiagram'
-    }
-    rule classifier-function-measure {
-        <classifier-word> <function-word>    | 'ClassifierFunction'
-    }
-    rule class-mean-cross-entropy-measure {
-        <class-word> <mean-word> <cross-word> <entropy-word>    | 'ClassMeanCrossEntropy'
-    }
-    rule class-rejection-rate-measure {
-        <class-word> <rejection-word> <rate-word>    | 'ClassRejectionRate'
-    }
-    rule cohen-kappa-measure {
-        <cohen-word> <kappa-word>    | 'CohenKappa'
-    }
-    rule confusion-distribution-measure {
-        <confusion-word> <distribution-word>    | 'ConfusionDistribution'
-    }
-    rule confusion-function-measure {
-        <confusion-word> <function-word>    | 'ConfusionFunction'
-    }
-    rule confusion-matrix-measure {
-        <confusion-word> <matrix-word>    | 'ConfusionMatrix'
-    }
-    rule confusion-matrix-plot-measure {
-        <confusion-word> <matrix-word> <plot-word>    | 'ConfusionMatrixPlot'
-    }
-    rule correctly-classified-examples-measure {
-        <correctly-word> <classified-word> <examples-word>    | 'CorrectlyClassifiedExamples'
-    }
-    rule decision-utilities-measure {
-        <decision-word> <utilities-word>    | 'DecisionUtilities'
-    }
-    rule error-measure {
-        <error-word>    | 'Error'
-    }
-    rule evaluation-time-measure {
-        <evaluation-word> <time-word>    | 'EvaluationTime'
-    }
-    rule examples-measure {
-        <examples-word>    | 'Examples'
-    }
-    rule f1-score-measure {
-        <f1-word> <score-word>    | 'F1Score'
-    }
-    rule false-discovery-rate-measure {
-        <false-word> <discovery-word> <rate-word>    | 'FalseDiscoveryRate'
-    }
-    rule false-negative-examples-measure {
-        <false-word> <negative-word> <examples-word>    | 'FalseNegativeExamples'
-    }
-    rule false-negative-number-measure {
-        <false-word> <negative-word> <number-word>    | 'FalseNegativeNumber'
-    }
-    rule false-negative-rate-measure {
-        <false-word> <negative-word> <rate-word>    | 'FalseNegativeRate'
-    }
-    rule false-positive-examples-measure {
-        <false-word> <positive-word> <examples-word>    | 'FalsePositiveExamples'
-    }
-    rule false-positive-number-measure {
-        <false-word> <positive-word> <number-word>    | 'FalsePositiveNumber'
-    }
-    rule false-positive-rate-measure {
-        <false-word> <positive-word> <rate-word>    | 'FalsePositiveRate'
-    }
-    rule geometric-mean-probability-measure {
-        <geometric-word> <mean-word> <probability-word>    | 'GeometricMeanProbability'
-    }
-    rule indeterminate-examples-measure {
-        <indeterminate-word> <examples-word>    | 'IndeterminateExamples'
-    }
-    rule least-certain-examples-measure {
-        <least-word> <certain-word> <examples-word>    | 'LeastCertainExamples'
-    }
-    rule likelihood-measure {
-        <likelihood-word>    | 'Likelihood'
-    }
-    rule log-likelihood-measure {
-        <log-word> <likelihood-word>    | 'LogLikelihood'
-    }
-    rule matthews-correlation-coefficient-measure {
-        <matthews-word> <correlation-word> <coefficient-word>    | 'MatthewsCorrelationCoefficient'
-    }
-    rule mean-cross-entropy-measure {
-        <mean-word> <cross-word> <entropy-word>    | 'MeanCrossEntropy'
-    }
-    rule mean-decision-utility-measure {
-        <mean-word> <decision-word> <utility-word>    | 'MeanDecisionUtility'
-    }
-    rule misclassified-examples-measure {
-        <misclassified-word> <examples-word>    | 'MisclassifiedExamples'
-    }
-    rule most-certain-examples-measure {
-        <most-word> <certain-word> <examples-word>    | 'MostCertainExamples'
-    }
-    rule negative-predictive-value-measure {
-        <negative-word> <predictive-word> <value-word>    | 'NegativePredictiveValue'
-    }
-    rule perplexity-measure {
-        <perplexity-word>    | 'Perplexity'
-    }
-    rule precision-measure {
-        <precision-word>    | 'Precision'
-    }
-    rule probabilities-measure {
-        <probabilities-word>    | 'Probabilities'
-    }
-    rule probability-histogram-measure {
-        <probability-word> <histogram-word>    | 'ProbabilityHistogram'
-    }
-    rule properties-measure {
-        <properties-word>    | 'Properties'
-    }
-    rule recall-measure {
-        <recall-word>    | 'Recall'
-    }
-    rule rejection-rate-measure {
-        <rejection-word> <rate-word>    | 'RejectionRate'
-    }
-    rule reliability-data-measure {
-        <reliability-word> <data-word>    | 'ReliabilityData'
-    }
-    rule reliability-diagram-measure {
-        <reliability-word> <diagram-word>    | 'ReliabilityDiagram'
-    }
-    rule report-measure {
-        <report-word>    | 'Report'
-    }
-    rule curve-measure {
-        <curve-word>    | 'ROCCurve'
-    }
-    rule scott-pi-measure {
-        <scott-word> <pi-word>    | 'ScottPi'
-    }
-    rule specificity-measure {
-        <specificity-word>    | 'Specificity'
-    }
-    rule top-confusions-measure {
-        <top-word> <confusions-word>    | 'TopConfusions'
-    }
-    rule true-negative-examples-measure {
-        <true-word> <negative-word> <examples-word>    | 'TrueNegativeExamples'
-    }
-    rule true-negative-number-measure {
-        <true-word> <negative-word> <number-word>    | 'TrueNegativeNumber'
-    }
-    rule true-positive-examples-measure {
-        <true-word> <positive-word> <examples-word>    | 'TruePositiveExamples'
-    }
-    rule true-positive-number-measure {
-        <true-word> <positive-word> <number-word>    | 'TruePositiveNumber'
-    }
-    rule worst-classified-examples-measure {
-        <worst-word> <classified-word> <examples-word>    | 'WorstClassifiedExamples'
-    }
-    token accuracy-word { 'accuracy' }
-    token area-word { 'area' }
-    token baseline-word { 'baseline' }
-    token batch-word { 'batch' }
-    token best-word { 'best' }
-    token certain-word { 'certain' }
-    token class-word { 'class' }
-    token classic-word { 'classic' }
-    token classified-word { 'classified' }
-    token classifier-word { 'classifier' }
-    token coefficient-word { 'coefficient' }
-    token cohen-word { 'cohen' }
-    token confusion-word { 'confusion' }
-    token confusions-word { 'confusions' }
-    token correctly-word { 'correctly' }
-    token correlation-word { 'correlation' }
-    token cross-word { 'cross' }
-    token curve-word { 'curve' }
-    token data-word { 'data' }
-    token decision-word { 'decision' }
-    token diagram-word { 'diagram' }
-    token discovery-word { 'discovery' }
-    token distribution-word { 'distribution' }
-    token entropy-word { 'entropy' }
-    token error-word { 'error' }
-    token evaluation-word { 'evaluation' }
-    token examples-word { 'examples' }
-    token f1-word { 'f1' }
-    token false-word { 'false' }
-    token function-word { 'function' }
-    token geometric-word { 'geometric' }
-    token histogram-word { 'histogram' }
-    token indeterminate-word { 'indeterminate' }
-    token kappa-word { 'kappa' }
-    token least-word { 'least' }
-    token likelihood-word { 'likelihood' }
-    token log-word { 'log' }
-    token matrix-word { 'matrix' }
-    token matthews-word { 'matthews' }
-    token mean-word { 'mean' }
-    token misclassified-word { 'misclassified' }
-    token most-word { 'most' }
-    token negative-word { 'negative' }
-    token number-word { 'number' }
-    token perplexity-word { 'perplexity' }
-    token pi-word { 'pi' }
-    token plot-word { 'plot' }
-    token positive-word { 'positive' }
-    token precision-word { 'precision' }
-    token predictive-word { 'predictive' }
-    token probabilities-word { 'probabilities' }
-    token probability-word { 'probability' }
-    token properties-word { 'properties' }
-    token rate-word { 'rate' }
-    token recall-word { 'recall' }
-    token rejection-word { 'rejection' }
-    token reliability-word { 'reliability' }
-    token report-word { 'report' }
-    token score-word { 'score' }
-    token scott-word { 'scott' }
-    token specificity-word { 'specificity' }
-    token time-word { 'time' }
-    token top-word { 'top' }
-    token true-word { 'true' }
-    token under-word { 'under' }
-    token utilities-word { 'utilities' }
-    token utility-word { 'utility' }
-    token value-word { 'value' }
-    token worst-word { 'worst' }
+
+    rule accuracy-measure {<accuracy-measure-word> | 'Accuracy'}
+    rule accuracy-baseline-measure {<accuracy-measure-word> <baseline-measure-word> | 'AccuracyBaseline'}
+    rule accuracy-rejection-plot-measure {<accuracy-measure-word> <rejection-measure-word> <plot-measure-word> | 'AccuracyRejectionPlot'}
+    rule area-under-curve-measure {<area-measure-word> <under-measure-word> <curve-measure-word> | 'AreaUnderROCCurve'}
+    rule batch-evaluation-time-measure {<batch-measure-word> <evaluation-measure-word> <time-measure-word> | 'BatchEvaluationTime'}
+    rule best-classified-examples-measure {<best-measure-word> <classified-measure-word> <examples-measure-word> | 'BestClassifiedExamples'}
+    rule classic-reliability-diagram-measure {<classic-measure-word> <reliability-measure-word> <diagram-measure-word> | 'ClassicReliabilityDiagram'}
+    rule classifier-function-measure {<classifier-measure-word> <function-measure-word> | 'ClassifierFunction'}
+    rule class-mean-cross-entropy-measure {<class-measure-word> <mean-measure-word> <cross-measure-word> <entropy-measure-word> | 'ClassMeanCrossEntropy'}
+    rule class-rejection-rate-measure {<class-measure-word> <rejection-measure-word> <rate-measure-word> | 'ClassRejectionRate'}
+    rule cohen-kappa-measure {<cohen-measure-word> <kappa-measure-word> | 'CohenKappa'}
+    rule confusion-distribution-measure {<confusion-measure-word> <distribution-measure-word> | 'ConfusionDistribution'}
+    rule confusion-function-measure {<confusion-measure-word> <function-measure-word> | 'ConfusionFunction'}
+    rule confusion-matrix-measure {<confusion-measure-word> <matrix-measure-word> | 'ConfusionMatrix'}
+    rule confusion-matrix-plot-measure {<confusion-measure-word> <matrix-measure-word> <plot-measure-word> | 'ConfusionMatrixPlot'}
+    rule correctly-classified-examples-measure {<correctly-measure-word> <classified-measure-word> <examples-measure-word> | 'CorrectlyClassifiedExamples'}
+    rule decision-utilities-measure {<decision-measure-word> <utilities-measure-word> | 'DecisionUtilities'}
+    rule error-measure {<error-measure-word> | 'Error'}
+    rule evaluation-time-measure {<evaluation-measure-word> <time-measure-word> | 'EvaluationTime'}
+    rule examples-measure {<examples-measure-word> | 'Examples'}
+    rule f1-score-measure {<f1-measure-word> <score-measure-word> | 'F1Score'}
+    rule false-discovery-rate-measure {<false-measure-word> <discovery-measure-word> <rate-measure-word> | 'FalseDiscoveryRate'}
+    rule false-negative-examples-measure {<false-measure-word> <negative-measure-word> <examples-measure-word> | 'FalseNegativeExamples'}
+    rule false-negative-number-measure {<false-measure-word> <negative-measure-word> <number-measure-word> | 'FalseNegativeNumber'}
+    rule false-negative-rate-measure {<false-measure-word> <negative-measure-word> <rate-measure-word> | 'FalseNegativeRate'}
+    rule false-positive-examples-measure {<false-measure-word> <positive-measure-word> <examples-measure-word> | 'FalsePositiveExamples'}
+    rule false-positive-number-measure {<false-measure-word> <positive-measure-word> <number-measure-word> | 'FalsePositiveNumber'}
+    rule false-positive-rate-measure {<false-measure-word> <positive-measure-word> <rate-measure-word> | 'FalsePositiveRate'}
+    rule geometric-mean-probability-measure {<geometric-measure-word> <mean-measure-word> <probability-measure-word> | 'GeometricMeanProbability'}
+    rule indeterminate-examples-measure {<indeterminate-measure-word> <examples-measure-word> | 'IndeterminateExamples'}
+    rule least-certain-examples-measure {<least-measure-word> <certain-measure-word> <examples-measure-word> | 'LeastCertainExamples'}
+    rule likelihood-measure {<likelihood-measure-word> | 'Likelihood'}
+    rule log-likelihood-measure {<log-measure-word> <likelihood-measure-word> | 'LogLikelihood'}
+    rule matthews-correlation-coefficient-measure {<matthews-measure-word> <correlation-measure-word> <coefficient-measure-word> | 'MatthewsCorrelationCoefficient'}
+    rule mean-cross-entropy-measure {<mean-measure-word> <cross-measure-word> <entropy-measure-word> | 'MeanCrossEntropy'}
+    rule mean-decision-utility-measure {<mean-measure-word> <decision-measure-word> <utility-measure-word> | 'MeanDecisionUtility'}
+    rule misclassified-examples-measure {<misclassified-measure-word> <examples-measure-word> | 'MisclassifiedExamples'}
+    rule most-certain-examples-measure {<most-measure-word> <certain-measure-word> <examples-measure-word> | 'MostCertainExamples'}
+    rule negative-predictive-value-measure {<negative-measure-word> <predictive-measure-word> <value-measure-word> | 'NegativePredictiveValue'}
+    rule perplexity-measure {<perplexity-measure-word> | 'Perplexity'}
+    rule precision-measure {<precision-measure-word> | 'Precision'}
+    rule probabilities-measure {<probabilities-measure-word> | 'Probabilities'}
+    rule probability-histogram-measure {<probability-measure-word> <histogram-measure-word> | 'ProbabilityHistogram'}
+    rule properties-measure {<properties-measure-word> | 'Properties'}
+    rule recall-measure {<recall-measure-word> | 'Recall'}
+    rule rejection-rate-measure {<rejection-measure-word> <rate-measure-word> | 'RejectionRate'}
+    rule reliability-data-measure {<reliability-measure-word> <data-measure-word> | 'ReliabilityData'}
+    rule reliability-diagram-measure {<reliability-measure-word> <diagram-measure-word> | 'ReliabilityDiagram'}
+    rule report-measure {<report-measure-word> | 'Report'}
+    rule curve-measure {<curve-measure-word> | 'ROCCurve'}
+    rule scott-pi-measure {<scott-measure-word> <pi-measure-word> | 'ScottPi'}
+    rule specificity-measure {<specificity-measure-word> | 'Specificity'}
+    rule top-confusions-measure {<top-measure-word> <confusions-measure-word> | 'TopConfusions'}
+    rule true-negative-examples-measure {<true-measure-word> <negative-measure-word> <examples-measure-word> | 'TrueNegativeExamples'}
+    rule true-negative-number-measure {<true-measure-word> <negative-measure-word> <number-measure-word> | 'TrueNegativeNumber'}
+    rule true-positive-examples-measure {<true-measure-word> <positive-measure-word> <examples-measure-word> | 'TruePositiveExamples'}
+    rule true-positive-number-measure {<true-measure-word> <positive-measure-word> <number-measure-word> | 'TruePositiveNumber'}
+    rule worst-classified-examples-measure {<worst-measure-word> <classified-measure-word> <examples-measure-word> | 'WorstClassifiedExamples'}
+
+    token accuracy-measure-word { 'accuracy' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'accuracy') }> }
+    token area-measure-word { 'area' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'area') }> }
+    token baseline-measure-word { 'baseline' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'baseline') }> }
+    token batch-measure-word { 'batch' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'batch') }> }
+    token best-measure-word { 'best' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'best') }> }
+    token certain-measure-word { 'certain' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'certain') }> }
+    token class-measure-word { 'class' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'class') }> }
+    token classic-measure-word { 'classic' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'classic') }> }
+    token classified-measure-word { 'classified' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'classified') }> }
+    token classifier-measure-word { 'classifier' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'classifier') }> }
+    token coefficient-measure-word { 'coefficient' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'coefficient') }> }
+    token cohen-measure-word { 'cohen' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'cohen') }> }
+    token confusion-measure-word { 'confusion' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'confusion') }> }
+    token confusions-measure-word { 'confusions' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'confusions') }> }
+    token correctly-measure-word { 'correctly' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'correctly') }> }
+    token correlation-measure-word { 'correlation' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'correlation') }> }
+    token cross-measure-word { 'cross' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'cross') }> }
+    token curve-measure-word { 'curve' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'curve') }> }
+    token data-measure-word { 'data' }
+    token decision-measure-word { 'decision' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'decision') }> }
+    token diagram-measure-word { 'diagram' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'diagram') }> }
+    token discovery-measure-word { 'discovery' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'discovery') }> }
+    token distribution-measure-word { 'distribution' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'distribution') }> }
+    token entropy-measure-word { 'entropy' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'entropy') }> }
+    token error-measure-word { 'error' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'error') }> }
+    token evaluation-measure-word { 'evaluation' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'evaluation') }> }
+    token examples-measure-word { 'examples' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'examples') }> }
+    token f1-measure-word { 'f1' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'f1') }> }
+    token false-measure-word { 'false' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'false') }> }
+    token function-measure-word { 'function' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'function') }> }
+    token geometric-measure-word { 'geometric' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'geometric') }> }
+    token histogram-measure-word { 'histogram' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'histogram') }> }
+    token indeterminate-measure-word { 'indeterminate' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'indeterminate') }> }
+    token kappa-measure-word { 'kappa' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'kappa') }> }
+    token least-measure-word { 'least' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'least') }> }
+    token likelihood-measure-word { 'likelihood' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'likelihood') }> }
+    token log-measure-word { 'log' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'log') }> }
+    token matrix-measure-word { 'matrix' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'matrix') }> }
+    token matthews-measure-word { 'matthews' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'matthews') }> }
+    token mean-measure-word { 'mean' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'mean') }> }
+    token misclassified-measure-word { 'misclassified' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'misclassified') }> }
+    token most-measure-word { 'most' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'most') }> }
+    token negative-measure-word { 'negative' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'negative') }> }
+    token number-measure-word { 'number' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'number') }> }
+    token perplexity-measure-word { 'perplexity' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'perplexity') }> }
+    token pi-measure-word { 'pi' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'pi') }> }
+    token plot-measure-word { 'plot' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'plot') }> }
+    token positive-measure-word { 'positive' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'positive') }> }
+    token precision-measure-word { 'precision' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'precision') }> }
+    token predictive-measure-word { 'predictive' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'predictive') }> }
+    token probabilities-measure-word { 'probabilities' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'probabilities') }> }
+    token probability-measure-word { 'probability' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'probability') }> }
+    token properties-measure-word { 'properties' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'properties') }> }
+    token rate-measure-word { 'rate' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'rate') }> }
+    token recall-measure-word { 'recall' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'recall') }> }
+    token rejection-measure-word { 'rejection' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'rejection') }> }
+    token reliability-measure-word { 'reliability' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'reliability') }> }
+    token report-measure-word { 'report' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'report') }> }
+    token score-measure-word { 'score' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'score') }> }
+    token scott-measure-word { 'scott' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'scott') }> }
+    token specificity-measure-word { 'specificity' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'specificity') }> }
+    token time-measure-word { 'time' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'time') }> }
+    token top-measure-word { 'top' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'top') }> }
+    token true-measure-word { 'true' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'true') }> }
+    token under-measure-word { 'under' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'under') }> }
+    token utilities-measure-word { 'utilities' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'utilities') }> }
+    token utility-measure-word { 'utility' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'utility') }> }
+    token value-measure-word { 'value' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'value') }> }
+    token worst-measure-word { 'worst' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'worst') }> }
 }
