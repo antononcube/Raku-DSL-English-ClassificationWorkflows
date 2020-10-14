@@ -98,7 +98,7 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
     # Classifier info command
     method classifier-query-command($/) { make $/.values[0].made; }
     method classifier-info-simple($/){ make 'ClConEchoFunctionContext[ ClassifierInformation[#classifier]& ]'; }
-    method classifier-get-info-property($/){ make 'ClConEchoFunctionContext[ Association @ Map[ Function[{pr}, pr -> Information[#classifier, pr]], { ' ~ $/.values[0].made ~ '}& ]]'; }
+    method classifier-get-info-property($/){ make 'ClConEchoFunctionContext[ Association @ Map[ Function[{pr}, pr -> Information[#classifier, pr]], { ' ~ $/.values[0].made ~ '}]& ]'; }
     method classifier-property-list($/) { make $<wl-classifier-info-property>>>.made.join(', '); }
 
     method classifier-counts($){ make 'ClConEchoFunctionContext[ Length @ #classifier ]'; }
@@ -112,9 +112,9 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
     method classifier-measurements-command($/) { make $/.values[0].made; }
     method classifier-measurements-simple($/){
         if $<classifier-measurements-list> {
-            make 'ClConClassifierMeasurements[ {' ~ $<classifier-measurements-list>.made ~ '} ]';
+            make 'ClConClassifierMeasurements[ {' ~ $<classifier-measurements-list>.made ~ '} ] ==> ClConEchoValue[]';
         } else {
-            make 'ClConClassifierMeasurements[]';
+            make 'ClConClassifierMeasurements[] ==> ClConEchoValue[]';
         }
     }
     method classifier-measurements-list($/) {
