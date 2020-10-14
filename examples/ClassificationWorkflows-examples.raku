@@ -11,7 +11,9 @@ DSL TARGET WL-ClCon;
 use dfTitanic;
 split data with fraction 0.8, method class label proportional;
 make a gradient boosted trees classifier;
-show rocs;
+show classifier training time, and method;
+show classifier precision and recall;
+show roc plots of TPR and FPR;
 assign pipeline object to clObj120';
 
 say "\n", '=' x 30;
