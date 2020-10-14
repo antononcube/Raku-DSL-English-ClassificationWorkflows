@@ -36,12 +36,14 @@ use DSL::Shared::Roles::ErrorHandling;
 use DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases;
 use DSL::English::ClassificationWorkflows::Grammar::ROCFunctions;
 use DSL::English::ClassificationWorkflows::Grammar::ClassifierProperties;
+use DSL::English::ClassificationWorkflows::Grammar::ClassifierMeasurements;
 
 grammar DSL::English::ClassificationWorkflows::Grammar
         does DSL::Shared::Roles::ErrorHandling
         does DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
         does DSL::English::ClassificationWorkflows::Grammar::ROCFunctions
-        does DSL::English::ClassificationWorkflows::Grammar::ClassifierProperties {
+        does DSL::English::ClassificationWorkflows::Grammar::ClassifierProperties
+        does DSL::English::ClassificationWorkflows::Grammar::ClassifierMeasurements {
     # TOP
     rule TOP {
         <pipeline-command> |
@@ -113,10 +115,11 @@ grammar DSL::English::ClassificationWorkflows::Grammar
     ## (Ensemble counts)
     rule classifier-counts { [ <how-adverb> <many-determiner> | <what-pronoun> <number-of> ] <classifiers-noun> }
 
-
     # Classifier measurement command
     rule classifier-measurements-command { <classifier-measurements-simple> }
-    rule classifier-measurements-simple { <classifier-noun> <measurements-noun> }
+    rule classifier-measurements-openning { <display-directive>? <classifier-noun> <measurements-noun>? }
+    rule classifier-measurements-simple{ <classifier-measurements-openning> <classifier-measurements-list>? }
+    rule classifier-measurements-list { <wl-classifier-measurement>+ % <.list-separator> }
 
     # ROC plot command
     rule roc-plots-command { <roc-diagrams-command> | <roc-curves-simple> }
@@ -126,5 +129,4 @@ grammar DSL::English::ClassificationWorkflows::Grammar
     rule list-line-roc-diagram-phrase { <list-noun>? <line-noun> <roc-curve-phrase> <diagram-phrase> }
     rule list-line-diagram-phrase { <list-noun>? <line-noun> <diagram-phrase> | 'ListLinePlot' }
     rule roc-functions-list { <roc-function>+ % [ <.list-separator> | <.versus-preposition> ] }
-
 }

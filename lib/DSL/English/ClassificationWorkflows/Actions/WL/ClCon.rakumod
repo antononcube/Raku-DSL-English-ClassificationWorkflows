@@ -34,11 +34,13 @@ use DSL::English::ClassificationWorkflows::Grammar;
 use DSL::Shared::Actions::English::WL::PipelineCommand;
 use DSL::English::ClassificationWorkflows::Actions::WL::ROCFunctions;
 use DSL::English::ClassificationWorkflows::Actions::WL::ClassifierProperties;
+use DSL::English::ClassificationWorkflows::Actions::WL::ClassifierMeasurements;
 
 class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
         is DSL::Shared::Actions::English::WL::PipelineCommand
         is DSL::English::ClassificationWorkflows::Actions::WL::ROCFunctions
-        is DSL::English::ClassificationWorkflows::Actions::WL::ClassifierProperties {
+        is DSL::English::ClassificationWorkflows::Actions::WL::ClassifierProperties
+        is DSL::English::ClassificationWorkflows::Actions::WL::ClassifierMeasurements {
 
     method TOP($/) { make $/.values[0].made; }
 
@@ -96,7 +98,7 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
     # Classifier info command
     method classifier-query-command($/) { make $/.values[0].made; }
     method classifier-info-simple($/){ make 'ClConEchoFunctionContext[ ClassifierInformation[#classifier]& ]'; }
-    method classifier-get-info-property($/){ make 'ClConEchoFunctionContext[ Function[{pr}, Information[#classifier, pr]] /@ { ' ~ $/.values[0].made ~ '}& ]'; }
+    method classifier-get-info-property($/){ make 'ClConEchoFunctionContext[ Association @ Map[ Function[{pr}, pr -> Information[#classifier, pr]], { ' ~ $/.values[0].made ~ '}& ]]'; }
     method classifier-property-list($/) { make $<wl-classifier-info-property>>>.made.join(', '); }
 
     method classifier-counts($){ make 'ClConEchoFunctionContext[ Length @ #classifier ]'; }
@@ -108,7 +110,16 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
 
     # Classifier measurements command
     method classifier-measurements-command($/) { make $/.values[0].made; }
-    method classifier-measurements-simple($/){ make 'ClConClassifierMeasurements[]'; }
+    method classifier-measurements-simple($/){
+        if $<classifier-measurements-list> {
+            make 'ClConClassifierMeasurements[ {' ~ $<classifier-measurements-list>.made ~ '} ]';
+        } else {
+            make 'ClConClassifierMeasurements[]';
+        }
+    }
+    method classifier-measurements-list($/) {
+        make $<wl-classifier-measurement>>>.made.join(', ');
+    }
 
     # ROC plots command
     method roc-plots-command($/) { make $/.values[0].made; }
