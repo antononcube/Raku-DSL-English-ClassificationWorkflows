@@ -1,6 +1,6 @@
 
 role DSL::English::ClassificationWorkflows::Grammar::ClassifierMeasurements {
-    rule wl-classifier-measurements {
+    rule wl-classifier-measurement {
         <accuracy-measure> |
         <accuracy-baseline-measure> |
         <accuracy-rejection-plot-measure> |

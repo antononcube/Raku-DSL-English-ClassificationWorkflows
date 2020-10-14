@@ -1,62 +1,62 @@
 class DSL::English::ClassificationWorkflows::Actions::WL::ClassifierMeasurements {
-    method wl-classifier-measurements($/) { make '"' ~ $/.values[0].made ~ '"'; }
+    method wl-classifier-measurement($/) { make make '"' ~ $/.values[0].made ~ '"'; }
 
-    method accuracy-measure($/) { 'Accuracy' }
-    method accuracy-baseline-measure($/) { 'AccuracyBaseline' }
-    method accuracy-rejection-plot-measure($/) { 'AccuracyRejectionPlot' }
-    method area-under-curve-measure($/) { 'AreaUnderROCCurve' }
-    method batch-evaluation-time-measure($/) { 'BatchEvaluationTime' }
-    method best-classified-examples-measure($/) { 'BestClassifiedExamples' }
-    method classic-reliability-diagram-measure($/) { 'ClassicReliabilityDiagram' }
-    method classifier-function-measure($/) { 'ClassifierFunction' }
-    method class-mean-cross-entropy-measure($/) { 'ClassMeanCrossEntropy' }
-    method class-rejection-rate-measure($/) { 'ClassRejectionRate' }
-    method cohen-kappa-measure($/) { 'CohenKappa' }
-    method confusion-distribution-measure($/) { 'ConfusionDistribution' }
-    method confusion-function-measure($/) { 'ConfusionFunction' }
-    method confusion-matrix-measure($/) { 'ConfusionMatrix' }
-    method confusion-matrix-plot-measure($/) { 'ConfusionMatrixPlot' }
-    method correctly-classified-examples-measure($/) { 'CorrectlyClassifiedExamples' }
-    method decision-utilities-measure($/) { 'DecisionUtilities' }
-    method error-measure($/) { 'Error' }
-    method evaluation-time-measure($/) { 'EvaluationTime' }
-    method examples-measure($/) { 'Examples' }
-    method f1-score-measure($/) { 'F1Score' }
-    method false-discovery-rate-measure($/) { 'FalseDiscoveryRate' }
-    method false-negative-examples-measure($/) { 'FalseNegativeExamples' }
-    method false-negative-number-measure($/) { 'FalseNegativeNumber' }
-    method false-negative-rate-measure($/) { 'FalseNegativeRate' }
-    method false-positive-examples-measure($/) { 'FalsePositiveExamples' }
-    method false-positive-number-measure($/) { 'FalsePositiveNumber' }
-    method false-positive-rate-measure($/) { 'FalsePositiveRate' }
-    method geometric-mean-probability-measure($/) { 'GeometricMeanProbability' }
-    method indeterminate-examples-measure($/) { 'IndeterminateExamples' }
-    method least-certain-examples-measure($/) { 'LeastCertainExamples' }
-    method likelihood-measure($/) { 'Likelihood' }
-    method log-likelihood-measure($/) { 'LogLikelihood' }
-    method matthews-correlation-coefficient-measure($/) { 'MatthewsCorrelationCoefficient' }
-    method mean-cross-entropy-measure($/) { 'MeanCrossEntropy' }
-    method mean-decision-utility-measure($/) { 'MeanDecisionUtility' }
-    method misclassified-examples-measure($/) { 'MisclassifiedExamples' }
-    method most-certain-examples-measure($/) { 'MostCertainExamples' }
-    method negative-predictive-value-measure($/) { 'NegativePredictiveValue' }
-    method perplexity-measure($/) { 'Perplexity' }
-    method precision-measure($/) { 'Precision' }
-    method probabilities-measure($/) { 'Probabilities' }
-    method probability-histogram-measure($/) { 'ProbabilityHistogram' }
-    method properties-measure($/) { 'Properties' }
-    method recall-measure($/) { 'Recall' }
-    method rejection-rate-measure($/) { 'RejectionRate' }
-    method reliability-data-measure($/) { 'ReliabilityData' }
-    method reliability-diagram-measure($/) { 'ReliabilityDiagram' }
-    method report-measure($/) { 'Report' }
-    method curve-measure($/) { 'ROCCurve' }
-    method scott-pi-measure($/) { 'ScottPi' }
-    method specificity-measure($/) { 'Specificity' }
-    method top-confusions-measure($/) { 'TopConfusions' }
-    method true-negative-examples-measure($/) { 'TrueNegativeExamples' }
-    method true-negative-number-measure($/) { 'TrueNegativeNumber' }
-    method true-positive-examples-measure($/) { 'TruePositiveExamples' }
-    method true-positive-number-measure($/) { 'TruePositiveNumber' }
-    method worst-classified-examples-measure($/) { 'WorstClassifiedExamples' }
+    method accuracy-measure($/) { make 'Accuracy'; }
+    method accuracy-baseline-measure($/) { make 'AccuracyBaseline'; }
+    method accuracy-rejection-plot-measure($/) { make 'AccuracyRejectionPlot'; }
+    method area-under-curve-measure($/) { make 'AreaUnderROCCurve'; }
+    method batch-evaluation-time-measure($/) { make 'BatchEvaluationTime'; }
+    method best-classified-examples-measure($/) { make 'BestClassifiedExamples'; }
+    method classic-reliability-diagram-measure($/) { make 'ClassicReliabilityDiagram'; }
+    method classifier-function-measure($/) { make 'ClassifierFunction'; }
+    method class-mean-cross-entropy-measure($/) { make 'ClassMeanCrossEntropy'; }
+    method class-rejection-rate-measure($/) { make 'ClassRejectionRate'; }
+    method cohen-kappa-measure($/) { make 'CohenKappa'; }
+    method confusion-distribution-measure($/) { make 'ConfusionDistribution'; }
+    method confusion-function-measure($/) { make 'ConfusionFunction'; }
+    method confusion-matrix-measure($/) { make 'ConfusionMatrix'; }
+    method confusion-matrix-plot-measure($/) { make 'ConfusionMatrixPlot'; }
+    method correctly-classified-examples-measure($/) { make 'CorrectlyClassifiedExamples'; }
+    method decision-utilities-measure($/) { make 'DecisionUtilities'; }
+    method error-measure($/) { make 'Error'; }
+    method evaluation-time-measure($/) { make 'EvaluationTime'; }
+    method examples-measure($/) { make 'Examples'; }
+    method f1-score-measure($/) { make 'F1Score'; }
+    method false-discovery-rate-measure($/) { make 'FalseDiscoveryRate'; }
+    method false-negative-examples-measure($/) { make 'FalseNegativeExamples'; }
+    method false-negative-number-measure($/) { make 'FalseNegativeNumber'; }
+    method false-negative-rate-measure($/) { make 'FalseNegativeRate'; }
+    method false-positive-examples-measure($/) { make 'FalsePositiveExamples'; }
+    method false-positive-number-measure($/) { make 'FalsePositiveNumber'; }
+    method false-positive-rate-measure($/) { make 'FalsePositiveRate'; }
+    method geometric-mean-probability-measure($/) { make 'GeometricMeanProbability'; }
+    method indeterminate-examples-measure($/) { make 'IndeterminateExamples'; }
+    method least-certain-examples-measure($/) { make 'LeastCertainExamples'; }
+    method likelihood-measure($/) { make 'Likelihood'; }
+    method log-likelihood-measure($/) { make 'LogLikelihood'; }
+    method matthews-correlation-coefficient-measure($/) { make 'MatthewsCorrelationCoefficient'; }
+    method mean-cross-entropy-measure($/) { make 'MeanCrossEntropy'; }
+    method mean-decision-utility-measure($/) { make 'MeanDecisionUtility'; }
+    method misclassified-examples-measure($/) { make 'MisclassifiedExamples'; }
+    method most-certain-examples-measure($/) { make 'MostCertainExamples'; }
+    method negative-predictive-value-measure($/) { make 'NegativePredictiveValue'; }
+    method perplexity-measure($/) { make 'Perplexity'; }
+    method precision-measure($/) { make 'Precision'; }
+    method probabilities-measure($/) { make 'Probabilities'; }
+    method probability-histogram-measure($/) { make 'ProbabilityHistogram'; }
+    method properties-measure($/) { make 'Properties'; }
+    method recall-measure($/) { make 'Recall'; }
+    method rejection-rate-measure($/) { make 'RejectionRate'; }
+    method reliability-data-measure($/) { make 'ReliabilityData'; }
+    method reliability-diagram-measure($/) { make 'ReliabilityDiagram'; }
+    method report-measure($/) { make 'Report'; }
+    method curve-measure($/) { make 'ROCCurve'; }
+    method scott-pi-measure($/) { make 'ScottPi'; }
+    method specificity-measure($/) { make 'Specificity'; }
+    method top-confusions-measure($/) { make 'TopConfusions'; }
+    method true-negative-examples-measure($/) { make 'TrueNegativeExamples'; }
+    method true-negative-number-measure($/) { make 'TrueNegativeNumber'; }
+    method true-positive-examples-measure($/) { make 'TruePositiveExamples'; }
+    method true-positive-number-measure($/) { make 'TruePositiveNumber'; }
+    method worst-classified-examples-measure($/) { make 'WorstClassifiedExamples'; }
 }
