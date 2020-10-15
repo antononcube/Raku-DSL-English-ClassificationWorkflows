@@ -30,6 +30,4 @@ ok $pCOMMAND.parse('remove data bottom outliers'),
 ok $pCOMMAND.parse('remove the data top outliers'),
         'remove the data top outliers';
 
-
-
 done-testing;
