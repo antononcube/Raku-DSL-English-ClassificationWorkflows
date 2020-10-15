@@ -8,28 +8,40 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
         does DSL::Shared::Roles::English::PipelineCommand {
     # Tokens
     token accuracy-noun { 'accuracy' }
+    token accuracies-noun { 'accuracies' }
+    token available-adjective { 'available' }
     token characteristic-noun { 'characteristic' }
     token characteristics-noun { 'characteristics' }
     token class-noun { 'class' }
+    token classes-noun { 'classes' }
+    token classification-noun { 'classification' }
     token classifier-noun { 'classifier' }
+    token classifiers-noun { 'classifiers' }
     token curve { 'curve' }
     token ensemble-noun { 'ensemble' }
+    token estimates-noun { 'estimates' }
     token fraction-noun { 'fraction' }
+    token importance-noun { 'importance' }
     token info-noun { 'info' }
     token information-noun { 'information' }
     token label-noun { 'label' }
+    token measurement-noun { 'measurement' }
     token measurements-noun { 'measurements' }
     token operating-adjective { 'operating' }
     token proportional-adjective { 'proportional' }
     token random-adjective { 'random' }
+    token ratio-noun { 'ratio' }
     token receiver-noun { 'receiver' }
     token reduce-verb { 'reduces' }
-    token ratio-noun { 'ratio' }
+    token results-noun { 'results' }
     token roc-noun { 'roc' }
     token rocs-noun { 'rocs' }
+    token shuffling-noun { 'shuffling' }
     token split-directive { 'split' | 'divide' | 'partition' }
     token split-verb { 'split' }
+    token test-verb { 'test' }
     token testing-adjective { 'testing' }
+    token threshold-noun { 'threshold' }
     token train-verb { 'train' }
     token training-adjective { 'training' }
     token validation-adjective { 'validation' }
