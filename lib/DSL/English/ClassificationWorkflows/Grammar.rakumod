@@ -52,8 +52,7 @@ grammar DSL::English::ClassificationWorkflows::Grammar
         <data-summary-command> |
         <dimension-reduction-command> |
         <make-classifier-command> |
-        <classifier-testing-command> |
-        <classifier-measurements-command> |
+        [ <classifier-measurements-command> || <classifier-testing-command> ] |
         <classifier-query-command> |
         <roc-plots-command>
     }
