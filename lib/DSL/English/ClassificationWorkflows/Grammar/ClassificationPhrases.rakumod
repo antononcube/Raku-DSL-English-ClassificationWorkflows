@@ -27,8 +27,8 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     token information-noun { 'information' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'information') }> }
     token label-noun { 'label' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'label') }> }
     token line-noun { 'line' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'line') }> }
-    token measurement-noun { 'measurement' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'measurement') }> }
-    token measurements-noun { 'measurements' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'measurements') }> }
+    token measurement-noun { 'measurement' | ([\w]+) <?{ $0.Str ne 'mesurements' and is-fuzzy-match( $0.Str, 'measurement') }> }
+    token measurements-noun { 'measurements' | ([\w]+) <?{ $0.Str ne 'mesurement' and is-fuzzy-match( $0.Str, 'measurements') }> }
     token operating-adjective { 'operating' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'operating') }> }
     token proportional-adjective { 'proportional' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'proportional') }> }
     token random-adjective { 'random' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'random') }> }
