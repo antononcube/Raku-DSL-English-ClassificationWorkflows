@@ -159,7 +159,7 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassifierMeasurements {
     token kappa-measure-word { 'kappa' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'kappa') }> }
     token least-measure-word { 'least' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'least') }> }
     token likelihood-measure-word { 'likelihood' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'likelihood') }> }
-    token log-measure-word { 'log' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'log') }> }
+    token log-measure-word { 'log' | 'lg' }
     token matrix-measure-word { 'matrix' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'matrix') }> }
     token matthews-measure-word { 'matthews' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'matthews') }> }
     token mean-measure-word { 'mean' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'mean') }> }
@@ -181,12 +181,12 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassifierMeasurements {
     token rejection-measure-word { 'rejection' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'rejection') }> }
     token reliability-measure-word { 'reliability' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'reliability') }> }
     token report-measure-word { 'report' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'report') }> }
-    token score-measure-word { 'score' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'score') }> }
-    token scott-measure-word { 'scott' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'scott') }> }
+    token score-measure-word { 'score' | ([\w]+) <?{ $0.Str ne 'scott' and is-fuzzy-match( $0.Str, 'score') }> }
+    token scott-measure-word { 'scott' | ([\w]+) <?{ $0.Str ne 'score' and is-fuzzy-match( $0.Str, 'scott') }> }
     token specificity-measure-word { 'specificity' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'specificity') }> }
     token time-measure-word { 'time' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'time') }> }
-    token top-measure-word { 'top' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'top') }> }
-    token true-measure-word { 'true' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'true') }> }
+    token top-measure-word { 'top' }
+    token true-measure-word { 'true' }
     token under-measure-word { 'under' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'under') }> }
     token utilities-measure-word { 'utilities' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'utilities') }> }
     token utility-measure-word { 'utility' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'utility') }> }
