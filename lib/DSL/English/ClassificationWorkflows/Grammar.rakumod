@@ -52,8 +52,9 @@ grammar DSL::English::ClassificationWorkflows::Grammar
         <data-summary-command> |
         <dimension-reduction-command> |
         <make-classifier-command> |
-        <classifier-query-command> |
+        <classifier-testing-command> |
         <classifier-measurements-command> |
+        <classifier-query-command> |
         <roc-plots-command>
     }
 
@@ -101,6 +102,7 @@ grammar DSL::English::ClassificationWorkflows::Grammar
     rule classifier-creation-opening { [ <create-directive> | <train-verb> ] <a-determiner>? }
     rule classifier-algorithm-spec { <classifier-method-spec> [ [ <.from-preposition> | <.of-preposition> ] <library-name> ]?}
     rule library-name { <mixed-quoted-variable-name> }
+    rule train-data-spec { [ <number-value> <.fraction-noun> | <percent-value> ] [ <.of-preposition> <.the-determiner>? <.available-adjective>? [ <records-phrase> | <data-noun> ]]}
 
     # Classifier info commands
     rule classifier-query-command { <classifier-info-simple> | <classifier-get-info-property> | <classifier-info> | <classifier-counts> }
@@ -120,6 +122,21 @@ grammar DSL::English::ClassificationWorkflows::Grammar
     rule classifier-measurements-openning { <display-directive>? <classifier-noun> <measurements-noun>? }
     rule classifier-measurements-simple{ <classifier-measurements-openning> <classifier-measurements-list>? }
     rule classifier-measurements-list { <wl-classifier-measurement>+ % <.list-separator> }
+
+    rule classifier-testing-command { <test-results> | <classifier-testing-simple> | <accuracies-by-variable-shuffling> }
+    rule classifier-testing-simple { [ <test-verb> [ <a-determiner> | <the-determiner> ] ]? <classifier-noun> }
+    rule test-results {
+       <.test-results-preamble> [ <.test-verb> <.results-noun> | <test-measures-list> ] [ <.with-preposition>? <.the-determiner>? <test-classification-threshold> ]? <.test-results-filler>? }
+    rule test-results-preamble { [ <compute-and-display> | <display-directive> ] <classifier-noun>? [ <measurement-noun> | <measurements-noun> ]? }
+    rule test-classification-threshold { <.classification-noun>? <.threshold-noun> <threshold=.number-value> [ <.of-preposition> | <.for-preposition> ] <class-label=.mixed-quoted-variable-name-or-wl-expr> }
+    rule test-results-filler { <for-preposition>? <the-determiner>? <classifier-noun> | <over-preposition>? <the-determiner>? <available-adjective>? <test-verb>? <data-noun> }
+    rule accuracies-by-variable-shuffling {
+        <.compute-and-display> <.the-determiner>? [
+        [ <.accuracies-noun> | <.accuracies-noun> ] <.with-preposition> [ <.variable-noun> | <.column-noun> ] <.shuffling-noun> |
+        [ <.variable-noun> | <.column-noun> ]? <.shuffling-noun> [ <.accuracy-noun> | <.accuracies-noun> ] |
+        <.variable-noun> <.importance-noun> <.estimates-noun>?
+        ] }
+    rule test-measures-list { <wl-classifier-measurement>+ % <.list-separator> }
 
     # ROC plot command
     rule roc-plots-command { <roc-diagrams-command> | <roc-curves-simple> }

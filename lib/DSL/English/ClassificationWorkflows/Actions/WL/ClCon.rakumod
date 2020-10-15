@@ -121,6 +121,30 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
         make $<wl-classifier-measurement>>>.made.join(', ');
     }
 
+    # Classifier testing command
+    method classifier-testing-command($/) { make $/.values[0].made; }
+    method classifier-testing-simple($/) {
+        make 'ClConClassifierMeasurements[] ==> ClConEchoValue[]';
+    }
+    method accuracies-by-variable-shuffling($/) { make 'ClConAccuracyByVariableShuffling[]'; }
+    method test-results($/) {
+        if $<test-measures-list> && $<test-classification-threshold> {
+            make 'ClConClassifierMeasurementsByThreshold[ {' ~ $<test-measures-list>.made ~ '}, ' ~ $<test-classification-threshold>.made ~ ' ] ==> ClConEchoValue[]';
+        } elsif $<test-classification-threshold> {
+            make 'ClConClassifierMeasurementsByThreshold[ "Precision", ' ~ $<test-classification-threshold>.made ~ ' ] ==> ClConEchoValue[]';
+        } elsif $<test-measures-list> {
+            make 'ClConClassifierMeasurements[ {' ~ $<test-measures-list>.made ~ '} ] ==> ClConEchoValue[]';
+        } else {
+            make 'ClConClassifierMeasurements[] ==> ClConEchoValue[]';
+        }
+    }
+    method test-classification-threshold($/){
+        make $<class-label>.made ~ ' -> ' ~ $<threshold>.made;
+    }
+    method test-measures-list($/) {
+        make $<wl-classifier-measurement>>>.made.join(', ');
+    }
+
     # ROC plots command
     method roc-plots-command($/) { make $/.values[0].made; }
     method roc-curves-simple($/){ make 'ClConROCPlot[]'; }
