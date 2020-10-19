@@ -52,8 +52,10 @@ grammar DSL::English::ClassificationWorkflows::Grammar
         <data-summary-command> |
         <dimension-reduction-command> |
         <make-classifier-command> |
+        <classifier-ensemble-creation-command> |
         [ <classifier-query-command> || <classifier-measurements-command> || <classifier-testing-command> ] |
-        <roc-plots-command>
+        <roc-plots-command> |
+        <data-outliers-command>
     }
 
     # Load data
@@ -65,10 +67,10 @@ grammar DSL::English::ClassificationWorkflows::Grammar
     # Split data command
     rule split-data-command { <split-data-spec> | <split-data-simple> }
     rule split-data-phrase { <.split-directive> <.the-determiner>? <.data> }
-    rule split-data-simple { <.split-data-phrase> [ <.with-preposition> <.the-determiner>? <.fraction-noun>? <split-fraction=.number-value> ]? }
+    rule split-data-simple { <.split-data-phrase> [ <.with-preposition> <.the-determiner>? [ <.fraction-noun> | <.ratio-noun> ]? <split-fraction=.number-value> ]? }
     rule split-data-spec { <.split-data-phrase> <.with-preposition> <split-data-element-list> }
     rule split-data-element-list { <split-data-element>+ % <.list-separator> }
-    rule split-data-element { <split-training-fraction> | <split-testing-fraction> | <split-validation-fraction> | <split-method> }
+    rule split-data-element { <split-training-fraction> | <split-validation-fraction> | <split-method> }
     rule split-training-fraction { <.training-adjective>? <.data-noun>? <.fraction-noun>? <number-value> }
     rule split-validation-fraction { <.validation-adjective> <.data-noun>? <.fraction-noun>? <number-value> }
     rule split-method { <.method-noun> [ <.class-noun>? <.label-noun>? <proportional-adjective> | <random-adjective> ] }
@@ -83,13 +85,14 @@ grammar DSL::English::ClassificationWorkflows::Grammar
     rule dimension-reduction-simple { <reduce-dimension-phrase> }
 
     # Make classifier command
-    rule make-classifier-command { <make-classifier-simple> | <make-classifier-thorough-command> }
+    rule make-classifier-command { <make-classifier-simple-command> | <make-classifier-thorough-command> }
 
     ## Simple classifier creation
-    rule make-classifier-simple {
-        <.create-directive> <.a-determiner>? <.classifier-noun> <.using-preposition>? <classifier-method-spec>? |
-        <.create-directive> <.a-determiner>? <classifier-method-spec> <.classifier-noun> }
+    rule make-classifier-simple-command {
+        <.create-directive> <.a-determiner>? <.classifier-noun> <.using-preposition>? <.the-determiner>? <.classifier-method-phrase>? <classifier-method-spec>? |
+        <.create-directive> <.a-determiner>? <classifier-method-spec> <.classifier-method-phrase>? }
     rule classifier-method-spec { <wl-classifier-name> | <mixed-quoted-variable-name> }
+    rule classifier-method-phrase { <classifier-noun> | <method-noun> | <algorithm-noun> }
 
     ## More thorough classifier creation
     rule make-classifier-thorough-command {
@@ -144,4 +147,14 @@ grammar DSL::English::ClassificationWorkflows::Grammar
     rule list-line-roc-diagram-phrase { <list-noun>? <line-noun> <roc-curve-phrase> <diagram-phrase> }
     rule list-line-diagram-phrase { <list-noun>? <line-noun> <diagram-phrase> | 'ListLinePlot' }
     rule roc-functions-list { <roc-function>+ % [ <.list-separator> | <.versus-preposition> ] }
+
+    # Data outliers command
+    rule data-outliers-command { <find-outliers-command> | <remove-outliers-command> | <show-outliers-command> }
+    rule find-outliers-command { <find-outliers-per-class> | <find-outliers-all> }
+    rule find-outliers-all { <find-directive> <outliers-spec> }
+    rule find-outliers-per-class { [ <.find-directive> | <.compute-and-display>] <outliers-spec> <.per-preposition> <.class-label-phrase> }
+    rule remove-outliers-command { <remove-directive> <outliers-spec>}
+    rule show-outliers-command { <display-directive> <outliers-spec> }
+    rule outliers-spec { <.the-determiner>? <.data-noun>? <outliers-type>? <.outliers-noun> }
+    rule outliers-type { <top-noun> | <bottom-noun> | <largest-adjective> | <smallest-adjective> | <all-determiner> }
 }
