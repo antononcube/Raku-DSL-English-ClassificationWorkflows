@@ -33,6 +33,7 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     token ratio-noun { 'ratio' }
     token receiver-noun { 'receiver' }
     token reduce-verb { 'reduces' }
+    token resampling-noun { 'resampling' }
     token results-noun { 'results' }
     token roc-noun { 'roc' }
     token rocs-noun { 'rocs' }
@@ -47,6 +48,7 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     token validation-adjective { 'validation' }
 
     # Rules
+    rule class-label-phrase { <class-noun> <label-noun>? | <label-noun> }
     rule classifier-ensemble-phrase { <classifier-noun> <ensemble-noun> }
     rule classifier-info-phrase { <classifier-noun> [ <info-noun> | <information-noun> ] }
     rule reduce-dimension-phrase { <reduce-verb> <dimension> }

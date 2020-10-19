@@ -35,6 +35,7 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     token ratio-noun { 'ratio' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'ratio') }> }
     token receiver-noun { 'receiver' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'receiver') }> }
     token reduce-verb { 'reduces' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'reduces') }> }
+    token resampling-noun { 'resampling' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'resampling') }>}
     token results-noun { 'results' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'results') }>}
     token roc-noun { 'roc' | ([\w]+) <?{ $0.Str ne 'rocs' and is-fuzzy-match( $0.Str, 'roc') }> }
     token rocs-noun { 'rocs' | ([\w]+) <?{ $0.Str ne 'roc' and is-fuzzy-match( $0.Str, 'roc') }> }
@@ -49,6 +50,7 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     token validation-adjective { 'validation' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'validation') }> }
 
     # Rules
+    rule class-label-phrase { <class-noun> <label-noun>? | <label-noun> }
     rule classifier-ensemble-phrase { <classifier-noun> <ensemble-noun> }
     rule classifier-info-phrase { <classifier-noun> [ <info-noun> | <information-noun> ] }
     rule reduce-dimension-phrase { <reduce-verb> <dimension> }
