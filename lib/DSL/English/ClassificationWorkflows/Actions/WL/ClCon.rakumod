@@ -148,16 +148,34 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
     # ROC plots command
     method roc-plots-command($/) { make $/.values[0].made; }
     method roc-curves-simple($/){ make 'ClConROCPlot[]'; }
-    method roc-diagrams-command($/) { make 'ClConROCPlot[ ' ~ $/.values[0].made ~ ' ]'; }
+    method roc-diagrams-command($/) {
+        if $<roc-functions-list> {
+            make 'ClConROCPlot[ ' ~ $/.values[0].made ~ ' ]';
+        } else {
+            make 'ClConROCPlot[]';
+        }
+    }
     method roc-functions-list($/) { make $<roc-function>>>.made.join(', ');}
+
+    # Data outliers command
+    method data-outliers-command($/) { make $/.values[0].made; }
+    method find-outliers-command($/) { make $/.values[0].made; }
+    method remove-outliers-command($/) { make 'ClConRemoveOutliers[]'; }
+    method show-outliers-command($/) { make 'ClConOutlierPosition[ ' ~ $<outliers-spec>.made ~ ' ] ==> ClConEchoValue[]'; }
+    method outliers-spec($/) { make '"OutlierIdentifierParameters" -> ' ~ outlierFunctonFromSpec( $<outliers-type>.made ); }
+    method outliers-type($/) { make $/.values[0].Str; }
+    method find-outliers-all($/) { make 'ClConOutlierPosition[ ' ~ $<outliers-spec>.made ~ ' ]'; }
+    method find-outliers-per-class($/) { make 'ClConOutlierPosition[ '~ $<outliers-spec>.made ~ ' ]'; }
 
     # WL classifier names
     method wl-classifier-name($/) { make '"' ~ $/.values[0].made ~ '"'; }
     method decision-tree-classifier-name($/) { make 'DecisionTree'; }
     method gradient-boosted-trees-classifier-name($/) { make 'GradientBoostedTrees'; }
     method logistic-regression-classifier-name($/) { make 'LogisticRegression'; }
+    method naive-bayes-classifier-name($/) { make 'NaiveBayes'; }
     method nearest-neighbors-classifier-name($/) { make 'NearestNeighbors'; }
     method neural-network-classifier-name($/) { make 'NeuralNetwork'; }
+    method random-forest-classifier-name($/) { make 'RandomForest'; }
     method support-vector-machine-classifier-name($/) { make 'SupportVectorMachine' };
 
     # Pipeline command overwrites
@@ -177,4 +195,15 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
 
     ## Echo messages
     method echo-command($/) { make 'ClConEcho[ ' ~ $<echo-message-spec>.made ~ ' ]'; }
+}
+
+sub outlierFunctonFromSpec( Str $spec ) {
+    return
+            do given $spec {
+                when 'top'      { 'TopOutliers@*SPLUSQuartileIdentifierParameters' }
+                when 'largest'  { 'TopOutliers@*SPLUSQuartileIdentifierParameters' }
+                when 'bottom'   { 'BottomOutliers@*SPLUSQuartileIdentifierParameters' }
+                when 'smallest' { 'BottomOutliers@*SPLUSQuartileIdentifierParameters' }
+                default         { 'SPLUSQuartileIdentifierParameters' }
+            };
 }
