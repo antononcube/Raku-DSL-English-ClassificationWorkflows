@@ -86,7 +86,7 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
 
     # Make classifier command
     method make-classifier-command($/) { make $/.values[0].made; }
-    method make-classifier-simple($/){
+    method make-classifier-simple-command($/){
         if $<classifier-method-spec> {
             make 'ClConMakeClassifier[ ' ~ $<classifier-method-spec>.made ~ ' ]';
         } else {
