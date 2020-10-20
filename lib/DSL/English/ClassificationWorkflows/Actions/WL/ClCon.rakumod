@@ -49,6 +49,7 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
     method load-data-table($/) { make 'ClConUnit[ ExampleData[' ~ $<data-location-spec>.made ~ '] ]'; }
     method data-location-spec($/) { make '\'' ~ $/.Str ~ '\''; }
     method use-data-table($/) { make 'ClConUnit[ ' ~ $<variable-name>.made ~ ' ]'; }
+    method use-classifier-object($/) { make $<variable-name>.made; }
 
     # Split command
 	method split-data-command($/) { make $/.values[0].made; }
