@@ -63,7 +63,7 @@ grammar DSL::English::ClassificationWorkflows::Grammar
     rule data-location-spec { <dataset-name> }
     rule load-data-table { <.load-data-directive> <data-location-spec> }
     rule use-data-table { [ <.use-verb> | <.using-preposition> ] <.the-determiner>? <.data>? <variable-name> }
-    rule use-classifier-object { [<.use-verb> | <.using-preposition>] <.the-determiner>? <.classifier-object-phrase>? <variable-name> }
+    rule use-classifier-object { [<.use-verb> | <.using-preposition>] <.the-determiner>? <.classifier-object-phrase> <variable-name> }
 
     # Split data command
     rule split-data-command { <split-data-spec> | <split-data-simple> }
