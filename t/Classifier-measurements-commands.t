@@ -3,7 +3,7 @@ use lib 'lib';
 use DSL::English::ClassificationWorkflows::Grammar;
 use Test;
 
-plan 7;
+plan 8;
 
 # Shortcut
 my $pCOMMAND = DSL::English::ClassificationWorkflows::Grammar;
