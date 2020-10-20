@@ -95,6 +95,38 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
     }
     method classifier-method-spec($/) { make $/.values[0].made; }
 
+    # Make classifier ensemble command
+    method classifier-ensemble-creation-command($/) { make $/.values[0].made; }
+    method ensemble-by-single-method-command($/) {
+        my $methodPart;
+        my $resamplingPart;
+
+        if $<ensemble-creation-num> {
+            $methodPart = $<ensemble-creation-num>.made;
+        } elsif $<ensemble-creation-simple> {
+            $methodPart = $<ensemble-creation-simple>.made
+        }
+
+        $resamplingPart = $<resampling-spec> ?? $<resampling-spec>.made !!  '"samplingFunction" -> "RandomSample", "samplingFraction" -> 0.95';
+
+        make 'ClConMakeClassifier[ <| ' ~ $methodPart ~ ', ' ~ $resamplingPart ~ ' |> ]';
+    }
+    method ensemble-creation-simple($/) {
+        make '"method" -> ' ~ $<classifier-method-spec>.made ~ ', "numberOfClassifiers" -> 3';
+    }
+    method ensemble-creation-num($/) {
+        make '"method" -> ' ~ $<classifier-method-spec>.made ~ ', "numberOfClassifiers" -> ' ~ $<number-of-classifiers>.made;
+    }
+    method resampling-spec($/) {
+        my $rfunc = $<resampling-function> ?? $<resampling-function>.made !! '"RandomSample"';
+        my $rfrac = $<resampling-fraction> ?? $<resampling-fraction>.made !! '0.95';
+
+        make '"samplingFunction" -> ' ~ $rfunc ~ ', "samplingFraction" -> ' ~ $rfrac;
+    }
+    method resampling-function($/) { '"' ~ $/.Str ~ '"'; }
+    method number-of-classifiers($/) { make $/.values[0].made; }
+    method resampling-fraction-spec($/) { make $/.values[0].made; }
+
     # Classifier info command
     method classifier-query-command($/) { make $/.values[0].made; }
     method classifier-info-simple($/){ make 'ClConEchoFunctionContext[ ClassifierInformation[#classifier]& ]'; }
