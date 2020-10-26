@@ -55,7 +55,7 @@ class DSL::English::ClassificationWorkflows::Actions::WL::System
 	method split-data-command($/) { make $/.values[0].made; }
     method split-data-simple($/) {
         my $sfr = $<split-fraction> ?? $<split-fraction>.made !! '0.75';
-        make '{dataTraining, dataTesting} = TakeDrop[ data, Floor[ ' ~ $sfr ~ ' * Length[data] ] ]';
+        make '{dataTraining, dataTesting} = TakeDrop[ RandomSample[data], Floor[ ' ~ $sfr ~ ' * Length[data] ] ]';
     }
 
     method split-data-spec($/) {
@@ -171,7 +171,7 @@ class DSL::English::ClassificationWorkflows::Actions::WL::System
         } elsif $<test-classification-threshold> {
             make 'Echo @ ClassifierMeasurementsByThreshold[ "Precision", ' ~ $<test-classification-threshold>.made ~ ' ]';
         } elsif $<test-measures-list> {
-            make 'Echo @ ClassifierMeasurements[ {' ~ $<test-measures-list>.made ~ '} ]';
+            make 'Echo @ ClassifierMeasurements[clObj, dataTesting, {' ~ $<test-measures-list>.made ~ '} ]';
         } else {
             make 'Echo @ ClassifierMeasurements[clObj, dataTesting]';
         }
