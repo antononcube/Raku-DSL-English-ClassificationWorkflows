@@ -29,37 +29,39 @@
 =end comment
 
 use v6;
+
 use DSL::English::ClassificationWorkflows::Grammar;
-
 use DSL::Shared::Actions::English::WL::PipelineCommand;
-use DSL::Shared::Actions::WL::CommonStructures;
-use DSL::Shared::Actions::WL::PredicateSpecification;
-
-unit module DSL::English::ClassificationWorkflows::Actions::WL::System;
+use DSL::English::ClassificationWorkflows::Actions::WL::ROCFunctions;
+use DSL::English::ClassificationWorkflows::Actions::WL::ClassifierProperties;
+use DSL::English::ClassificationWorkflows::Actions::WL::ClassifierMeasurements;
 
 class DSL::English::ClassificationWorkflows::Actions::WL::System
-        is DSL::Shared::Actions::WL::PredicateSpecification
-        is DSL::Shared::Actions::WL::CommonStructures {
+        is DSL::Shared::Actions::English::WL::PipelineCommand
+        is DSL::English::ClassificationWorkflows::Actions::WL::ROCFunctions
+        is DSL::English::ClassificationWorkflows::Actions::WL::ClassifierProperties
+        is DSL::English::ClassificationWorkflows::Actions::WL::ClassifierMeasurements {
 
     method TOP($/) { make $/.values[0].made; }
 
     # Load data
     method data-load-command($/) { make $/.values[0].made; }
-    method load-data-table($/) { make 'ClConUnit[ ExampleData[' ~ $<data-location-spec>.made ~ '] ]'; }
+    method load-data-table($/) { make 'data = ExampleData @ ' ~ $<data-location-spec>.made; }
     method data-location-spec($/) { make '\'' ~ $/.Str ~ '\''; }
-    method use-data-table($/) { make 'ClConUnit[ ' ~ $<variable-name>.made ~ ' ]'; }
+    method use-data-table($/) { make 'data = ClConToNormalClassifierData @ ' ~ $<variable-name>.made; }
+    method use-classifier-object($/) { make 'clObj = ' ~ $<variable-name>.made; }
 
     # Split command
 	method split-data-command($/) { make $/.values[0].made; }
     method split-data-simple($/) {
-        if $<split-fraction> {
-          make 'ClConSplitData[ ' ~ $<split-fraction>.made ~ ' ]';
-        } else {
-          make 'ClConSplitData[ 0.75 ]';
-        }
+        my $sfr = $<split-fraction> ?? $<split-fraction>.made !! '0.75';
+        make '{dataTraining, dataTesting} = TakeDrop[ data, Floor[ ' ~ $sfr ~ ' * Length[data] ] ]';
     }
 
-    method split-data-spec($/) { make 'ClConSplitData[ ' ~ $<split-data-element-list>.made ~ ' ]'; }
+    method split-data-spec($/) {
+        warn 'Multiple argument data splitting is not implemented.';
+        make '{dataTraining, dataTesting} = TakeDrop[ data, Floor[ 0.75 * Length[data] ] ]';
+    }
 
     method split-data-element-list($/) { make $<split-data-element>>>.made.join(', '); }
     method split-data-element($/) { make $/.values[0].made; }
@@ -77,36 +79,179 @@ class DSL::English::ClassificationWorkflows::Actions::WL::System
 
     # Data summary command
     method data-summary-command($/) { make $/.values[0].made; }
-    method data-summary-simple($/){ make 'ClConEchoDataSummary[]'; }
+    method data-summary-simple($/){
+        make 'Echo @ Map[ResourceFunction["RecordsSummary"][#, Thread -> True] &, <| "data" -> data, "dataTraining" -> dataTraining, "dataTesting" -> dataTesting|>]';
+    }
 
     # Reduce dimension command
     method reduce-dimension-command($/) { make $/.values[0].made; }
-    method reduce-dimension-simple($/){ make 'ClConReduceDimension[]'; }
+    method reduce-dimension-simple($/){
+        %.properties<DimensionReduction> = True;
+        make 'feFunc = FeatureExtract[dataTraining]; ' ~ "\n" ~ 'dataTraining = feFunc /@ trainingData';
+    }
 
     # Make classifier command
     method make-classifier-command($/) { make $/.values[0].made; }
-    method make-classifier-simple($/){ make 'ClConMakeClassifier[]'; }
+    method make-classifier-simple-command($/){
+        if $<classifier-method-spec> {
+            make 'clObj = Classify[ dataTraining, Method -> ' ~ $<classifier-method-spec>.made ~ ' ]';
+        } else {
+            make 'clObj = Classify[ dataTraining ]';
+        }
+    }
+    method classifier-method-spec($/) { make $/.values[0].made; }
+
+    # Make classifier ensemble command
+    method classifier-ensemble-creation-command($/) { make $/.values[0].made; }
+    method ensemble-by-single-method-command($/) {
+        my $methodPart;
+        my $resamplingPart;
+
+        if $<ensemble-creation-num> {
+            $methodPart = $<ensemble-creation-num>.made;
+        } elsif $<ensemble-creation-simple> {
+            $methodPart = $<ensemble-creation-simple>.made
+        }
+
+        $resamplingPart = $<resampling-spec> ?? $<resampling-spec>.made !!  '"samplingFunction" -> "RandomSample", "samplingFraction" -> 0.95';
+
+        make 'clObj = EnsembleClassify[ dataTraining, <| ' ~ $methodPart ~ ', ' ~ $resamplingPart ~ ' |> ]';
+    }
+    method ensemble-creation-simple($/) {
+        make '"method" -> ' ~ $<classifier-method-spec>.made ~ ', "numberOfClassifiers" -> 3';
+    }
+    method ensemble-creation-num($/) {
+        make '"method" -> ' ~ $<classifier-method-spec>.made ~ ', "numberOfClassifiers" -> ' ~ $<number-of-classifiers>.made;
+    }
+    method resampling-spec($/) {
+        my $rfunc = $<resampling-function> ?? $<resampling-function>.made !! '"RandomSample"';
+        my $rfrac = $<resampling-fraction> ?? $<resampling-fraction>.made !! '0.95';
+
+        make '"samplingFunction" -> ' ~ $rfunc ~ ', "samplingFraction" -> ' ~ $rfrac;
+    }
+    method resampling-function($/) { '"' ~ $/.Str ~ '"'; }
+    method number-of-classifiers($/) { make $/.values[0].made; }
+    method resampling-fraction-spec($/) { make $/.values[0].made; }
 
     # Classifier info command
-    method classifier-info-command($/) { make $/.values[0].made; }
-    method classifier-info-simple($/){ make 'CClConEchoFunctionContext[ClassifierInformation[#classifier] &]'; }
+    method classifier-query-command($/) { make $/.values[0].made; }
+    method classifier-info-simple($/){ make 'Echo @ ClassifierInformation[clObj]'; }
+    method classifier-get-info-property($/){ make 'Echo @ Association @ Map[ Function[{pr}, pr -> Information[clObj, pr]], { ' ~ $/.values[0].made ~ '}]'; }
+    method classifier-property-list($/) { make $<wl-classifier-info-property>>>.made.join(', '); }
+
+    method classifier-counts($){ make 'Echo[ Length @ clObj ]'; }
+
+    method classifier-info-property-name($/) { make $/.values[0].made; }
+    method accuracy-property($/) { make 'Accuracy'; }
+    method training-time-property($/) { make 'TrainingTime'; }
+    method number-of-classes-property($/) { make 'ClassLabels'; }
 
     # Classifier measurements command
     method classifier-measurements-command($/) { make $/.values[0].made; }
-    method classifier-measurements-simple($/){ make 'ClConClassifierMeasurements[]'; }
+    method classifier-measurements-simple($/){
+        if $<classifier-measurements-list> {
+            make 'Echo @ ClassifierMeasurements[clObj, dataTesting, {' ~ $<classifier-measurements-list>.made ~ '}]';
+        } else {
+            make 'Echo @ ClassifierMeasurements[clObj, dataTesting]';
+        }
+    }
+    method classifier-measurements-list($/) {
+        make $<wl-classifier-measurement>>>.made.join(', ');
+    }
 
-    # ROC curves command
-    method roc-curves-command($/) { make $/.values[0].made; }
+    # Classifier testing command
+    method classifier-testing-command($/) { make $/.values[0].made; }
+    method classifier-testing-simple($/) {
+        make 'Echo @ ClassifierMeasurements[clObj, dataTesting, {"Accuracy", "Precision", "Recall"}]';
+    }
+    method accuracies-by-variable-shuffling($/) { make 'ClConAccuracyByVariableShuffling[]'; }
+    method test-results($/) {
+        if $<test-measures-list> && $<test-classification-threshold> {
+            make 'Echo @ ClassifierMeasurementsByThreshold[ {' ~ $<test-measures-list>.made ~ '}, ' ~ $<test-classification-threshold>.made ~ ' ]';
+        } elsif $<test-classification-threshold> {
+            make 'Echo @ ClassifierMeasurementsByThreshold[ "Precision", ' ~ $<test-classification-threshold>.made ~ ' ]';
+        } elsif $<test-measures-list> {
+            make 'Echo @ ClassifierMeasurements[ {' ~ $<test-measures-list>.made ~ '} ]';
+        } else {
+            make 'Echo @ ClassifierMeasurements[clObj, dataTesting]';
+        }
+    }
+    method test-classification-threshold($/){
+        make $<class-label>.made ~ ' -> ' ~ $<threshold>.made;
+    }
+    method test-measures-list($/) {
+        make $<wl-classifier-measurement>>>.made.join(', ');
+    }
+
+    # ROC plots command
+    method roc-plots-command($/) { make $/.values[0].made; }
     method roc-curves-simple($/){ make 'ClConROCPlot[]'; }
+    method roc-diagrams-command($/) {
+        if $<roc-functions-list> {
+            make 'Echo @ ROCPlot[ ' ~ $/.values[0].made ~ ' ]';
+        } else {
+            make 'Echo @ ROCPlot[]';
+        }
+    }
+    method roc-functions-list($/) { make $<roc-function>>>.made.join(', ');}
 
-    # Pipeline command
-    method pipeline-command($/) { make $/.values[0].made; }
-    method take-pipeline-value($/) { make 'obj'; }
+    # Data outliers command
+    method data-outliers-command($/) { make $/.values[0].made; }
+    method find-outliers-command($/) { make $/.values[0].made; }
+    method remove-outliers-command($/) { make 'Echo["Remoming outliers is not implemented"]'; }
+    method show-outliers-command($/) { make 'Echo @ OutlierPosition[ trainDaat, ' ~ $<outliers-spec>.made ~ ' ]'; }
+    method outliers-spec($/) { make '"OutlierIdentifierParameters" -> ' ~ outlierFunctonFromSpec( $<outliers-type>.made ); }
+    method outliers-type($/) { make $/.values[0].Str; }
+    method find-outliers-all($/) { make 'Echo @ OutlierPosition[ dataTraining, ' ~ $<outliers-spec>.made ~ ' ]'; }
+    method find-outliers-per-class($/) { make 'Echo @ OutlierPosition[ dataTraining, '~ $<outliers-spec>.made ~ ' ]'; }
+
+    # WL classifier names
+    method wl-classifier-name($/) { make '"' ~ $/.values[0].made ~ '"'; }
+    method decision-tree-classifier-name($/) { make 'DecisionTree'; }
+    method gradient-boosted-trees-classifier-name($/) { make 'GradientBoostedTrees'; }
+    method logistic-regression-classifier-name($/) { make 'LogisticRegression'; }
+    method naive-bayes-classifier-name($/) { make 'NaiveBayes'; }
+    method nearest-neighbors-classifier-name($/) { make 'NearestNeighbors'; }
+    method neural-network-classifier-name($/) { make 'NeuralNetwork'; }
+    method random-forest-classifier-name($/) { make 'RandomForest'; }
+    method support-vector-machine-classifier-name($/) { make 'SupportVectorMachine' };
+
+    # Pipeline command overwrites
+    ## Object
+    method assign-pipeline-object-to($/) {
+        make $/.values[0].made ~ ' = ' ~ makeContextSpec( %.properties );
+    }
+
+    ## Value
+    method assign-pipeline-value-to($/) { make 'ClConAssignValueTo[ ' ~ $/.values[0].made ~ ' ]'; }
+    method take-pipeline-value($/) { make 'ClConTakeValue[]'; }
     method echo-pipeline-value($/) { make 'ClConEchoValue[]'; }
+    method echo-pipeline-funciton-value($/) { make 'ClConEchoFunctionValue[ ' ~ $<pipeline-function-spec>.made ~ ' ]'; }
 
-    method echo-command($/) { make 'ClConEcho[ ' ~ $<echo-message-spec>.made ~ ' ]'; }
-    method echo-message-spec($/) { make $/.values[0].made; }
-    method echo-words-list($/) { make '"' ~ $<variable-name>>>.made.join(' ') ~ '"'; }
-    method echo-variable($/) { make $/.Str; }
-    method echo-text($/) { make $/.Str; }
+    ## Context
+    method take-pipeline-context($/) { make makeContextSpec( %.properties ); }
+    method echo-pipeline-context($/) { make 'Echo @ ' ~ makeContextSpec( %.properties ); }
+    method echo-pipeline-function-context($/) { make $<pipeline-function-spec>.made ~ ' @ ' ~ makeContextSpec( %.properties ); }
+
+    ## Echo messages
+    method echo-command($/) { make 'Echo[ ' ~ $<echo-message-spec>.made ~ ' ]'; }
+}
+
+sub outlierFunctonFromSpec( Str $spec ) {
+    return
+            do given $spec {
+                when 'top'      { 'TopOutliers@*SPLUSQuartileIdentifierParameters' }
+                when 'largest'  { 'TopOutliers@*SPLUSQuartileIdentifierParameters' }
+                when 'bottom'   { 'BottomOutliers@*SPLUSQuartileIdentifierParameters' }
+                when 'smallest' { 'BottomOutliers@*SPLUSQuartileIdentifierParameters' }
+                default         { 'SPLUSQuartileIdentifierParameters' }
+            };
+}
+
+sub makeContextSpec( %props ) {
+    my $res = '"data" -> data, "dataTraining" -> dataTraining, "dataTesting" -> dataTesting, "classifier" -> clObj';
+    if %props<DimensionReduction>:exists {
+        $res = $res ~ ', "featureExtractor" -> feFunc'
+    }
+    return '<| ' ~ $res ~ ' |>';
 }
