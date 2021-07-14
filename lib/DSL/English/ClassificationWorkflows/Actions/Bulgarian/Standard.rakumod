@@ -39,7 +39,14 @@ unit module DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard;
 class DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard
         is DSL::Shared::Actions::CommonStructures {
 
+    # Top
     method TOP($/) { make $/.values[0].made; }
+
+    # workflow-command-list
+    method workflow-commands-list($/) { make $/.values>>.made.join(";\n"); }
+
+    # workflow-command
+    method workflow-command($/) { make $/.values[0].made; }
 
 	# Load data
 	method data-load-command($/) { make $/.values[0].made; }
@@ -83,7 +90,7 @@ class DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard
 
     # Make classifier command
     method make-classifier-command($/) { make $/.values[0].made; }
-    method make-classifier-simple($/){ make 'тренирай класификатора'; }
+    method make-classifier-simple-command($/){ make 'тренирай класификатора'; }
 
     # Classifier info command
     method classifier-info-command($/) { make $/.values[0].made; }
