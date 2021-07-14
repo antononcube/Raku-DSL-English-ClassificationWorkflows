@@ -42,7 +42,14 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
         is DSL::English::ClassificationWorkflows::Actions::WL::ClassifierProperties
         is DSL::English::ClassificationWorkflows::Actions::WL::ClassifierMeasurements {
 
+    # Top
     method TOP($/) { make $/.values[0].made; }
+
+    # workflow-command-list
+    method workflow-commands-list($/) { make $/.values>>.made.join(" ==>\n"); }
+
+    # workflow-command
+    method workflow-command($/) { make $/.values[0].made; }
 
     # Load data
     method data-load-command($/) { make $/.values[0].made; }

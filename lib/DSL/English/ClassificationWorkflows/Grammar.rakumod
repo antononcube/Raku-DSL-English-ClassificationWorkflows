@@ -44,8 +44,15 @@ grammar DSL::English::ClassificationWorkflows::Grammar
         does DSL::English::ClassificationWorkflows::Grammar::ROCFunctions
         does DSL::English::ClassificationWorkflows::Grammar::ClassifierProperties
         does DSL::English::ClassificationWorkflows::Grammar::ClassifierMeasurements {
+
     # TOP
-    rule TOP {
+    rule TOP { <workflow-command> }
+
+    # Workflow commands list
+    rule workflow-commands-list { [ [ <.ws>? <workflow-command> <.ws>? ]+ % <.list-of-commands-separator> ] <.list-of-commands-separator>? }
+
+    # Workflow command
+    rule workflow-command {
         <pipeline-command> |
         <data-load-command> |
         <split-data-command> |
