@@ -28,6 +28,7 @@ my %targetToAction =
     "WL-ClCon"         => DSL::English::ClassificationWorkflows::Actions::WL::ClCon,
     "WL"               => DSL::English::ClassificationWorkflows::Actions::WL::System,
     "WL-System"        => DSL::English::ClassificationWorkflows::Actions::WL::System,
+    "WL::System"       => DSL::English::ClassificationWorkflows::Actions::WL::System,
     "Bulgarian"        => DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard;
 
 my %targetToSeparator{Str} =
@@ -38,6 +39,7 @@ my %targetToSeparator{Str} =
     "WL"               => ";\n",
     "WL-ClCon"         => " ==>\n",
     "WL-System"        => ";\n",
+    "WL::System"       => ";\n",
     "Bulgarian"        => "\n";
 
 
