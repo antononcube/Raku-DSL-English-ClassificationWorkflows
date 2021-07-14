@@ -2,9 +2,32 @@ use lib './lib';
 use lib '.';
 use DSL::English::ClassificationWorkflows;
 
-#say DSL::English::ClassificationWorkflows::Grammar.parse( 'split data with fraction 0.8' );
+# Shortcuts
+#-----------------------------------------------------------
+my $pCOMMAND = DSL::English::ClassificationWorkflows::Grammar;
 
-say "=" x 10;
+sub clcon-parse( Str:D $command, Str:D :$rule = 'TOP' ) {
+    $pCOMMAND.parse($command, :$rule);
+}
+
+sub clcon-interpret( Str:D $command,
+                   Str:D:$rule = 'TOP',
+                   :$actions = DSL::English::ClassificationWorkflows::Actions::WL::ClCon.new) {
+        $pCOMMAND.parse( $command, :$rule, :$actions ).made;
+}
+
+#----------------------------------------------------------
+
+
+#use Grammar::Tracer;
+#say $pCOMMAND.parse( 'create classifier ensemble of 5 RandomForest classifiers', rule => 'ensemble-creation-num');
+#say $pCOMMAND.parse( 'create classifier ensemble with 5 of RandomForest classifiers', rule => 'classifier-ensemble-creation-command');
+#say $pCOMMAND.parse( 'create classifier ensemble with 5 of RandomForest classifiers using 0.7 resampling', rule => 'classifier-ensemble-creation-command');
+#say $pCOMMAND.parse( 'create classifier ensemble with 5 of RandomForest classifiers using 70 % resampling', rule => 'classifier-ensemble-creation-command');
+#say $pCOMMAND.subparse( 'split data with ratio 0.8 and with label proportional method');
+
+
+say "=" x 60;
 
 #my $commands = '
 #DSL TARGET WL-ClCon;
@@ -16,28 +39,57 @@ say "=" x 10;
 #show roc plots of TPR and FPR;
 #assign pipeline object to clObj120';
 
-my $commands = '
+#my $commands = '
+#use dfTitanic;
+#split data with fraction 0.8, method class label proportional;
+#make a gradient boosted trees classifier;
+#show top confusions, misclassified examples, MeanCrossEntropy for the classifier;
+#show measurements test results over the available test data;
+#show LeastCertainExamples;
+#compute classifier measurements Recall by threshold 0.3 for "died" over available test data;
+#test the classifier;
+#compute and show variable importance estimates;
+#';
+
+#my @testCommands = (
+#'use classifier object clObj;
+#split data with ratio 0.8 using label proportional method;
+#create an ensemble using 15 random forest classifiers;
+#show classifier misclassified examples and least certain examples'
+#);
+
+my @testCommands = (
+'DSL MODULE ClCon;
 use dfTitanic;
-split data with fraction 0.8, method class label proportional;
-make a gradient boosted trees classifier;
-show top confusions, misclassified examples, MeanCrossEntropy for the classifier;
-show measurements test results over the available test data;
-show LeastCertainExamples;
-compute classifier measurements Recall by threshold 0.3 for "died" over available test data;
-test the classifier;
-compute and show variable importance estimates;
-';
-
-say "\n", '=' x 30;
-say '-' x 3, 'WL-ClCon:';
-say '=' x 30;
+split data with fraction 0.8;
+make gradient boosted trees classifier;
+show classifier training time;
+show classifier measurements;
+show classifier confusion matrix plot, ROCCurve;
+show top confusions, misclassified examples, least certain examples;
+assign pipeline object to clObj120;'
+);
 
 
-say ToClassificationWorkflowCode($commands, 'WL-ClCon');
+#my @targets = ('WL-ClCon', 'WL-System');
+my @targets = ('Bulgarian', 'WL-System', 'WL-ClCon');
 
-#
-#say "\n", '=' x 30;
-#say '-' x 3, 'Bulgarian:';
-#say '=' x 30;
-#
-#say ToClassificationWorkflowCode($commands, 'Bulgarian');
+#for @testCommands -> $c {
+#    say "=" x 30;
+#    say $c;
+#    for @targets -> $t {
+#        say '-' x 30;
+#        say $t;
+#        say '-' x 30;
+#        my $start = now;
+#        my $res = ToClassificationWorkflowCode($c, $t);
+#        say "time:", now - $start;
+#        say $res;
+#    }
+#}
+
+#say clcon-parse( @testCommands[0], rule => 'workflow-commands-list' );
+say clcon-interpret(
+        @testCommands[0],
+        rule => 'workflow-commands-list',
+        actions => DSL::English::ClassificationWorkflows::Actions::WL::ClCon.new);
