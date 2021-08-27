@@ -66,23 +66,40 @@ class DSL::English::ClassificationWorkflows::Actions::WL::System
     }
 
     method split-data-spec($/) {
-        note 'Multiple argument data splitting is not implemented.';
-        make '{dataTraining, dataTesting} = TakeDrop[ data, Floor[ 0.75 * Length[data] ] ]';
+        my %splitArgs = $<split-data-element-list>.made;
+        my $frac = %splitArgs<TrainingFraction>:exists ?? %splitArgs<TrainingFraction> !! '0.75';
+
+        # Note that here append ';' because we produce two rows in this method.
+        # (';' is appended in ToClassificationWorkflowCode using %targetToSeparator.)
+        my $res = '{dataTraining, dataTesting} = TakeDrop[ RandomSample[data], Floor[ ' ~ $frac ~ ' * Length[data] ] ];';
+        $res ~= "\n";
+
+        if %splitArgs<ValidationFraction>:exists {
+            $res ~= '{dataTraining, dataValidation} = TakeDrop[ RandomSample[dataTraining], Floor[ ' ~ %splitArgs<ValidationFraction> ~ ' * Length[dataTraining] ] ]';
+        } else {
+            $res ~= 'dataValidation = Automatic'
+        }
+
+        if %splitArgs<SplitMethodMethod>:exists {
+            note 'Splitting method is not implemented in ClassificationWorkflows::Actions::WL::System.';
+        }
+
+        make $res;
     }
 
-    method split-data-element-list($/) { make $<split-data-element>>>.made.join(', '); }
+    method split-data-element-list($/) { make $<split-data-element>>>.made.hash; }
     method split-data-element($/) { make $/.values[0].made; }
 
-    method split-training-fraction($/)   { make '"TrainingFraction" -> ' ~ $<number-value>.made; }
-    method split-validation-fraction($/) { make '"ValidationFraction" -> ' ~ $<number-value>.made; }
+    method split-training-fraction($/)   { make %(TrainingFraction => $<number-value>.made); }
+    method split-validation-fraction($/) { make %(ValidationFraction => $<number-value>.made); }
     method split-method($/) {
         if $<proportional-adjective> {
-            make 'Method -> "LabelsProportional"';
+            make %(SplitMethod => "LabelsProportional");
         } else {
-            make 'Method -> "Random"';
+            make %(SplitMethod => "Random");
         }
     }
-    method split-class-label-column($/) { make '"ClassLabelColumn" -> ' ~ $<variable-name>.made; }
+    method split-class-label-column($/) { make  %(ClassLabelColumn => $<variable-name>.made); }
 
     # Data summary command
     method data-summary-command($/) { make $/.values[0].made; }
@@ -101,7 +118,7 @@ class DSL::English::ClassificationWorkflows::Actions::WL::System
     method make-classifier-command($/) { make $/.values[0].made; }
     method make-classifier-simple-command($/){
         if $<classifier-method-spec> {
-            make 'clObj = Classify[ dataTraining, Method -> ' ~ $<classifier-method-spec>.made ~ ' ]';
+            make 'clObj = Classify[ dataTraining, Method -> ' ~ $<classifier-method-spec>.made ~ ', ValidationSet -> dataValidation ]';
         } else {
             make 'clObj = Classify[ dataTraining ]';
         }
