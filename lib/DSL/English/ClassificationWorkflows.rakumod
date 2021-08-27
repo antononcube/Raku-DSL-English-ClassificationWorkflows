@@ -26,6 +26,7 @@ use DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard;
 my %targetToAction =
     "Mathematica"      => DSL::English::ClassificationWorkflows::Actions::WL::System,
     "WL-ClCon"         => DSL::English::ClassificationWorkflows::Actions::WL::ClCon,
+    "WL::ClCon"        => DSL::English::ClassificationWorkflows::Actions::WL::ClCon,
     "WL"               => DSL::English::ClassificationWorkflows::Actions::WL::System,
     "WL-System"        => DSL::English::ClassificationWorkflows::Actions::WL::System,
     "WL::System"       => DSL::English::ClassificationWorkflows::Actions::WL::System,
@@ -38,6 +39,7 @@ my %targetToSeparator{Str} =
     "Mathematica"      => "\n",
     "WL"               => ";\n",
     "WL-ClCon"         => " ==>\n",
+    "WL::ClCon"        => " ==>\n",
     "WL-System"        => ";\n",
     "WL::System"       => ";\n",
     "Bulgarian"        => "\n";
@@ -49,7 +51,7 @@ sub has-semicolon (Str $word) {
 }
 
 #-----------------------------------------------------------
-proto ToClassificationWorkflowCode(Str $command, Str $target = 'tidyverse' ) is export {*}
+proto ToClassificationWorkflowCode(Str $command, Str $target = 'WL::ClCon' ) is export {*}
 
 multi ToClassificationWorkflowCode ( Str $command where not has-semicolon($command), Str $target = 'WL-ClCon' ) {
 
