@@ -21,11 +21,11 @@ ok $pCOMMAND.parse('show top confusions, misclassified examples, MeanCrossEntrop
 ok $pCOMMAND.parse('show measurements test results over the available test data'),
         'show measurements test results over the available test data';
 
-ok $pCOMMAND.parse('show LeastCertainExample'),
-        'show LeastCertainExample';
+ok $pCOMMAND.parse('show LeastCertainExamples'),
+        'show LeastCertainExamples';
 
-ok $pCOMMAND.parse('show classifier LeastCertainExample'),
-        'show classifier LeastCertainExample';
+ok $pCOMMAND.parse('show classifier LeastCertainExamples'),
+        'show classifier LeastCertainExamples';
 
 ok $pCOMMAND.parse('compute classifier measurements Recall by threshold 0.3 for "died" over available test data'),
         'compute classifier measurements Recall by threshold 0.3 for "died" over available test data';
