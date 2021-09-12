@@ -46,7 +46,7 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
     method TOP($/) { make $/.values[0].made; }
 
     # workflow-command-list
-    method workflow-commands-list($/) { make $/.values>>.made.join(" ==>\n"); }
+    method workflow-commands-list($/) { make $/.values>>.made.join(" \\[DoubleLongRightArrow]\n"); }
 
     # workflow-command
     method workflow-command($/) { make $/.values[0].made; }
@@ -152,9 +152,9 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
     method classifier-measurements-command($/) { make $/.values[0].made; }
     method classifier-measurements-simple($/){
         if $<classifier-measurements-list> {
-            make 'ClConClassifierMeasurements[ {' ~ $<classifier-measurements-list>.made ~ '} ] ==> ClConEchoValue[]';
+            make 'ClConClassifierMeasurements[ {' ~ $<classifier-measurements-list>.made ~ '} ] \[DoubleLongRightArrow] ClConEchoValue[]';
         } else {
-            make 'ClConClassifierMeasurements[] ==> ClConEchoValue[]';
+            make 'ClConClassifierMeasurements[] \[DoubleLongRightArrow] ClConEchoValue[]';
         }
     }
     method classifier-measurements-list($/) {
@@ -164,18 +164,18 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
     # Classifier testing command
     method classifier-testing-command($/) { make $/.values[0].made; }
     method classifier-testing-simple($/) {
-        make 'ClConClassifierMeasurements[] ==> ClConEchoValue[]';
+        make 'ClConClassifierMeasurements[] \[DoubleLongRightArrow] ClConEchoValue[]';
     }
     method accuracies-by-variable-shuffling($/) { make 'ClConAccuracyByVariableShuffling[]'; }
     method test-results($/) {
         if $<test-measures-list> && $<test-classification-threshold> {
-            make 'ClConClassifierMeasurementsByThreshold[ {' ~ $<test-measures-list>.made ~ '}, ' ~ $<test-classification-threshold>.made ~ ' ] ==> ClConEchoValue[]';
+            make 'ClConClassifierMeasurementsByThreshold[ {' ~ $<test-measures-list>.made ~ '}, ' ~ $<test-classification-threshold>.made ~ ' ] \[DoubleLongRightArrow] ClConEchoValue[]';
         } elsif $<test-classification-threshold> {
-            make 'ClConClassifierMeasurementsByThreshold[ "Precision", ' ~ $<test-classification-threshold>.made ~ ' ] ==> ClConEchoValue[]';
+            make 'ClConClassifierMeasurementsByThreshold[ "Precision", ' ~ $<test-classification-threshold>.made ~ ' ] \[DoubleLongRightArrow] ClConEchoValue[]';
         } elsif $<test-measures-list> {
-            make 'ClConClassifierMeasurements[ {' ~ $<test-measures-list>.made ~ '} ] ==> ClConEchoValue[]';
+            make 'ClConClassifierMeasurements[ {' ~ $<test-measures-list>.made ~ '} ] \[DoubleLongRightArrow] ClConEchoValue[]';
         } else {
-            make 'ClConClassifierMeasurements[] ==> ClConEchoValue[]';
+            make 'ClConClassifierMeasurements[] \[DoubleLongRightArrow] ClConEchoValue[]';
         }
     }
     method test-classification-threshold($/){
@@ -201,7 +201,7 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
     method data-outliers-command($/) { make $/.values[0].made; }
     method find-outliers-command($/) { make $/.values[0].made; }
     method remove-outliers-command($/) { make 'ClConRemoveOutliers[]'; }
-    method show-outliers-command($/) { make 'ClConOutlierPosition[ ' ~ $<outliers-spec>.made ~ ' ] ==> ClConEchoValue[]'; }
+    method show-outliers-command($/) { make 'ClConOutlierPosition[ ' ~ $<outliers-spec>.made ~ ' ] \[DoubleLongRightArrow] ClConEchoValue[]'; }
     method outliers-spec($/) { make '"OutlierIdentifierParameters" -> ' ~ outlierFunctonFromSpec( $<outliers-type>.made ); }
     method outliers-type($/) { make $/.values[0].Str; }
     method find-outliers-all($/) { make 'ClConOutlierPosition[ ' ~ $<outliers-spec>.made ~ ' ]'; }
@@ -235,6 +235,13 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
 
     ## Echo messages
     method echo-command($/) { make 'ClConEcho[ ' ~ $<echo-message-spec>.made ~ ' ]'; }
+
+    ## Setup code
+    method setup-code-command($/) {
+        make q:to/SETUPEND/
+    Import["https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/master/MonadicProgramming/MonadicContextualClassification.m"];
+    SETUPEND
+  }
 }
 
 sub outlierFunctonFromSpec( Str $spec ) {

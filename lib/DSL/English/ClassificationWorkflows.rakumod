@@ -36,13 +36,13 @@ my %targetToSeparator{Str} =
     "Julia"            => "\n",
     "Julia-DataFrames" => "\n",
     "R"                => " ;\n",
-    "Mathematica"      => "\n",
+    "Mathematica"      => " \\[DoubleLongRightArrow]\n",
     "WL"               => ";\n",
-    "WL-ClCon"         => " ==>\n",
-    "WL::ClCon"        => " ==>\n",
+    "WL-ClCon"         => " \\[DoubleLongRightArrow]\n",
+    "WL::ClCon"        => " \\[DoubleLongRightArrow]\n",
     "WL-System"        => ";\n",
     "WL::System"       => ";\n",
-    "Bulgarian"        => "\n";
+    "Bulgarian"        => " \n";
 
 
 #-----------------------------------------------------------
@@ -78,5 +78,7 @@ multi ToClassificationWorkflowCode ( Str $command where has-semicolon($command),
 
     @cmdLines = grep { $_.^name eq 'Str' }, @cmdLines;
 
-    return @cmdLines.join( %targetToSeparator{$specTarget} ).trim;
+    my Str $res = @cmdLines.join( %targetToSeparator{$specTarget} ).trim;
+
+    return $res.subst( / ^^ \h* <{ '\'' ~ %targetToSeparator{$specTarget}.trim ~ '\'' }> \h* /, ''):g
 }

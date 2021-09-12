@@ -259,6 +259,13 @@ class DSL::English::ClassificationWorkflows::Actions::WL::System
 
     ## Echo messages
     method echo-command($/) { make 'Echo[ ' ~ $<echo-message-spec>.made ~ ' ]'; }
+
+    ## Setup code
+    method setup-code-command($/) {
+        make q:to/SETUPEND/
+    Import["https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/master/MonadicProgramming/MonadicContextualClassification.m"];
+    SETUPEND
+    }
 }
 
 sub outlierFunctonFromSpec( Str $spec ) {
