@@ -14,7 +14,7 @@ interpretation of natural language commands that specify classification workflow
 
 unit module DSL::English::ClassificationWorkflows;
 
-use DSL::Shared::Utilities::MetaSpecsProcessing;
+use DSL::Shared::Utilities::CommandProcessing;
 
 use DSL::English::ClassificationWorkflows::Grammar;
 use DSL::English::ClassificationWorkflows::Actions::WL::ClCon;
@@ -23,7 +23,7 @@ use DSL::English::ClassificationWorkflows::Actions::WL::System;
 use DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard;
 
 #-----------------------------------------------------------
-my %targetToAction =
+my %targetToAction{Str} =
     "Mathematica"      => DSL::English::ClassificationWorkflows::Actions::WL::System,
     "WL-ClCon"         => DSL::English::ClassificationWorkflows::Actions::WL::ClCon,
     "WL::ClCon"        => DSL::English::ClassificationWorkflows::Actions::WL::ClCon,
@@ -32,7 +32,7 @@ my %targetToAction =
     "WL::System"       => DSL::English::ClassificationWorkflows::Actions::WL::System,
     "Bulgarian"        => DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard;
 
-my %targetToSeparator{Str} =
+my Str %targetToSeparator{Str} =
     "Julia"            => "\n",
     "Julia-DataFrames" => "\n",
     "R"                => " ;\n",
@@ -53,32 +53,11 @@ sub has-semicolon (Str $word) {
 #-----------------------------------------------------------
 proto ToClassificationWorkflowCode(Str $command, Str $target = 'WL::ClCon' ) is export {*}
 
-multi ToClassificationWorkflowCode ( Str $command where not has-semicolon($command), Str $target = 'WL-ClCon' ) {
+multi ToClassificationWorkflowCode ( Str $command, Str $target = 'WL-ClCon' ) {
 
-    die 'Unknown target.' unless %targetToAction{$target}:exists;
-
-    my $match = DSL::English::ClassificationWorkflows::Grammar.parse($command.trim, actions => %targetToAction{$target} );
-    die 'Cannot parse the given command.' unless $match;
-    return $match.made;
-}
-
-multi ToClassificationWorkflowCode ( Str $command where has-semicolon($command), Str $target = 'WL-ClCon' ) {
-
-    my $specTarget = get-dsl-spec( $command, 'target');
-
-    $specTarget = $specTarget ?? $specTarget<DSLTARGET> !! $target;
-
-    die 'Unknown target.' unless %targetToAction{$specTarget}:exists;
-
-    my @commandLines = $command.trim.split(/ ';' \s* /);
-
-    @commandLines = grep { $_.Str.chars > 0 }, @commandLines;
-
-    my @cmdLines = map { ToClassificationWorkflowCode($_, $specTarget) }, @commandLines;
-
-    @cmdLines = grep { $_.^name eq 'Str' }, @cmdLines;
-
-    my Str $res = @cmdLines.join( %targetToSeparator{$specTarget} ).trim;
-
-    return $res.subst( / ^^ \h* <{ '\'' ~ %targetToSeparator{$specTarget}.trim ~ '\'' }> \h* /, ''):g
+    DSL::Shared::Utilities::CommandProcessing::ToWorkflowCode( $command,
+                                                               grammar => DSL::English::ClassificationWorkflows::Grammar,
+                                                               :%targetToAction,
+                                                               :%targetToSeparator,
+                                                               :$target )
 }
