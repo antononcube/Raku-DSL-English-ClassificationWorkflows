@@ -6,14 +6,14 @@ use DSL::English::ClassificationWorkflows;
 #-----------------------------------------------------------
 my $pCOMMAND = DSL::English::ClassificationWorkflows::Grammar;
 
-sub clcon-parse( Str:D $command, Str:D :$rule = 'TOP' ) {
+sub clcon-parse(Str:D $command, Str:D :$rule = 'TOP') {
     $pCOMMAND.parse($command, :$rule);
 }
 
-sub clcon-interpret( Str:D $command,
-                   Str:D:$rule = 'TOP',
-                   :$actions = DSL::English::ClassificationWorkflows::Actions::WL::ClCon.new) {
-        $pCOMMAND.parse( $command, :$rule, :$actions ).made;
+sub clcon-interpret(Str:D $command,
+                    Str:D:$rule = 'TOP',
+                    :$actions = DSL::English::ClassificationWorkflows::Actions::WL::ClCon.new) {
+    $pCOMMAND.parse($command, :$rule, :$actions).made;
 }
 
 #----------------------------------------------------------
@@ -60,8 +60,9 @@ say "=" x 60;
 
 my @testCommands = (
 'DSL MODULE ClCon;
+setup code;
 use dfTitanic;
-split data with fraction 0.8;
+split data with split ratio 0.82 and validation fraction 0.2;
 make gradient boosted trees classifier;
 show classifier training time;
 show classifier measurements;
@@ -70,26 +71,35 @@ show top confusions, misclassified examples, least certain examples;
 assign pipeline object to clObj120;'
 );
 
+#@testCommands = (
+#'DSL MODULE ClCon;
+#use data dfTitanic;
+#split data with fraction 0.8;
+#show classifier measurements;
+#show classifier confusion matrix plot, ROCCurve;
+#'
+#);
+
 
 #my @targets = ('WL-ClCon', 'WL-System');
 my @targets = ('Bulgarian', 'WL-System', 'WL-ClCon');
 
-#for @testCommands -> $c {
-#    say "=" x 30;
-#    say $c;
-#    for @targets -> $t {
-#        say '-' x 30;
-#        say $t;
-#        say '-' x 30;
-#        my $start = now;
-#        my $res = ToClassificationWorkflowCode($c, $t);
-#        say "time:", now - $start;
-#        say $res;
-#    }
-#}
+for @testCommands -> $c {
+    say "=" x 30;
+    say $c;
+    for @targets -> $t {
+        say '-' x 30;
+        say $t;
+        say '-' x 30;
+        my $start = now;
+        my $res = ToClassificationWorkflowCode($c, $t, format => 'hash');
+        say "time:", now - $start;
+        say $res;
+    }
+}
 
 #say clcon-parse( @testCommands[0], rule => 'workflow-commands-list' );
-say clcon-interpret(
-        @testCommands[0],
-        rule => 'workflow-commands-list',
-        actions => DSL::English::ClassificationWorkflows::Actions::WL::ClCon.new);
+#say clcon-interpret(
+#        @testCommands[0],
+#        rule => 'workflow-commands-list',
+#        actions => DSL::English::ClassificationWorkflows::Actions::WL::ClCon.new);

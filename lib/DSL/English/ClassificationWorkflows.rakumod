@@ -51,13 +51,14 @@ sub has-semicolon (Str $word) {
 }
 
 #-----------------------------------------------------------
-proto ToClassificationWorkflowCode(Str $command, Str $target = 'WL::ClCon' ) is export {*}
+proto ToClassificationWorkflowCode(Str $command, Str $target = 'WL::ClCon', | ) is export {*}
 
-multi ToClassificationWorkflowCode ( Str $command, Str $target = 'WL-ClCon' ) {
+multi ToClassificationWorkflowCode ( Str $command, Str $target = 'WL-ClCon', *%args ) {
 
     DSL::Shared::Utilities::CommandProcessing::ToWorkflowCode( $command,
                                                                grammar => DSL::English::ClassificationWorkflows::Grammar,
                                                                :%targetToAction,
                                                                :%targetToSeparator,
-                                                               :$target )
+                                                               :$target,
+                                                               |%args )
 }

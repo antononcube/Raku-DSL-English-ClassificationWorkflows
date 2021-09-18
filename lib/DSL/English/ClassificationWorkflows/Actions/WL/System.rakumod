@@ -262,7 +262,7 @@ class DSL::English::ClassificationWorkflows::Actions::WL::System
 
     ## Setup code
     method setup-code-command($/) {
-        make q:to/SETUPEND/
+        make 'SETUPCODE' => q:to/SETUPEND/
     Import["https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/master/MonadicProgramming/MonadicContextualClassification.m"];
     SETUPEND
     }

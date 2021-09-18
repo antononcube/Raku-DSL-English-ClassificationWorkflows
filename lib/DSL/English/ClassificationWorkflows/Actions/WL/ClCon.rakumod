@@ -42,6 +42,9 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
         is DSL::English::ClassificationWorkflows::Actions::WL::ClassifierProperties
         is DSL::English::ClassificationWorkflows::Actions::WL::ClassifierMeasurements {
 
+    # Separator
+    method separator() { " \\[DoubleLongRightArrow]\n" }
+
     # Top
     method TOP($/) { make $/.values[0].made; }
 
@@ -238,7 +241,7 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
 
     ## Setup code
     method setup-code-command($/) {
-        make q:to/SETUPEND/
+        make 'SETUPCODE' => q:to/SETUPEND/
     Import["https://raw.githubusercontent.com/antononcube/MathematicaForPrediction/master/MonadicProgramming/MonadicContextualClassification.m"];
     SETUPEND
   }
