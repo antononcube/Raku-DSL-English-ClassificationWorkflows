@@ -90,7 +90,14 @@ class DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard
 
     # Make classifier command
     method make-classifier-command($/) { make $/.values[0].made; }
-    method make-classifier-simple-command($/){ make 'тренирай класификатора'; }
+    method make-classifier-simple-command($/){
+        if $<classifier-method-spec> {
+            make 'тренирай класификатор с метод: ' ~ $<classifier-method-spec>.Str;
+        } else {
+            make 'тренирай класификатор';
+        }
+    }
+    method classifier-method-spec($/) { make $/.values[0].made; }
 
     # Classifier info command
     method classifier-info-command($/) { make $/.values[0].made; }
@@ -105,14 +112,26 @@ class DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard
     method roc-curves-simple($/){ make 'покажи диаграма с приемателните операционни характеристики (ROC)'; }
 
 
-    # Pipeline command
-    method pipeline-command($/) { make $/.values[0].made; }
-    method take-pipeline-value($/) { make 'вземи обекта'; }
-    method echo-pipeline-value($/) { make 'ехо на поточната стойност'; }
+    # Pipeline command overwrites
+    ## Object
+    method assign-pipeline-object-to($/) { make 'присвои лентовия обект на: ' ~ $/.values[0].made; }
 
-    method echo-command($/) { make 'отпечатай съобщението: ' ~ $<echo-message-spec>.made; }
-    method echo-message-spec($/) { make $/.values[0].made; }
-    method echo-words-list($/) { make '"' ~ $<variable-name>>>.made.join(' ') ~ '"'; }
-    method echo-variable($/) { make $/.Str; }
-    method echo-text($/) { make $/.Str; }
+    ## Value
+    method assign-pipeline-value-to($/) { make  'присвои лентовата стойност на: ' ~ $/.values[0].made; }
+    method take-pipeline-value($/) { make 'вземи лентовата стойност'; }
+    method echo-pipeline-value($/) { make 'покажи лентовата стойност'; }
+    method echo-pipeline-funciton-value($/) { make 'покажи лентовата стойност трансформирана с: ' ~ $<pipeline-function-spec>.made; }
+
+    ## Context
+    method take-pipeline-context($/) { make 'вземи контекста'; }
+    method echo-pipeline-context($/) { make 'покажи контекста'; }
+    method echo-pipeline-function-context($/) { make 'покажи контекста трансформиран с: ' ~ $<pipeline-function-spec>.made ~ ' )'; }
+
+    ## Echo messages
+    method echo-command($/) { make 'покажи съобщението: ' ~ $<echo-message-spec>.made; }
+
+    ## Setup code
+    method setup-code-command($/) {
+        make 'SETUPCODE' => ''
+    }
 }
