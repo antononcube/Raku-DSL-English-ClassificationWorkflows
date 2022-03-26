@@ -21,6 +21,7 @@ use DSL::English::ClassificationWorkflows::Actions::WL::ClCon;
 use DSL::English::ClassificationWorkflows::Actions::WL::System;
 
 use DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard;
+use DSL::English::ClassificationWorkflows::Actions::English::Standard;
 
 #-----------------------------------------------------------
 my %targetToAction{Str} =
@@ -30,7 +31,8 @@ my %targetToAction{Str} =
     "WL"               => DSL::English::ClassificationWorkflows::Actions::WL::System,
     "WL-System"        => DSL::English::ClassificationWorkflows::Actions::WL::System,
     "WL::System"       => DSL::English::ClassificationWorkflows::Actions::WL::System,
-    "Bulgarian"        => DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard;
+    "Bulgarian"        => DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard,
+    "English"          => DSL::English::ClassificationWorkflows::Actions::English::Standard;
 
 my Str %targetToSeparator{Str} =
     "Julia"            => "\n",
@@ -42,7 +44,8 @@ my Str %targetToSeparator{Str} =
     "WL::ClCon"        => " \\[DoubleLongRightArrow]\n",
     "WL-System"        => ";\n",
     "WL::System"       => ";\n",
-    "Bulgarian"        => " \n";
+    "Bulgarian"        => " \n",
+    "English"          => " \n";
 
 
 #-----------------------------------------------------------

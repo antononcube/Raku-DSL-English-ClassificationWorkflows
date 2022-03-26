@@ -1,32 +1,43 @@
 {
-    "perl" : "6.d",
-    "name" : "DSL::English::ClassificationWorkflows",
-    "api"  : "1",
-    "auth" : "github:antononcube",
-    "version" : "0.1.0",
-    "description" : "Classification workflows building by natural language commands.",
-    "authors" : [ "Anton Antonov" ],
-    "license" : "GPL-3.0-or-later",
-    "provides" : {
-        "DSL::English::ClassificationWorkflows" : "lib/DSL/English/ClassificationWorkflows.rakumod",
-        "DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard" : "lib/DSL/English/ClassificationWorkflows/Actions/Bulgarian/Standard.rakumod",
-        "DSL::English::ClassificationWorkflows::Actions::WL::ClCon" : "lib/DSL/English/ClassificationWorkflows/Actions/WL/ClCon.rakumod",
-        "DSL::English::ClassificationWorkflows::Actions::WL::ClassifierMeasurements" : "lib/DSL/English/ClassificationWorkflows/Actions/WL/ClassifierMeasurements.rakumod",
-        "DSL::English::ClassificationWorkflows::Actions::WL::ClassifierProperties" : "lib/DSL/English/ClassificationWorkflows/Actions/WL/ClassifierProperties.rakumod",
-        "DSL::English::ClassificationWorkflows::Actions::WL::ROCFunctions" : "lib/DSL/English/ClassificationWorkflows/Actions/WL/ROCFunctions.rakumod",
-        "DSL::English::ClassificationWorkflows::Actions::WL::System" : "lib/DSL/English/ClassificationWorkflows/Actions/WL/System.rakumod",
-        "DSL::English::ClassificationWorkflows::Grammar" : "lib/DSL/English/ClassificationWorkflows/Grammar.rakumod",
-        "DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases" : "lib/DSL/English/ClassificationWorkflows/Grammar/ClassificationPhrases.rakumod",
-        "DSL::English::ClassificationWorkflows::Grammar::ClassifierMeasurements" : "lib/DSL/English/ClassificationWorkflows/Grammar/ClassifierMeasurements.rakumod",
-        "DSL::English::ClassificationWorkflows::Grammar::ClassifierProperties" : "lib/DSL/English/ClassificationWorkflows/Grammar/ClassifierProperties.rakumod",
-        "DSL::English::ClassificationWorkflows::Grammar::ROCFunctions" : "lib/DSL/English/ClassificationWorkflows/Grammar/ROCFunctions.rakumod"
-    },
-    "depends" : [ "DSL::Shared" ],
-    "build-depends" : [ ],
-    "test-depends" : [ ],
-    "resources" : [ ],
-    "tags": [
-      "classification", "classifier", "parser", "interpreter", "monad", "workflow", "pipeline"
-    ],
-    "source-url" : "https://github.com/antononcube/Raku-DSL-English-ClassificationWorkflows.git"
+  "name": "DSL::English::ClassificationWorkflows",
+  "description": "Classification workflows building by natural language commands.",
+  "version": "0.1.0",
+  "perl": "6.d",
+  "authors": [
+    "Anton Antonov"
+  ],
+  "auth": "github:antononcube",
+  "depends": [
+    "DSL::Shared"
+  ],
+  "build-depends": [],
+  "test-depends": [],
+  "provides": {
+    "DSL::English::ClassificationWorkflows": "lib/DSL/English/ClassificationWorkflows.rakumod",
+    "DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard": "lib/DSL/English/ClassificationWorkflows/Actions/Bulgarian/Standard.rakumod",
+    "DSL::English::ClassificationWorkflows::Actions::English::Standard": "lib/DSL/English/ClassificationWorkflows/Actions/English/Standard.rakumod",
+    "DSL::English::ClassificationWorkflows::Actions::WL::ClCon": "lib/DSL/English/ClassificationWorkflows/Actions/WL/ClCon.rakumod",
+    "DSL::English::ClassificationWorkflows::Actions::WL::ClassifierMeasurements": "lib/DSL/English/ClassificationWorkflows/Actions/WL/ClassifierMeasurements.rakumod",
+    "DSL::English::ClassificationWorkflows::Actions::WL::ClassifierProperties": "lib/DSL/English/ClassificationWorkflows/Actions/WL/ClassifierProperties.rakumod",
+    "DSL::English::ClassificationWorkflows::Actions::WL::ROCFunctions": "lib/DSL/English/ClassificationWorkflows/Actions/WL/ROCFunctions.rakumod",
+    "DSL::English::ClassificationWorkflows::Actions::WL::System": "lib/DSL/English/ClassificationWorkflows/Actions/WL/System.rakumod",
+    "DSL::English::ClassificationWorkflows::Grammar": "lib/DSL/English/ClassificationWorkflows/Grammar.rakumod",
+    "DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases": "lib/DSL/English/ClassificationWorkflows/Grammar/ClassificationPhrases.rakumod",
+    "DSL::English::ClassificationWorkflows::Grammar::ClassifierMeasurements": "lib/DSL/English/ClassificationWorkflows/Grammar/ClassifierMeasurements.rakumod",
+    "DSL::English::ClassificationWorkflows::Grammar::ClassifierProperties": "lib/DSL/English/ClassificationWorkflows/Grammar/ClassifierProperties.rakumod",
+    "DSL::English::ClassificationWorkflows::Grammar::ROCFunctions": "lib/DSL/English/ClassificationWorkflows/Grammar/ROCFunctions.rakumod"
+  },
+  "resources": [],
+  "license": "GPL-3.0-or-later",
+  "tags": [
+    "classification",
+    "classifier",
+    "parser",
+    "interpreter",
+    "monad",
+    "workflow",
+    "pipeline"
+  ],
+  "api": "1",
+  "source-url": "https://github.com/antononcube/Raku-DSL-English-ClassificationWorkflows.git"
 }
