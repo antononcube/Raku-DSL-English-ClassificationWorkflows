@@ -54,7 +54,7 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     rule classifier-ensemble-phrase { <classifier-noun> <ensemble-noun> }
     rule classifier-info-phrase { <classifier-noun> [ <info-noun> | <information-noun> ] }
     rule classifier-object-phrase { <classifier-noun>? <object-noun> }
-    rule reduce-dimension-phrase { <reduce-verb> <dimension> }
+    rule reduce-dimension-phrase { <reduce-verb> <dimension-noun> }
     rule roc-phrase { <receiver-noun> <operating-adjective> <characteristic-noun> | <roc-noun> }
     rule rocs-phrase { <receiver-noun> <operating-adjective> <characteristics-noun> | <rocs-noun> }
     rule roc-curve-phrase { [ <roc-phrase> | <rocs-phrase> ] [ <curve-noun> | <curves-noun> ]? }
