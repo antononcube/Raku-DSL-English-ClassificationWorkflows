@@ -85,8 +85,8 @@ class DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard
     method data-summary-simple($/){ make 'опиши данните'; }
 
     # Reduce dimension command
-    method reduce-dimension-command($/) { make $/.values[0].made; }
-    method reduce-dimension-simple($/){ make 'намали размерността'; }
+    method dimension-reduction-command($/) { make $/.values[0].made; }
+    method dimension-reduction-simple($/){ make 'намали размерността'; }
 
     # Make classifier command
     method make-classifier-command($/) { make $/.values[0].made; }

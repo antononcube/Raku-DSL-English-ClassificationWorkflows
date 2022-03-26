@@ -85,10 +85,9 @@ class DSL::English::ClassificationWorkflows::Actions::English::Standard
     method data-summary-simple($/){ make 'summarize data'; }
 
     # Reduce dimension command
-    method reduce-dimension-command($/) { make $/.values[0].made; }
-    method reduce-dimension-simple($/){ make 'reduce dimension'; }
+    method dimension-reduction-command($/) { make $/.values[0].made; }
+    method dimension-reduction-simple($/){ make 'reduce dimension'; }
 
-    # Make classifier command
     # Make classifier command
     method make-classifier-command($/) { make $/.values[0].made; }
     method make-classifier-simple-command($/){

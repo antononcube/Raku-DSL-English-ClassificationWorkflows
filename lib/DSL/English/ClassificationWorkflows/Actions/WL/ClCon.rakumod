@@ -92,8 +92,8 @@ class DSL::English::ClassificationWorkflows::Actions::WL::ClCon
     method data-summary-simple($/){ make 'ClConEchoDataSummary[]'; }
 
     # Reduce dimension command
-    method reduce-dimension-command($/) { make $/.values[0].made; }
-    method reduce-dimension-simple($/){ make 'ClConReduceDimension[]'; }
+    method dimension-reduction-command($/) { make $/.values[0].made; }
+    method dimension-reduction-simple($/){ make 'ClConReduceDimension[]'; }
 
     # Make classifier command
     method make-classifier-command($/) { make $/.values[0].made; }
