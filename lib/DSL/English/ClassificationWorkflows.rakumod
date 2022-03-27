@@ -28,13 +28,14 @@ use DSL::English::ClassificationWorkflows::Actions::Russian::Standard;
 my %targetToAction{Str} =
     "Mathematica"      => DSL::English::ClassificationWorkflows::Actions::WL::System,
     "WL-ClCon"         => DSL::English::ClassificationWorkflows::Actions::WL::ClCon,
-    "WL::ClCon"        => DSL::English::ClassificationWorkflows::Actions::WL::ClCon,
     "WL"               => DSL::English::ClassificationWorkflows::Actions::WL::System,
     "WL-System"        => DSL::English::ClassificationWorkflows::Actions::WL::System,
-    "WL::System"       => DSL::English::ClassificationWorkflows::Actions::WL::System,
     "Bulgarian"        => DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard,
     "English"          => DSL::English::ClassificationWorkflows::Actions::English::Standard,
     "Russian"          => DSL::English::ClassificationWorkflows::Actions::Russian::Standard;
+
+my %targetToAction2{Str} = %targetToAction.grep({ $_.key.contains('-') }).map({ $_.key.subst('-', '::') => $_.value }).Hash;
+%targetToAction = |%targetToAction , |%targetToAction2;
 
 my Str %targetToSeparator{Str} =
     "Julia"            => "\n",
@@ -43,26 +44,30 @@ my Str %targetToSeparator{Str} =
     "Mathematica"      => " \\[DoubleLongRightArrow]\n",
     "WL"               => ";\n",
     "WL-ClCon"         => " \\[DoubleLongRightArrow]\n",
-    "WL::ClCon"        => " \\[DoubleLongRightArrow]\n",
     "WL-System"        => ";\n",
-    "WL::System"       => ";\n",
     "Bulgarian"        => " \n",
     "English"          => " \n",
     "Russian"          => " \n";
 
+my Str %targetToSeparator2{Str} = %targetToSeparator.grep({ $_.key.contains('-') }).map({ $_.key.subst('-', '::') => $_.value }).Hash;
+%targetToSeparator = |%targetToSeparator , |%targetToSeparator2;
 
 #-----------------------------------------------------------
-sub has-semicolon (Str $word) {
-    return defined index $word, ';';
-}
-
-#-----------------------------------------------------------
-proto ToClassificationWorkflowCode(Str $command, Str $target = 'WL::ClCon', | ) is export {*}
+proto ToClassificationWorkflowCode(Str $command, Str $target = 'WL-ClCon', | ) is export {*}
 
 multi ToClassificationWorkflowCode ( Str $command, Str $target = 'WL-ClCon', *%args ) {
+    my $lang = %args<language>:exists ?? %args<language> !! 'English';
+    $lang = $lang.wordcase;
+
+    my $gname = "DSL::{$lang}::ClassificationWorkflows::Grammar";
+
+    try require ::($gname);
+    if ::($gname) ~~ Failure { die "Failed to load the grammar $gname." }
+
+    my Grammar $grammar = ::($gname);
 
     DSL::Shared::Utilities::CommandProcessing::ToWorkflowCode( $command,
-                                                               grammar => DSL::English::ClassificationWorkflows::Grammar,
+                                                               :$grammar,
                                                                :%targetToAction,
                                                                :%targetToSeparator,
                                                                :$target,
