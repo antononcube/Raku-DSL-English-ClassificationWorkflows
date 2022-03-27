@@ -1,0 +1,111 @@
+use DSL::Shared::Utilities::FuzzyMatching;
+
+role DSL::English::ClassificationWorkflows::Grammar::ClassifierMeasurements {
+
+    rule wl-classifier-property {
+        <acceptance-threshold-prop> |
+        <accuracy-prop> |
+        <anomaly-detector-prop> |
+        <batch-evaluation-speed-prop> |
+        <batch-evaluation-time-prop> |
+        <classes-prop> |
+        <class-number-prop> |
+        <class-priors-prop> |
+        <evaluation-time-prop> |
+        <example-number-prop> |
+        <feature-names-prop> |
+        <feature-number-prop> |
+        <feature-types-prop> |
+        <function-prop> |
+        <function-memory-prop> |
+        <function-properties-prop> |
+        <indeterminate-threshold-prop> |
+        <l1-regularization-prop> |
+        <l2-regularization-prop> |
+        <learning-curve-prop> |
+        <max-training-memory-prop> |
+        <mean-cross-entropy-prop> |
+        <method-prop> |
+        <method-description-prop> |
+        <method-option-prop> |
+        <optimization-method-prop> |
+        <performance-goal-prop> |
+        <probabilities-function-prop> |
+        <properties-prop> |
+        <training-class-priors-prop> |
+        <training-time-prop> |
+        <utility-function-prop>}
+
+    rule acceptance-threshold-prop {<acceptance-word> <threshold-word> | 'AcceptanceThreshold'}
+    rule accuracy-prop {<accuracy-word> | 'Accuracy'}
+    rule anomaly-detector-prop {<anomaly-word> <detector-word> | 'AnomalyDetector'}
+    rule batch-evaluation-speed-prop {<batch-word> <evaluation-word> <speed-word> | 'BatchEvaluationSpeed'}
+    rule batch-evaluation-time-prop {<batch-word> <evaluation-word> <time-word> | 'BatchEvaluationTime'}
+    rule classes-prop {<classes-word> | 'Classes'}
+    rule class-number-prop {<class-word> <number-word> | 'ClassNumber'}
+    rule class-priors-prop {<class-word> <priors-word> | 'ClassPriors'}
+    rule evaluation-time-prop {<evaluation-word> <time-word> | 'EvaluationTime'}
+    rule example-number-prop {<example-word> <number-word> | 'ExampleNumber'}
+    rule feature-names-prop {<feature-word> <names-word> | 'FeatureNames'}
+    rule feature-number-prop {<feature-word> <number-word> | 'FeatureNumber'}
+    rule feature-types-prop {<feature-word> <types-word> | 'FeatureTypes'}
+    rule function-prop {<function-word> | 'Function'}
+    rule function-memory-prop {<function-word> <memory-word> | 'FunctionMemory'}
+    rule function-properties-prop {<function-word> <properties-word> | 'FunctionProperties'}
+    rule indeterminate-threshold-prop {<indeterminate-word> <threshold-word> | 'IndeterminateThreshold'}
+    rule l1-regularization-prop {<l1-word> <regularization-word> | 'L1Regularization'}
+    rule l2-regularization-prop {<l2-word> <regularization-word> | 'L2Regularization'}
+    rule learning-curve-prop {<learning-word> <curve-word> | 'LearningCurve'}
+    rule max-training-memory-prop {<max-word> <training-word> <memory-word> | 'MaxTrainingMemory'}
+    rule mean-cross-entropy-prop {<mean-word> <cross-word> <entropy-word> | 'MeanCrossEntropy'}
+    rule method-prop {<method-word> | 'Method'}
+    rule method-description-prop {<method-word> <description-word> | 'MethodDescription'}
+    rule method-option-prop {<method-word> <option-word> | 'MethodOption'}
+    rule optimization-method-prop {<optimization-word> <method-word> | 'OptimizationMethod'}
+    rule performance-goal-prop {<performance-word> <goal-word> | 'PerformanceGoal'}
+    rule probabilities-function-prop {<probabilities-word> <function-word> | 'ProbabilitiesFunction'}
+    rule properties-prop {<properties-word> | 'Properties'}
+    rule training-class-priors-prop {<training-word> <class-word> <priors-word> | 'TrainingClassPriors'}
+    rule training-time-prop {<training-word> <time-word> | 'TrainingTime'}
+    rule utility-function-prop {<utility-word> <function-word> | 'UtilityFunction'}
+
+    token acceptance-word {'acceptance'}
+    token accuracy-word {'accuracy'}
+    token anomaly-word {'anomaly'}
+    token batch-word {'batch'}
+    token class-word {'class'}
+    token classes-word {'classes'}
+    token cross-word {'cross'}
+    token curve-word {'curve'}
+    token description-word {'description'}
+    token detector-word {'detector'}
+    token entropy-word {'entropy'}
+    token evaluation-word {'evaluation'}
+    token example-word {'example'}
+    token feature-word {'feature'}
+    token function-word {'function'}
+    token goal-word {'goal'}
+    token indeterminate-word {'indeterminate'}
+    token l1-word {'l1'}
+    token l2-word {'l2'}
+    token learning-word {'learning'}
+    token max-word {'max'}
+    token mean-word {'mean'}
+    token memory-word {'memory'}
+    token method-word {'method'}
+    token names-word {'names'}
+    token number-word {'number'}
+    token optimization-word {'optimization'}
+    token option-word {'option'}
+    token performance-word {'performance'}
+    token priors-word {'priors'}
+    token probabilities-word {'probabilities'}
+    token properties-word {'properties'}
+    token regularization-word {'regularization'}
+    token speed-word {'speed'}
+    token threshold-word {'threshold'}
+    token time-word {'time'}
+    token training-word {'training'}
+    token types-word {'types'}
+    token utility-word {'utility'}
+}
