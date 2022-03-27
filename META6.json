@@ -16,6 +16,7 @@
     "DSL::English::ClassificationWorkflows": "lib/DSL/English/ClassificationWorkflows.rakumod",
     "DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard": "lib/DSL/English/ClassificationWorkflows/Actions/Bulgarian/Standard.rakumod",
     "DSL::English::ClassificationWorkflows::Actions::English::Standard": "lib/DSL/English/ClassificationWorkflows/Actions/English/Standard.rakumod",
+    "DSL::English::ClassificationWorkflows::Actions::Russian::Standard": "lib/DSL/English/ClassificationWorkflows/Actions/Russian/Standard.rakumod",
     "DSL::English::ClassificationWorkflows::Actions::WL::ClCon": "lib/DSL/English/ClassificationWorkflows/Actions/WL/ClCon.rakumod",
     "DSL::English::ClassificationWorkflows::Actions::WL::ClassifierMeasurements": "lib/DSL/English/ClassificationWorkflows/Actions/WL/ClassifierMeasurements.rakumod",
     "DSL::English::ClassificationWorkflows::Actions::WL::ClassifierProperties": "lib/DSL/English/ClassificationWorkflows/Actions/WL/ClassifierProperties.rakumod",
