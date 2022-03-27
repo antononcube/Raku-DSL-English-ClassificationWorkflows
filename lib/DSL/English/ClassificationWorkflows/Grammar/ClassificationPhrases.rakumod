@@ -51,7 +51,7 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
 
     # Rules
     rule class-label-phrase { <class-noun> <label-noun>? | <label-noun> }
-    rule classifier-ensemble-phrase { <classifier-noun> <ensemble-noun> }
+    rule classifier-ensemble-phrase { [ <classifier-noun>? <ensemble-noun> ] | <ensemble-noun> <of-preposition> <classifiers-noun> }
     rule classifier-info-phrase { <classifier-noun> [ <info-noun> | <information-noun> ] }
     rule classifier-object-phrase { <classifier-noun>? <object-noun> }
     rule reduce-dimension-phrase { <reduce-verb> <dimension-noun> }

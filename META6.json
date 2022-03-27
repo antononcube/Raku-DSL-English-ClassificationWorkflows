@@ -26,7 +26,8 @@
     "DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases": "lib/DSL/English/ClassificationWorkflows/Grammar/ClassificationPhrases.rakumod",
     "DSL::English::ClassificationWorkflows::Grammar::ClassifierMeasurements": "lib/DSL/English/ClassificationWorkflows/Grammar/ClassifierMeasurements.rakumod",
     "DSL::English::ClassificationWorkflows::Grammar::ClassifierProperties": "lib/DSL/English/ClassificationWorkflows/Grammar/ClassifierProperties.rakumod",
-    "DSL::English::ClassificationWorkflows::Grammar::ROCFunctions": "lib/DSL/English/ClassificationWorkflows/Grammar/ROCFunctions.rakumod"
+    "DSL::English::ClassificationWorkflows::Grammar::ROCFunctions": "lib/DSL/English/ClassificationWorkflows/Grammar/ROCFunctions.rakumod",
+    "DSL::English::ClassificationWorkflows::Grammarish": "lib/DSL/English/ClassificationWorkflows/Grammarish.rakumod"
   },
   "resources": [],
   "license": "GPL-3.0-or-later",
