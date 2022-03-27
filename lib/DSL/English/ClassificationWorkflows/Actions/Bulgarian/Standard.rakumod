@@ -69,7 +69,7 @@ class DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard
     method split-data-element-list($/) { make $<split-data-element>>>.made.join(', '); }
     method split-data-element($/) { make $/.values[0].made; }
 
-    method split-training-fraction($/)   { make 'тренировачна част ' ~ $<number-value>.made; }
+    method split-training-fraction($/)   { make 'тренировъчна част ' ~ $<number-value>.made; }
     method split-validation-fraction($/) { make 'валидираща част ' ~ $<number-value>.made; }
     method split-method($/) {
         if $<proportional-adjective> {
