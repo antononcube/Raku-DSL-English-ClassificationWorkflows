@@ -23,6 +23,9 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     proto token characteristics-noun {*}
     token characteristics-noun:sym<English> { :i 'characteristics' | ([\w]+) <?{ $0.Str ne 'characteristic' and is-fuzzy-match($0.Str, 'characteristics', 2) }> }
 
+    proto token class-adjective {*}
+    token class-adjective:sym<English> { :i <class-noun> }
+
     proto token class-noun {*}
     token class-noun:sym<English> { :i 'class' | ([\w]+) <?{ $0.Str ne 'classes' and is-fuzzy-match($0.Str, 'class', 2) }> }
 
@@ -31,6 +34,9 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
 
     proto token classification-noun {*}
     token classification-noun:sym<English> { :i 'classification' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'classification', 2) }> }
+
+    proto token classifier-adjective {*}
+    token classifier-adjective:sym<English> { :i <classifier-noun> }
 
     proto token classifier-noun {*}
     token classifier-noun:sym<English> { :i 'classifier' | ([\w]+) <?{ $0.Str ne 'classifiers' and is-fuzzy-match($0.Str, 'classifier', 2) }> }
@@ -59,6 +65,9 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     proto token label-noun {*}
     token label-noun:sym<English> { :i 'label' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'label', 2) }> }
 
+    proto token line-noun {*}
+    token line-noun:sym<English> { :i 'line' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'line', 2) }> }
+
     proto token measurement-noun {*}
     token measurement-noun:sym<English> { :i 'measurement' | ([\w]+) <?{ $0.Str ne 'measurements' and is-fuzzy-match($0.Str, 'measurement', 2) }> }
 
@@ -71,23 +80,14 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     proto token proportional-adjective {*}
     token proportional-adjective:sym<English> { :i 'proportional' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'proportional', 2) }> }
 
-    proto token random-adjective {*}
-    token random-adjective:sym<English> { :i 'random' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'random', 2) }> }
-
     proto token ratio-noun {*}
     token ratio-noun:sym<English> { :i 'ratio' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'ratio', 2) }> }
 
     proto token receiver-noun {*}
     token receiver-noun:sym<English> { :i 'receiver' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'receiver', 2) }> }
 
-    proto token reduce-verb {*}
-    token reduce-verb:sym<English> { :i 'reduces' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'reduces', 2) }> }
-
     proto token resampling-noun {*}
     token resampling-noun:sym<English> { :i 'resampling' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'resampling', 2) }> }
-
-    proto token results-noun {*}
-    token results-noun:sym<English> { :i 'results' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'results', 2) }> }
 
     proto token roc-noun {*}
     token roc-noun:sym<English> { :i 'roc' | ([\w]+) <?{ $0.Str ne 'rocs' and is-fuzzy-match($0.Str, 'roc', 1) }> }
@@ -98,11 +98,11 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     proto token shuffling-noun {*}
     token shuffling-noun:sym<English> { :i 'shuffling' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'shuffling', 2) }> }
 
+    proto token split-adjective {*}
+    token split-adjective:sym<English> { :i <split-verb> }
+
     proto token split-directive {*}
     token split-directive:sym<English> { :i 'split' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'split', 2) }> | 'divide' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'divide', 2) }> | 'partition' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'partition', 2) }> }
-
-    proto token split-verb {*}
-    token split-verb:sym<English> { :i 'split' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'split', 2) }> }
 
     proto token test-verb {*}
     token test-verb:sym<English> { :i 'test' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'test', 2) }> }
@@ -125,16 +125,16 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     # Rules
 
     proto rule class-label-phrase {*}
-    rule class-label-phrase:sym<English> {  <class-noun> <label-noun>? | <label-noun>  }
+    rule class-label-phrase:sym<English> {  <class-adjective> <label-noun>? | <label-noun>  }
 
     proto rule classifier-ensemble-phrase {*}
-    rule classifier-ensemble-phrase:sym<English> {  [ <classifier-noun>? <ensemble-noun> ] | <ensemble-noun> <of-preposition> <classifiers-noun>  }
+    rule classifier-ensemble-phrase:sym<English> {  [ <classifier-adjective>? <ensemble-noun> ] | <ensemble-noun> <of-preposition> <classifiers-noun>  }
 
     proto rule classifier-info-phrase {*}
-    rule classifier-info-phrase:sym<English> {  <classifier-noun> [ <info-noun> | <information-noun> ]  }
+    rule classifier-info-phrase:sym<English> {  <classifier-adjective> [ <info-noun> | <information-noun> ]  }
 
     proto rule classifier-object-phrase {*}
-    rule classifier-object-phrase:sym<English> {  <classifier-noun>? <object-noun>  }
+    rule classifier-object-phrase:sym<English> {  <classifier-adjective>? <object-noun>  }
 
     proto rule reduce-dimension-phrase {*}
     rule reduce-dimension-phrase:sym<English> {  <reduce-verb> <dimension-noun>  }

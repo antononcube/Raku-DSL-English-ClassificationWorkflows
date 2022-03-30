@@ -60,7 +60,7 @@ role DSL::English::ClassificationWorkflows::Grammarish {
     # Split data command
     rule split-data-command { <split-data-spec> | <split-data-simple> }
     rule split-data-phrase { <.split-directive> <.the-determiner>? <.data> }
-    rule split-data-simple { <.split-data-phrase> [ <.with-preposition> <.the-determiner>? [ <.fraction-noun> | <.ratio-noun> ]? <split-fraction=.number-value> ]? }
+    rule split-data-simple { <.split-data-phrase> [ <.with-preposition> <.the-determiner>? <.split-adjective>? [ <.fraction-noun> | <.ratio-noun> ]? <split-fraction=.number-value> ]? }
     rule split-data-spec { <.split-data-phrase> <.with-preposition> <split-data-element-list> }
     rule split-data-element-list { <split-data-element>+ % [ <.list-separator> <.using-preposition>? | <.using-preposition> ] }
     rule split-data-element { <split-training-fraction> | <split-validation-fraction> | <split-method> }

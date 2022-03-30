@@ -12,9 +12,11 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     token available-adjective { 'available' }
     token characteristic-noun { 'characteristic' }
     token characteristics-noun { 'characteristics' }
+    token class-adjective { <class-noun> }
     token class-noun { 'class' }
     token classes-noun { 'classes' }
     token classification-noun { 'classification' }
+    token classifier-adjective { <classifier-noun> }
     token classifier-noun { 'classifier' }
     token classifiers-noun { 'classifiers' }
     token ensemble-noun { 'ensemble' }
@@ -24,21 +26,19 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     token info-noun { 'info' }
     token information-noun { 'information' }
     token label-noun { 'label' }
+    token line-noun { 'line' }
     token measurement-noun { 'measurement' }
     token measurements-noun { 'measurements' }
     token operating-adjective { 'operating' }
     token proportional-adjective { 'proportional' }
-    token random-adjective { 'random' }
     token ratio-noun { 'ratio' }
     token receiver-noun { 'receiver' }
-    token reduce-verb { 'reduces' }
     token resampling-noun { 'resampling' }
-    token results-noun { 'results' }
     token roc-noun { 'roc' }
     token rocs-noun { 'rocs' }
     token shuffling-noun { 'shuffling' }
+    token split-adjective { <split-verb> }
     token split-directive { 'split' | 'divide' | 'partition' }
-    token split-verb { 'split' }
     token test-verb { 'test' }
     token testing-adjective { 'testing' }
     token threshold-noun { 'threshold' }
@@ -47,10 +47,10 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     token validation-adjective { 'validation' }
 
     # Rules
-    rule class-label-phrase { <class-noun> <label-noun>? | <label-noun> }
-    rule classifier-ensemble-phrase { [ <classifier-noun>? <ensemble-noun> ] | <ensemble-noun> <of-preposition> <classifiers-noun> }
-    rule classifier-info-phrase { <classifier-noun> [ <info-noun> | <information-noun> ] }
-    rule classifier-object-phrase { <classifier-noun>? <object-noun> }
+    rule class-label-phrase { <class-adjective> <label-noun>? | <label-noun> }
+    rule classifier-ensemble-phrase { [ <classifier-adjective>? <ensemble-noun> ] | <ensemble-noun> <of-preposition> <classifiers-noun> }
+    rule classifier-info-phrase { <classifier-adjective> [ <info-noun> | <information-noun> ] }
+    rule classifier-object-phrase { <classifier-adjective>? <object-noun> }
     rule reduce-dimension-phrase { <reduce-verb> <dimension-noun> }
     rule roc-phrase { <receiver-noun> <operating-adjective> <characteristic-noun> | <roc-noun> }
     rule rocs-phrase { <receiver-noun> <operating-adjective> <characteristics-noun> | <rocs-noun> }
