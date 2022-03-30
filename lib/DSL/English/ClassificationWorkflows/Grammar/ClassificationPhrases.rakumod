@@ -7,60 +7,151 @@ use DSL::Shared::Utilities::FuzzyMatching;
 role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
         does DSL::Shared::Roles::English::PipelineCommand {
     # Tokens
-    token accuracy-noun { 'accuracy' | ([\w]+) <?{ $0.Str ne 'accuracies' and is-fuzzy-match( $0.Str, 'accuracy') }> }
-    token accuracies-noun { 'accuracies' | ([\w]+) <?{ $0.Str ne 'accuracy' and is-fuzzy-match( $0.Str, 'accuracies') }> }
-    token available-adjective { 'available' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'available') }> }
-    token characteristic-noun { 'characteristic' | ([\w]+) <?{ $0.Str ne 'characteristics' and is-fuzzy-match( $0.Str, 'characteristic') }> }
-    token characteristics-noun { 'characteristics' | ([\w]+) <?{ $0.Str ne 'characteristic' and is-fuzzy-match( $0.Str, 'characteristics') }> }
-    token class-noun { 'class' | ([\w]+) <?{ $0.Str ne 'classes' and is-fuzzy-match( $0.Str, 'class') }> }
-    token classes-noun { 'classes' | ([\w]+) <?{ $0.Str ne 'class' and is-fuzzy-match( $0.Str, 'classes') }> }
-    token classification-noun { 'classification' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'classification') }> }
-    token classifier-noun { 'classifier' | ([\w]+) <?{ $0.Str ne 'classifiers' and is-fuzzy-match( $0.Str, 'classifier') }> }
-    token classifiers-noun { 'classifiers' | ([\w]+) <?{ $0.Str ne 'classifier' and is-fuzzy-match( $0.Str, 'classifiers') }> }
-    token curve-noun { 'curve' | ([\w]+) <?{ $0.Str ne 'curves' and is-fuzzy-match( $0.Str, 'curve') }> }
-    token curves-noun { 'curves' | ([\w]+) <?{ $0.Str ne 'curve' and is-fuzzy-match( $0.Str, 'curves') }> }
-    token ensemble-noun { 'ensemble' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'ensemble') }> }
-    token estimates-noun { 'estimates' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'estimates') }> }
-    token fraction-noun { 'fraction' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'fraction') }> }
-    token importance-noun { 'importance' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'importance') }> }
-    token info-noun { 'info' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'info') }> }
-    token information-noun { 'information' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'information') }> }
-    token label-noun { 'label' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'label') }> }
-    token line-noun { 'line' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'line') }> }
-    token measurement-noun { 'measurement' | ([\w]+) <?{ $0.Str ne 'mesurements' and is-fuzzy-match( $0.Str, 'measurement') }> }
-    token measurements-noun { 'measurements' | ([\w]+) <?{ $0.Str ne 'mesurement' and is-fuzzy-match( $0.Str, 'measurements') }> }
-    token operating-adjective { 'operating' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'operating') }> }
-    token proportional-adjective { 'proportional' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'proportional') }> }
-    token random-adjective { 'random' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'random') }> }
-    token ratio-noun { 'ratio' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'ratio') }> }
-    token receiver-noun { 'receiver' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'receiver') }> }
-    token reduce-verb { 'reduces' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'reduces') }> }
-    token resampling-noun { 'resampling' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'resampling') }>}
-    token results-noun { 'results' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'results') }>}
-    token roc-noun { 'roc' | ([\w]+) <?{ $0.Str ne 'rocs' and is-fuzzy-match( $0.Str, 'roc') }> }
-    token rocs-noun { 'rocs' | ([\w]+) <?{ $0.Str ne 'roc' and is-fuzzy-match( $0.Str, 'roc') }> }
-    token shuffling-noun { 'shuffling' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'shuffling') }>}
-    token split-directive { 'split' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'split') }> | 'divide' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'divide') }> | 'partition' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'partition') }> }
-    token split-verb { 'split' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'split') }> }
-    token threshold-noun { 'threshold' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'threshold') }>}
-    token test-verb { 'test' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'test') }> }
-    token testing-adjective { 'testing' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'testing') }> }
-    token train-verb { 'train' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'train') }> }
-    token training-adjective { 'training' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'training') }> }
-    token validation-adjective { 'validation' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'validation') }> }
+
+    proto token accuracy-noun {*}
+    token accuracy-noun:sym<English> { :i 'accuracy' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'accuracy', 2) }> }
+
+    proto token accuracies-noun {*}
+    token accuracies-noun:sym<English> { :i 'accuracies' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'accuracies', 2) }> }
+
+    proto token available-adjective {*}
+    token available-adjective:sym<English> { :i 'available' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'available', 2) }> }
+
+    proto token characteristic-noun {*}
+    token characteristic-noun:sym<English> { :i 'characteristic' | ([\w]+) <?{ $0.Str ne 'characteristics' and is-fuzzy-match($0.Str, 'characteristic', 2) }> }
+
+    proto token characteristics-noun {*}
+    token characteristics-noun:sym<English> { :i 'characteristics' | ([\w]+) <?{ $0.Str ne 'characteristic' and is-fuzzy-match($0.Str, 'characteristics', 2) }> }
+
+    proto token class-noun {*}
+    token class-noun:sym<English> { :i 'class' | ([\w]+) <?{ $0.Str ne 'classes' and is-fuzzy-match($0.Str, 'class', 2) }> }
+
+    proto token classes-noun {*}
+    token classes-noun:sym<English> { :i 'classes' | ([\w]+) <?{ $0.Str ne 'class' and is-fuzzy-match($0.Str, 'classes', 2) }> }
+
+    proto token classification-noun {*}
+    token classification-noun:sym<English> { :i 'classification' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'classification', 2) }> }
+
+    proto token classifier-noun {*}
+    token classifier-noun:sym<English> { :i 'classifier' | ([\w]+) <?{ $0.Str ne 'classifiers' and is-fuzzy-match($0.Str, 'classifier', 2) }> }
+
+    proto token classifiers-noun {*}
+    token classifiers-noun:sym<English> { :i 'classifiers' | ([\w]+) <?{ $0.Str ne 'classifier' and is-fuzzy-match($0.Str, 'classifiers', 2) }> }
+
+    proto token ensemble-noun {*}
+    token ensemble-noun:sym<English> { :i 'ensemble' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'ensemble', 2) }> }
+
+    proto token estimates-noun {*}
+    token estimates-noun:sym<English> { :i 'estimates' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'estimates', 2) }> }
+
+    proto token fraction-noun {*}
+    token fraction-noun:sym<English> { :i 'fraction' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'fraction', 2) }> }
+
+    proto token importance-noun {*}
+    token importance-noun:sym<English> { :i 'importance' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'importance', 2) }> }
+
+    proto token info-noun {*}
+    token info-noun:sym<English> { :i 'info' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'info', 2) }> }
+
+    proto token information-noun {*}
+    token information-noun:sym<English> { :i 'information' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'information', 2) }> }
+
+    proto token label-noun {*}
+    token label-noun:sym<English> { :i 'label' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'label', 2) }> }
+
+    proto token measurement-noun {*}
+    token measurement-noun:sym<English> { :i 'measurement' | ([\w]+) <?{ $0.Str ne 'measurements' and is-fuzzy-match($0.Str, 'measurement', 2) }> }
+
+    proto token measurements-noun {*}
+    token measurements-noun:sym<English> { :i 'measurements' | ([\w]+) <?{ $0.Str ne 'measurement' and is-fuzzy-match($0.Str, 'measurements', 2) }> }
+
+    proto token operating-adjective {*}
+    token operating-adjective:sym<English> { :i 'operating' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'operating', 2) }> }
+
+    proto token proportional-adjective {*}
+    token proportional-adjective:sym<English> { :i 'proportional' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'proportional', 2) }> }
+
+    proto token random-adjective {*}
+    token random-adjective:sym<English> { :i 'random' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'random', 2) }> }
+
+    proto token ratio-noun {*}
+    token ratio-noun:sym<English> { :i 'ratio' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'ratio', 2) }> }
+
+    proto token receiver-noun {*}
+    token receiver-noun:sym<English> { :i 'receiver' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'receiver', 2) }> }
+
+    proto token reduce-verb {*}
+    token reduce-verb:sym<English> { :i 'reduces' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'reduces', 2) }> }
+
+    proto token resampling-noun {*}
+    token resampling-noun:sym<English> { :i 'resampling' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'resampling', 2) }> }
+
+    proto token results-noun {*}
+    token results-noun:sym<English> { :i 'results' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'results', 2) }> }
+
+    proto token roc-noun {*}
+    token roc-noun:sym<English> { :i 'roc' | ([\w]+) <?{ $0.Str ne 'rocs' and is-fuzzy-match($0.Str, 'roc', 1) }> }
+
+    proto token rocs-noun {*}
+    token rocs-noun:sym<English> { :i 'rocs' | ([\w]+) <?{ $0.Str ne 'roc' and is-fuzzy-match($0.Str, 'rocs', 2) }> }
+
+    proto token shuffling-noun {*}
+    token shuffling-noun:sym<English> { :i 'shuffling' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'shuffling', 2) }> }
+
+    proto token split-directive {*}
+    token split-directive:sym<English> { :i 'split' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'split', 2) }> | 'divide' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'divide', 2) }> | 'partition' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'partition', 2) }> }
+
+    proto token split-verb {*}
+    token split-verb:sym<English> { :i 'split' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'split', 2) }> }
+
+    proto token test-verb {*}
+    token test-verb:sym<English> { :i 'test' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'test', 2) }> }
+
+    proto token testing-adjective {*}
+    token testing-adjective:sym<English> { :i 'testing' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'testing', 2) }> }
+
+    proto token threshold-noun {*}
+    token threshold-noun:sym<English> { :i 'threshold' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'threshold', 2) }> }
+
+    proto token train-verb {*}
+    token train-verb:sym<English> { :i 'train' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'train', 2) }> }
+
+    proto token training-adjective {*}
+    token training-adjective:sym<English> { :i 'training' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'training', 2) }> }
+
+    proto token validation-adjective {*}
+    token validation-adjective:sym<English> { :i 'validation' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'validation', 2) }> }
 
     # Rules
-    rule class-label-phrase { <class-noun> <label-noun>? | <label-noun> }
-    rule classifier-ensemble-phrase { [ <classifier-noun>? <ensemble-noun> ] | <ensemble-noun> <of-preposition> <classifiers-noun> }
-    rule classifier-info-phrase { <classifier-noun> [ <info-noun> | <information-noun> ] }
-    rule classifier-object-phrase { <classifier-noun>? <object-noun> }
-    rule reduce-dimension-phrase { <reduce-verb> <dimension-noun> }
-    rule roc-phrase { <receiver-noun> <operating-adjective> <characteristic-noun> | <roc-noun> }
-    rule rocs-phrase { <receiver-noun> <operating-adjective> <characteristics-noun> | <rocs-noun> }
-    rule roc-curve-phrase { [ <roc-phrase> | <rocs-phrase> ] [ <curve-noun> | <curves-noun> ]? }
+
+    proto rule class-label-phrase {*}
+    rule class-label-phrase:sym<English> {  <class-noun> <label-noun>? | <label-noun>  }
+
+    proto rule classifier-ensemble-phrase {*}
+    rule classifier-ensemble-phrase:sym<English> {  [ <classifier-noun>? <ensemble-noun> ] | <ensemble-noun> <of-preposition> <classifiers-noun>  }
+
+    proto rule classifier-info-phrase {*}
+    rule classifier-info-phrase:sym<English> {  <classifier-noun> [ <info-noun> | <information-noun> ]  }
+
+    proto rule classifier-object-phrase {*}
+    rule classifier-object-phrase:sym<English> {  <classifier-noun>? <object-noun>  }
+
+    proto rule reduce-dimension-phrase {*}
+    rule reduce-dimension-phrase:sym<English> {  <reduce-verb> <dimension-noun>  }
+
+    proto rule roc-phrase {*}
+    rule roc-phrase:sym<English> {  <receiver-noun> <operating-adjective> <characteristic-noun> | <roc-noun>  }
+
+    proto rule rocs-phrase {*}
+    rule rocs-phrase:sym<English> {  <receiver-noun> <operating-adjective> <characteristics-noun> | <rocs-noun>  }
+
+    proto rule roc-curve-phrase {*}
+    rule roc-curve-phrase:sym<English> {  [ <roc-phrase> | <rocs-phrase> ] [ <curve-noun> | <curves-noun> ]?  }
 
     # WL classifier names
-    rule wl-classifier-name {
+
+    proto rule wl-classifier-name {*}
+    rule wl-classifier-name:sym<English> { 
         <decision-tree-classifier-name> |
         <gradient-boosted-trees-classifier-name> |
         <logistic-regression-classifier-name> |
@@ -69,13 +160,29 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
         <neural-network-classifier-name> |
         <random-forest-classifier-name> |
         <support-vector-machine-classifier-name> }
-    rule decision-tree-classifier-name { 'decision' 'tree' | 'DecisionTree' }
-    rule gradient-boosted-trees-classifier-name { 'gradient' 'boosted' 'trees' | 'GradientBoostedTrees' }
-    rule logistic-regression-classifier-name { 'logistic' 'regression' | 'LogisticRegression' }
-    rule naive-bayes-classifier-name { 'naive' 'bayes' | 'NaiveBayes' }
-    rule nearest-neighbors-classifier-name { 'nearest' 'neighbors' | 'NearestNeighbors' }
-    rule neural-network-classifier-name { 'neural' 'network' | 'NeuralNetwork' }
-    rule random-forest-classifier-name { 'random' 'forest' | 'RandomForest' }
-    rule support-vector-machine-classifier-name { 'support' 'vector' 'machine' | 'SupportVectorMachine' }
 
+    proto rule decision-tree-classifier-name {*}
+    rule decision-tree-classifier-name:sym<English> {  'decision' 'tree' | 'DecisionTree'  }
+
+    proto rule gradient-boosted-trees-classifier-name {*}
+    rule gradient-boosted-trees-classifier-name:sym<English> {  'gradient' 'boosted' 'trees' | 'GradientBoostedTrees'  }
+
+    proto rule logistic-regression-classifier-name {*}
+    rule logistic-regression-classifier-name:sym<English> {  'logistic' 'regression' | 'LogisticRegression'  }
+
+    proto rule naive-bayes-classifier-name {*}
+    rule naive-bayes-classifier-name:sym<English> {  'naive' 'bayes' | 'NaiveBayes'  }
+
+    proto rule nearest-neighbors-classifier-name {*}
+    rule nearest-neighbors-classifier-name:sym<English> {  'nearest' 'neighbors' | 'NearestNeighbors'  }
+
+    proto rule neural-network-classifier-name {*}
+    rule neural-network-classifier-name:sym<English> {  'neural' 'network' | 'NeuralNetwork'  }
+
+    proto rule random-forest-classifier-name {*}
+    rule random-forest-classifier-name:sym<English> {  'random' 'forest' | 'RandomForest'  }
+
+    proto rule support-vector-machine-classifier-name {*}
+    rule support-vector-machine-classifier-name:sym<English> {  'support' 'vector' 'machine' | 'SupportVectorMachine'  }
 }
+

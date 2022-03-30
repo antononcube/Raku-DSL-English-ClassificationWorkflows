@@ -57,15 +57,7 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     rule roc-curve-phrase { [ <roc-phrase> | <rocs-phrase> ] [ <curve-noun> | <curves-noun> ]? }
 
     # WL classifier names
-    rule wl-classifier-name {
-        <decision-tree-classifier-name> |
-        <gradient-boosted-trees-classifier-name> |
-        <logistic-regression-classifier-name> |
-        <naive-bayes-classifier-name> |
-        <nearest-neighbors-classifier-name> |
-        <neural-network-classifier-name> |
-        <random-forest-classifier-name> |
-        <support-vector-machine-classifier-name> }
+    rule wl-classifier-name { <decision-tree-classifier-name> | <gradient-boosted-trees-classifier-name> | <logistic-regression-classifier-name> | <naive-bayes-classifier-name> | <nearest-neighbors-classifier-name> | <neural-network-classifier-name> | <random-forest-classifier-name> | <support-vector-machine-classifier-name> }
     rule decision-tree-classifier-name { 'decision' 'tree' | 'DecisionTree' }
     rule gradient-boosted-trees-classifier-name { 'gradient' 'boosted' 'trees' | 'GradientBoostedTrees' }
     rule logistic-regression-classifier-name { 'logistic' 'regression' | 'LogisticRegression' }
