@@ -110,9 +110,6 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     proto token testing-adjective {*}
     token testing-adjective:sym<English> { :i 'testing' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'testing', 2) }> }
 
-    proto token threshold-noun {*}
-    token threshold-noun:sym<English> { :i 'threshold' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'threshold', 2) }> }
-
     proto token train-verb {*}
     token train-verb:sym<English> { :i 'train' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'train', 2) }> }
 

@@ -41,7 +41,6 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     token split-directive { 'split' | 'divide' | 'partition' }
     token test-verb { 'test' }
     token testing-adjective { 'testing' }
-    token threshold-noun { 'threshold' }
     token train-verb { 'train' }
     token training-adjective { 'training' }
     token validation-adjective { 'validation' }
