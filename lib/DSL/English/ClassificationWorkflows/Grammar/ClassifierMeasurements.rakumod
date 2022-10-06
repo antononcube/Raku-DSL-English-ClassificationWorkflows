@@ -1,3 +1,6 @@
+##=================================================================
+## WARNING : Obsolete file, left in this repository as a reference.
+##=================================================================
 
 use DSL::Shared::Utilities::FuzzyMatching;
 
