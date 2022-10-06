@@ -28,19 +28,12 @@
 #==============================================================================
 =end comment
 
-use v6;
+use v6.d;
 
-use DSL::English::ClassificationWorkflows::Grammar;
-use DSL::Shared::Actions::English::WL::PipelineCommand;
-use DSL::English::ClassificationWorkflows::Actions::WL::ROCFunctions;
-use DSL::English::ClassificationWorkflows::Actions::WL::ClassifierProperties;
-use DSL::English::ClassificationWorkflows::Actions::WL::ClassifierMeasurements;
+use DSL::Entity::MachineLearning::Actions::WL::System;
 
 class DSL::English::ClassificationWorkflows::Actions::WL::System
-        is DSL::Shared::Actions::English::WL::PipelineCommand
-        is DSL::English::ClassificationWorkflows::Actions::WL::ROCFunctions
-        is DSL::English::ClassificationWorkflows::Actions::WL::ClassifierProperties
-        is DSL::English::ClassificationWorkflows::Actions::WL::ClassifierMeasurements {
+        is DSL::Entity::MachineLearning::Actions::WL::System {
 
     # Top
     method TOP($/) { make $/.values[0].made; }
