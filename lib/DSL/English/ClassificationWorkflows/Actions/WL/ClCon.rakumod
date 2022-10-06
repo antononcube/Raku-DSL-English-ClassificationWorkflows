@@ -28,13 +28,7 @@
 #==============================================================================
 =end comment
 
-use v6;
-
-use DSL::English::ClassificationWorkflows::Grammar;
-use DSL::Shared::Actions::English::WL::PipelineCommand;
-use DSL::English::ClassificationWorkflows::Actions::WL::ROCFunctions;
-use DSL::English::ClassificationWorkflows::Actions::WL::ClassifierProperties;
-use DSL::English::ClassificationWorkflows::Actions::WL::ClassifierMeasurements;
+use v6.d;
 
 use DSL::Entity::MachineLearning::Actions::WL::System;
 
