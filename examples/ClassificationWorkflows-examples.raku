@@ -62,12 +62,14 @@ my @testCommands = (
 'DSL MODULE ClCon;
 setup code;
 use dfTitanic;
+reduce dimension;
 split data with split ratio 0.82 and validation fraction 0.2;
 make gradient boosted trees classifier;
 show classifier training time;
 show classifier measurements;
 show classifier confusion matrix plot, ROCCurve;
 show top confusions, misclassified examples, least certain examples;
+show pipeline value;
 assign pipeline object to clObj120;'
 );
 
@@ -82,7 +84,8 @@ assign pipeline object to clObj120;'
 
 
 #my @targets = ('WL-ClCon', 'WL-System');
-my @targets = ('Bulgarian', 'WL-System', 'WL-ClCon');
+my @targets = ('WL-System', 'WL-ClCon');
+#my @targets = <Bulgarian English Russian>;
 
 for @testCommands -> $c {
     say "=" x 30;
