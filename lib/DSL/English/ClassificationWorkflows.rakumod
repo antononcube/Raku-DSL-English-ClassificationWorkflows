@@ -16,6 +16,8 @@ unit module DSL::English::ClassificationWorkflows;
 
 use DSL::Shared::Utilities::CommandProcessing;
 
+use DSL::Entity::MachineLearning;
+
 use DSL::English::ClassificationWorkflows::Grammar;
 use DSL::English::ClassificationWorkflows::Actions::WL::ClCon;
 use DSL::English::ClassificationWorkflows::Actions::WL::System;
@@ -53,10 +55,7 @@ my Str %targetToSeparator2{Str} = %targetToSeparator.grep({ $_.key.contains('-')
 %targetToSeparator = |%targetToSeparator , |%targetToSeparator2;
 
 #-----------------------------------------------------------
-proto ToClassificationWorkflowCode(Str $command, Str $target = 'WL-ClCon', | ) is export {*}
-
-multi ToClassificationWorkflowCode ( Str $command, Str $target = 'WL-ClCon', *%args ) {
-    my $lang = %args<language>:exists ?? %args<language> !! 'English';
+sub ClassificationWorkflowsGrammar(Str $lang is copy = 'English') is export {
     $lang = $lang.wordcase;
 
     my $gname = "DSL::{$lang}::ClassificationWorkflows::Grammar";
@@ -66,10 +65,23 @@ multi ToClassificationWorkflowCode ( Str $command, Str $target = 'WL-ClCon', *%a
 
     my Grammar $grammar = ::($gname);
 
+    $grammar.set-resources(DSL::Entity::MachineLearning::resource-access-object());
+    return $grammar;
+}
+
+#-----------------------------------------------------------
+proto ToClassificationWorkflowCode(Str $command, Str $target = 'WL-ClCon', | ) is export {*}
+
+multi ToClassificationWorkflowCode ( Str $command, Str $target = 'WL-ClCon', *%args ) {
+    my $lang = %args<language>:exists ?? %args<language> !! 'English';
+
+    my Grammar $pCOMMAND = ClassificationWorkflowsGrammar($lang);
+
+    my $ACTOBJ = %targetToAction{$target}.new(resources => DSL::Entity::MachineLearning::resource-access-object());
+
     DSL::Shared::Utilities::CommandProcessing::ToWorkflowCode( $command,
-                                                               :$grammar,
-                                                               :%targetToAction,
-                                                               :%targetToSeparator,
-                                                               :$target,
+                                                               grammar => $pCOMMAND,
+                                                               actions => $ACTOBJ,
+                                                               separator => %targetToSeparator{$target},
                                                                |%args )
 }

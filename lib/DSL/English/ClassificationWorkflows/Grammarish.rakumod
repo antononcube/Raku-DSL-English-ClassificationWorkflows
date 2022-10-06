@@ -84,7 +84,7 @@ role DSL::English::ClassificationWorkflows::Grammarish {
     rule make-classifier-simple-command {
         <.create-directive> <.a-determiner>? <.classifier-noun> <.using-preposition>? <.the-determiner>? <.classifier-method-phrase>? <classifier-method-spec>? |
         <.create-directive> <.a-determiner>? <classifier-method-spec> <.classifier-method-phrase>? }
-    rule classifier-method-spec { <wl-classifier-name> | <mixed-quoted-variable-name> }
+    rule classifier-method-spec { <entity-classifier-name> | <mixed-quoted-variable-name> }
     rule classifier-method-phrase { <classifier-noun> | <classifiers-noun> | <method-noun> | <methods-noun> | <algorithm-noun> | <algorithms-noun> }
 
     ## More thorough classifier creation
@@ -123,7 +123,7 @@ role DSL::English::ClassificationWorkflows::Grammarish {
     ## Get info property
     rule classifier-get-info-property { <.display-directive> <.classifier-noun> <classifier-property-list>}
     rule classifier-info { <.display-directive>? <.classifier-noun> [ <.info-noun> | <.information-noun> | <.stats-noun> | <.statistics-noun> ] }
-    rule classifier-property-list { <wl-classifier-info-property>+ % <.list-separator> }
+    rule classifier-property-list { <entity-classifier-property-name>+ % <.list-separator> }
 
     ## (Ensemble counts)
     rule classifier-counts { [ <how-adverb> <many-determiner> | <what-pronoun> <number-of> ] <classifiers-noun> }
@@ -132,7 +132,7 @@ role DSL::English::ClassificationWorkflows::Grammarish {
     rule classifier-measurements-command { <classifier-measurements-simple> }
     rule classifier-measurements-openning { <display-directive>? <classifier-noun> <measurements-noun>? }
     rule classifier-measurements-simple { <classifier-measurements-openning> <classifier-measurements-list>? }
-    rule classifier-measurements-list { <wl-classifier-measurement>+ % <.list-separator> }
+    rule classifier-measurements-list { <entity-classifier-measurement-name>+ % <.list-separator> }
 
     rule classifier-testing-command { <test-results> | <classifier-testing-simple> | <accuracies-by-variable-shuffling> }
     rule classifier-testing-simple { [ <test-verb> [ <a-determiner> | <the-determiner> ] ]? <classifier-noun> }
@@ -147,7 +147,7 @@ role DSL::English::ClassificationWorkflows::Grammarish {
         [ <.variable-noun> | <.column-noun> ]? <.shuffling-noun> [ <.accuracy-noun> | <.accuracies-noun> ] |
         <.variable-noun> <.importance-noun> <.estimates-noun>?
         ] }
-    rule test-measures-list { <wl-classifier-measurement>+ % <.list-separator> }
+    rule test-measures-list { <entity-classifier-measurement-name>+ % <.list-separator> }
 
     # ROC plot command
     rule roc-plots-command { <roc-diagrams-command> | <roc-curves-simple> }

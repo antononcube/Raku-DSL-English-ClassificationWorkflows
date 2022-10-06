@@ -28,23 +28,27 @@
 #==============================================================================
 =end comment
 
-use v6;
+use v6.d;
 
 use DSL::Shared::Roles::PredicateSpecification;
 use DSL::Shared::Roles::ErrorHandling;
+use DSL::Entity::MachineLearning::Grammar::EntityNames;
 
 use DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases;
-use DSL::English::ClassificationWorkflows::Grammar::ROCFunctions;
-use DSL::English::ClassificationWorkflows::Grammar::ClassifierProperties;
-use DSL::English::ClassificationWorkflows::Grammar::ClassifierMeasurements;
 use DSL::English::ClassificationWorkflows::Grammarish;
+
+use DSL::Entity::MachineLearning::Grammar::EntityNames;
 
 grammar DSL::English::ClassificationWorkflows::Grammar
         does DSL::English::ClassificationWorkflows::Grammarish
-        does DSL::Shared::Roles::ErrorHandling
         does DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
-        does DSL::English::ClassificationWorkflows::Grammar::ROCFunctions
-        does DSL::English::ClassificationWorkflows::Grammar::ClassifierProperties
-        does DSL::English::ClassificationWorkflows::Grammar::ClassifierMeasurements {
+        does DSL::Shared::Roles::ErrorHandling
+        does DSL::Entity::MachineLearning::Grammar::EntityNames {
+
+    my DSL::Entity::MachineLearning::ResourceAccess $resources;
+
+    method get-resources(--> DSL::Entity::MachineLearning::ResourceAccess) { return $resources; }
+    method set-resources(DSL::Entity::MachineLearning::ResourceAccess $obj) { $resources = $obj; }
+
 
 }

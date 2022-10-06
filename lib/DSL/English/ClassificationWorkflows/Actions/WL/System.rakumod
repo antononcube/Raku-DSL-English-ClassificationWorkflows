@@ -161,7 +161,7 @@ class DSL::English::ClassificationWorkflows::Actions::WL::System
     method classifier-query-command($/) { make $/.values[0].made; }
     method classifier-info-simple($/){ make 'Echo @ ClassifierInformation[clObj]'; }
     method classifier-get-info-property($/){ make 'Echo @ Association @ Map[ Function[{pr}, pr -> Information[clObj, pr]], { ' ~ $/.values[0].made ~ '}]'; }
-    method classifier-property-list($/) { make $<wl-classifier-info-property>>>.made.join(', '); }
+    method classifier-property-list($/) { make $<entity-classifier-property-name>>>.made.join(', '); }
 
     method classifier-counts($){ make 'Echo[ Length @ clObj ]'; }
 
@@ -180,7 +180,7 @@ class DSL::English::ClassificationWorkflows::Actions::WL::System
         }
     }
     method classifier-measurements-list($/) {
-        make $<wl-classifier-measurement>>>.made.join(', ');
+        make $<entity-classifier-measurement-name>>>.made.join(', ');
     }
 
     # Classifier testing command
@@ -204,7 +204,7 @@ class DSL::English::ClassificationWorkflows::Actions::WL::System
         make $<class-label>.made ~ ' -> ' ~ $<threshold>.made;
     }
     method test-measures-list($/) {
-        make $<wl-classifier-measurement>>>.made.join(', ');
+        make $<entity-classifier-measurement-name>>>.made.join(', ');
     }
 
     # ROC plots command
