@@ -1,12 +1,14 @@
-use v6;
+use v6.d;
 use lib 'lib';
 use DSL::English::ClassificationWorkflows::Grammar;
+use DSL::Entity::MachineLearning;
 use Test;
 
 plan 16;
 
 # Shortcut
 my $pCOMMAND = DSL::English::ClassificationWorkflows::Grammar;
+$pCOMMAND.set-resources(DSL::Entity::MachineLearning::resource-access-object());
 
 #-----------------------------------------------------------
 # Basic commands
