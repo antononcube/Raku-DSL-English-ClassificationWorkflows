@@ -108,8 +108,10 @@ class DSL::English::ClassificationWorkflows::Actions::Russian::Standard
     method classifier-measurements-simple($/){ make 'показать метрики классификатора'; }
 
     # ROC curves command
+    method roc-plots-command($/) { make $/.values[0].made; }
     method roc-curves-command($/) { make $/.values[0].made; }
     method roc-curves-simple($/){ make 'показать диаграмму рабочих характеристик приемника (RХП)'; }
+    method roc-diagrams-command($/){ make 'показать диаграмму рабочих характеристик приемника (RХП)'; }
 
     ## Setup code
     method setup-code-command($/) {

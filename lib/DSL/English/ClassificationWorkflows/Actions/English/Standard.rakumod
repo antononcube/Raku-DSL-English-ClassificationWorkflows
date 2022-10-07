@@ -108,8 +108,9 @@ class DSL::English::ClassificationWorkflows::Actions::English::Standard
     method classifier-measurements-simple($/){ make 'show classifier measurements'; }
 
     # ROC curves command
-    method roc-curves-command($/) { make $/.values[0].made; }
+    method roc-plots-command($/) { make $/.values[0].made; }
     method roc-curves-simple($/){ make 'show Receiver Operating Characteristics (ROC) diagram'; }
+    method roc-diagrams-command($/){ make 'show Receiver Operating Characteristics (ROC) diagram'; }
 
     ## Setup code
     method setup-code-command($/) {

@@ -28,12 +28,11 @@
 #==============================================================================
 =end comment
 
-use v6;
-use DSL::English::ClassificationWorkflows::Grammar;
+use v6.d;
 
-use DSL::Shared::Actions::English::WL::PipelineCommand;
-use DSL::Shared::Actions::CommonStructures;
 use DSL::Shared::Actions::Bulgarian::Standard::PipelineCommand;
+use DSL::Shared::Actions::CommonStructures;
+use DSL::Shared::Actions::English::WL::PipelineCommand;
 
 class DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard
         does DSL::Shared::Actions::Bulgarian::Standard::PipelineCommand
@@ -107,9 +106,10 @@ class DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard
     method classifier-measurements-command($/) { make $/.values[0].made; }
     method classifier-measurements-simple($/){ make 'покажи мерки на класификатора'; }
 
-    # ROC curves command
-    method roc-curves-command($/) { make $/.values[0].made; }
+    # ROC plots command
+    method roc-plots-command($/) { make $/.values[0].made; }
     method roc-curves-simple($/){ make 'покажи диаграма с приемателните операционни характеристики (ROC)'; }
+    method roc-diagrams-command($/){ make 'покажи диаграма с приемателните операционни характеристики (ROC)'; }
 
     ## Setup code
     method setup-code-command($/) {
