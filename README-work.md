@@ -44,9 +44,6 @@ Here is a simple invocation:
 use DSL::English::ClassificationWorkflows;
 
 ToClassificationWorkflowCode('make a logistic regression classifier', 'WL::ClCon');
-```
-```
-# ClConMakeClassifier[ "LogisticRegression" ]
 ``` 
 
 Here is a more complicated pipeline specification used to generate the code
@@ -64,48 +61,11 @@ END
 
 say $_.key, "\n", $_.value, "\n"  for ($_ => ToClassificationWorkflowCode($command, $_ ) for <WL::ClCon WL::System>);
 ```
-```
-# WL::ClCon
-# ClConUnit[ dfTitanic ] \[DoubleLongRightArrow]
-# ClConSplitData[ "TrainingFraction" -> 0.73 ] \[DoubleLongRightArrow]
-# ClConMakeClassifier[ "LogisticRegression" ] \[DoubleLongRightArrow]
-# ClConClassifierMeasurements[ {"Precision", "Recall"} ] \[DoubleLongRightArrow] ClConEchoValue[] \[DoubleLongRightArrow]
-# ClConClassifierMeasurements[ {"TopConfusions", "MisclassifiedExamples", "LeastCertainExamples"} ] \[DoubleLongRightArrow] ClConEchoValue[] \[DoubleLongRightArrow]
-# ClConROCPlot[]
-# 
-# WL::System
-# data = ClConToNormalClassifierData @ dfTitanic;
-# {dataTraining, dataTesting} = TakeDrop[ RandomSample[data], Floor[ 0.73 * Length[data] ] ];
-# dataValidation = Automatic;
-# clObj = Classify[ dataTraining, Method -> "LogisticRegression", ValidationSet -> dataValidation ];
-# Echo @ ClassifierMeasurements[clObj, dataTesting, {"Precision", "Recall"} ];
-# Echo @ ClassifierMeasurements[clObj, dataTesting, {"TopConfusions", "MisclassifiedExamples", "LeastCertainExamples"} ];
-# Echo @ ROCPlot[]
-```
 
 ### Natural languages
 
 ```perl6
 say $_.key, "\n", $_.value, "\n"  for ($_ => ToClassificationWorkflowCode($command, $_ ) for <Bulgarian English Russian>);
-```
-```
-# Bulgarian
-# използвай данните: dfTitanic 
-# раздели данните с тренировъчна част 0.73 
-# тренирай класификатор с метод: logistic regression  
-# покажи диаграма с приемателните операционни характеристики (ROC)
-# 
-# English
-# use the data: dfTitanic 
-# split data with training part 0.73 
-# train classifier with method: logistic regression  
-# show Receiver Operating Characteristics (ROC) diagram
-# 
-# Russian
-# использовать данные: dfTitanic 
-# разделить данные с тренировочная часть 0.73 
-# обучить классификатор методом: logistic regression  
-# показать диаграмму рабочих характеристик приемника (RХП)
 ```
 
 ------------
