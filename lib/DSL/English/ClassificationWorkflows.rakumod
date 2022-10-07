@@ -79,9 +79,11 @@ multi ToClassificationWorkflowCode ( Str $command, Str $target = 'WL-ClCon', *%a
 
     my $ACTOBJ = %targetToAction{$target}.new(resources => DSL::Entity::MachineLearning::resource-access-object());
 
+    my %args2 = %args.grep({ $_.key ∈ <format splitter> });
+
     DSL::Shared::Utilities::CommandProcessing::ToWorkflowCode( $command,
                                                                grammar => $pCOMMAND,
                                                                actions => $ACTOBJ,
                                                                separator => %targetToSeparator{$target},
-                                                               |%args )
+                                                               |%args2 )
 }
