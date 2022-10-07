@@ -1,6 +1,8 @@
 #!/usr/bin/env perl6
 use DSL::English::ClassificationWorkflows;
 
+my %*SUB-MAIN-OPTS = :named-anywhere;
+
 #| Translates natural language commands into (machine learning) classification workflow programming code.
 multi sub MAIN(Str $command,                   #= A string with one or many commands (separated by ';').
                Str :$target = 'WL-ClCon',      #= Target (programming language with optional library spec.)
@@ -13,6 +15,7 @@ multi sub MAIN(Str $command,                   #= A string with one or many comm
     say ToClassificationWorkflowCode($command, $target, :$language, format => $formatSpec);
 }
 
+#| Both target and command as arguments.
 multi sub MAIN(Str $target,                    #= Programming language.
                Str $command,                   #= A string with one or many commands (separated by ';').
                Str :$language = 'English',     #= The natural language to translate from.
