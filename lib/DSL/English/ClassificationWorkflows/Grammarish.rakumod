@@ -112,7 +112,7 @@ role DSL::English::ClassificationWorkflows::Grammarish {
     rule resampling-spec { <resampling-fraction-spec>? [ <.resampling-noun> | <.of-preposition> <.the-determiner>? <.data-noun> ] [ <.with-preposition> <resampling-function> ]?}
 
     rule resampling-function { 'RandomChoice' | 'RandomSample' }
-    rule number-of-classifiers { <number-value> }
+    rule number-of-classifiers { <number-value> | <numeric-word-form> }
     rule resampling-fraction-spec { <percent-value> | <number-value> }
 
     # Classifier info commands

@@ -125,7 +125,7 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     rule class-label-phrase:sym<English> {  <class-adjective> <label-noun>? | <label-noun>  }
 
     proto rule classifier-ensemble-phrase {*}
-    rule classifier-ensemble-phrase:sym<English> {  [ <classifier-adjective>? <ensemble-noun> ] | <ensemble-noun> <of-preposition> <classifiers-noun>  }
+    rule classifier-ensemble-phrase:sym<English> {  [ <classifier-adjective>? <ensemble-noun> ] | <ensemble-noun> [ <of-preposition> <classifiers-noun> | <classifier-noun> ] }
 
     proto rule classifier-info-phrase {*}
     rule classifier-info-phrase:sym<English> {  <classifier-adjective> [ <info-noun> | <information-noun> ]  }
