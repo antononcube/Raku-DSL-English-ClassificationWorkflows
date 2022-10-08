@@ -4,7 +4,7 @@ use DSL::English::ClassificationWorkflows::Grammar;
 use DSL::Entity::MachineLearning;
 use Test;
 
-plan 4;
+plan 5;
 
 # Shortcut
 my $pCOMMAND = DSL::English::ClassificationWorkflows::Grammar;
