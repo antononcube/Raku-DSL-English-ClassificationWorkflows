@@ -1,0 +1,32 @@
+use v6.d;
+use lib 'lib';
+use DSL::English::ClassificationWorkflows::Grammar;
+use DSL::Entity::MachineLearning;
+use Test;
+
+plan 4;
+
+# Shortcut
+my $pCOMMAND = DSL::English::ClassificationWorkflows::Grammar;
+$pCOMMAND.set-resources(DSL::Entity::MachineLearning::resource-access-object());
+
+#-----------------------------------------------------------
+# Find outliers commands
+#-----------------------------------------------------------
+
+ok $pCOMMAND.parse('create classifier ensemble with five of RandomForest classifiers'),
+        'create ensemble of classifiers using five RandomForest classifiers';
+
+ok $pCOMMAND.parse('create ensemble of classifiers using 3 logistic regression classifiers'),
+        'create ensemble of classifiers using 3 logistic regression classifiers';
+
+ok $pCOMMAND.parse('create classifier ensemble with 5 of RandomForest classifiers using 0.7 resampling'),
+        'create classifier ensemble with 5 of RandomForest classifiers using 0.7 resampling';
+
+ok $pCOMMAND.parse('create ensemble of classifiers with 3 RandomForest classifiers using 70 % resampling'),
+        'create ensemble of classifiers with 3 RandomForest classifiers using 70 % resampling';
+
+ok $pCOMMAND.parse('create an ensemble classifier with 3 RandomForest classifiers using 0.7 resampling'),
+        'create an ensemble classifier with 3 RandomForest classifiers using 0.7 resampling';
+
+done-testing;
