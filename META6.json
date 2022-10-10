@@ -9,7 +9,7 @@
   "auth": "zef:antononcube",
   "depends": [
     "DSL::Shared:ver<0.1.2+>",
-    "DSL::Entity::MachineLearning:ver<0.1.0+>"
+    "DSL::Entity::MachineLearning:ver<0.1.1+>"
   ],
   "build-depends": [],
   "test-depends": [],
