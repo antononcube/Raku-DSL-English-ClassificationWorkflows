@@ -1,0 +1,20 @@
+use v6.d;
+use lib 'lib';
+use DSL::English::ClassificationWorkflows::Grammar;
+use DSL::Entity::MachineLearning;
+use Test;
+
+plan 1;
+
+# Shortcut
+my $pCOMMAND = DSL::English::ClassificationWorkflows::Grammar;
+$pCOMMAND.set-resources(DSL::Entity::MachineLearning::resource-access-object());
+
+#-----------------------------------------------------------
+# ROC plots commands
+#-----------------------------------------------------------
+
+ok $pCOMMAND.parse('show roc curve for TruePositiveRate and FalsePositiveRate'),
+        'show roc curve for TruePositiveRate and FalsePositiveRate';
+
+done-testing;
