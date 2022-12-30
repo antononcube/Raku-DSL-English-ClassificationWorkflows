@@ -156,7 +156,7 @@ role DSL::English::ClassificationWorkflows::Grammarish {
     rule roc-diagram-phrase { <.list-line-roc-diagram-phrase> | [ <.list-line-diagram-phrase> | <.diagram-phrase> ] }
     rule list-line-roc-diagram-phrase { <list-noun>? <line-noun> <roc-curve-phrase> <diagram-phrase> }
     rule list-line-diagram-phrase { <list-noun>? <line-noun> <diagram-phrase> | 'ListLinePlot' }
-    rule roc-functions-list { <entity-roc-function-name>+ % [ <.list-separator> | <.versus-preposition> ] }
+    regex roc-functions-list { <entity-roc-function-name>+ % [ \h+ <.versus-preposition> \h+ | <.list-separator-symbol-for-regex> ] }
 
     # Data outliers command
     rule data-outliers-command { <find-outliers-command> | <remove-outliers-command> | <show-outliers-command> }
