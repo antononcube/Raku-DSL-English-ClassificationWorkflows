@@ -210,7 +210,7 @@ class DSL::English::ClassificationWorkflows::Actions::WL::System
             make 'Echo @ ROCPlot[]';
         }
     }
-    method roc-functions-list($/) { make $<roc-function>>>.made.join(', ');}
+    method roc-functions-list($/) { make $<entity-roc-function-name>>>.made.join(', ');}
 
     # Data outliers command
     method data-outliers-command($/) { make $/.values[0].made; }
