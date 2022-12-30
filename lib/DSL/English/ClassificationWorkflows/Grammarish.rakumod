@@ -45,8 +45,8 @@ role DSL::English::ClassificationWorkflows::Grammarish {
         <dimension-reduction-command> |
         <classifier-ensemble-creation-command> |
         <make-classifier-command> |
-        [ <classifier-query-command> || <classifier-measurements-command> || <classifier-testing-command> ] |
         <roc-plots-command> |
+        [ <classifier-query-command> || <classifier-measurements-command> || <classifier-testing-command> ] |
         <data-outliers-command>
     }
 
@@ -150,13 +150,13 @@ role DSL::English::ClassificationWorkflows::Grammarish {
     rule test-measures-list { <entity-classifier-measurement-name>+ % <.list-separator> }
 
     # ROC plot command
-    rule roc-plots-command { <roc-diagrams-command> | <roc-curves-simple> }
-    rule roc-curves-simple { <display-directive>? [ <roc-phrase> | <rocs-phrase> ] <plots-noun>? }
-    rule roc-diagrams-command { [ <.display-directive> <.roc-diagram-phrase> | <.roc-curves-simple> ] [ [ <.using-preposition> | <.of-preposition> ] <roc-functions-list> ]? }
+    rule roc-plots-command { <roc-diagrams-command> || <roc-curves-simple> }
+    rule roc-curves-simple { <display-directive>? <roc-curve-phrase> }
+    rule roc-diagrams-command { [ <.display-directive> <.roc-diagram-phrase> | <.roc-curves-simple> ] [ [ <.using-preposition> | <.of-preposition> | <.for-preposition> ] <roc-functions-list> ]? }
     rule roc-diagram-phrase { <.list-line-roc-diagram-phrase> | [ <.list-line-diagram-phrase> | <.diagram-phrase> ] }
     rule list-line-roc-diagram-phrase { <list-noun>? <line-noun> <roc-curve-phrase> <diagram-phrase> }
     rule list-line-diagram-phrase { <list-noun>? <line-noun> <diagram-phrase> | 'ListLinePlot' }
-    rule roc-functions-list { <roc-function>+ % [ <.list-separator> | <.versus-preposition> ] }
+    rule roc-functions-list { <entity-roc-function-name>+ % [ <.list-separator> | <.versus-preposition> ] }
 
     # Data outliers command
     rule data-outliers-command { <find-outliers-command> | <remove-outliers-command> | <show-outliers-command> }
