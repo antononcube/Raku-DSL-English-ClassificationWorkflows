@@ -4,7 +4,7 @@ use DSL::English::ClassificationWorkflows::Grammar;
 use DSL::Entity::MachineLearning;
 use Test;
 
-plan 2;
+plan 4;
 
 # Shortcut
 my $pCOMMAND = DSL::English::ClassificationWorkflows::Grammar;
@@ -19,5 +19,11 @@ ok $pCOMMAND.parse('show roc curve for TruePositiveRate and FalsePositiveRate'),
 
 ok $pCOMMAND.parse('show roc plot for PPV vs TPR'),
         'show roc plot for PPV vs TPR';
+
+ok $pCOMMAND.parse('show roc plot for PPV,TPR'),
+        'show roc plot for PPV,TPR';
+
+ok $pCOMMAND.parse('show roc plot for PPV, and TPR'),
+        'show roc plot for PPV, and TPR';
 
 done-testing;
