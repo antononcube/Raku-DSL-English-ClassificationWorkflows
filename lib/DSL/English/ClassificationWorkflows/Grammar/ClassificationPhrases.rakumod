@@ -44,6 +44,12 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     proto token classifiers-noun {*}
     token classifiers-noun:sym<English> { :i 'classifiers' | ([\w]+) <?{ $0.Str ne 'classifier' and is-fuzzy-match($0.Str, 'classifiers', 2) }> }
 
+    proto token curve-noun {*}
+    token curve-noun:sym<English> { :i 'curve' | ([\w]+) <?{ $0.Str ne 'curves' and is-fuzzy-match($0.Str, 'curve', 2) }> }
+
+    proto token curves-noun {*}
+    token curves-noun:sym<English> { :i 'curves' | ([\w]+) <?{ $0.Str ne 'curve' and is-fuzzy-match($0.Str, 'curves', 2) }> }
+
     proto token ensemble-noun {*}
     token ensemble-noun:sym<English> { :i 'ensemble' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'ensemble', 2) }> }
 
@@ -102,7 +108,7 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     token split-adjective:sym<English> { :i <split-verb> }
 
     proto token split-directive {*}
-    token split-directive:sym<English> { :i 'split' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'split', 2) }> | 'divide' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'divide', 2) }> | 'partition' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'partition', 2) }> }
+    token split-directive:sym<English> { :i  'split' | 'divide' | 'partition'  }
 
     proto token test-verb {*}
     token test-verb:sym<English> { :i 'test' | ([\w]+) <?{ is-fuzzy-match($0.Str, 'test', 2) }> }
@@ -125,7 +131,7 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     rule class-label-phrase:sym<English> {  <class-adjective> <label-noun>? | <label-noun>  }
 
     proto rule classifier-ensemble-phrase {*}
-    rule classifier-ensemble-phrase:sym<English> {  [ <classifier-adjective>? <ensemble-noun> ] | <ensemble-noun> [ <of-preposition> <classifiers-noun> | <classifier-noun> ] }
+    rule classifier-ensemble-phrase:sym<English> {  [ <classifier-adjective>? <ensemble-noun> ] | <ensemble-noun> [ <of-preposition>? <classifiers-noun> | <classifier-noun> ]  }
 
     proto rule classifier-info-phrase {*}
     rule classifier-info-phrase:sym<English> {  <classifier-adjective> [ <info-noun> | <information-noun> ]  }
@@ -143,20 +149,12 @@ role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
     rule rocs-phrase:sym<English> {  <receiver-noun> <operating-adjective> <characteristics-noun> | <rocs-noun>  }
 
     proto rule roc-curve-phrase {*}
-    rule roc-curve-phrase:sym<English> {  [ <roc-phrase> | <rocs-phrase> ] [ <curve-noun> | <curves-noun> ]?  }
+    rule roc-curve-phrase:sym<English> {  [ <roc-phrase> | <rocs-phrase> ] [ <curve-noun> | <curves-noun> | <plot-noun> | <plots-noun> ]?  }
 
     # WL classifier names
 
     proto rule wl-classifier-name {*}
-    rule wl-classifier-name:sym<English> { 
-        <decision-tree-classifier-name> |
-        <gradient-boosted-trees-classifier-name> |
-        <logistic-regression-classifier-name> |
-        <naive-bayes-classifier-name> |
-        <nearest-neighbors-classifier-name> |
-        <neural-network-classifier-name> |
-        <random-forest-classifier-name> |
-        <support-vector-machine-classifier-name> }
+    rule wl-classifier-name:sym<English> {  <decision-tree-classifier-name> | <gradient-boosted-trees-classifier-name> | <logistic-regression-classifier-name> | <naive-bayes-classifier-name> | <nearest-neighbors-classifier-name> | <neural-network-classifier-name> | <random-forest-classifier-name> | <support-vector-machine-classifier-name>  }
 
     proto rule decision-tree-classifier-name {*}
     rule decision-tree-classifier-name:sym<English> {  'decision' 'tree' | 'DecisionTree'  }
