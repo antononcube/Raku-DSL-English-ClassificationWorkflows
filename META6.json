@@ -1,13 +1,14 @@
 {
   "name": "DSL::English::ClassificationWorkflows",
   "description": "Classification workflows building by natural language commands.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "perl": "6.d",
   "authors": [
     "Anton Antonov"
   ],
   "auth": "zef:antononcube",
   "depends": [
+    "Clipboard:ver<0.1.1>",
     "DSL::Shared:ver<0.1.5+>",
     "DSL::Entity::MachineLearning:ver<0.1.1+>"
   ],
