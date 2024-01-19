@@ -5,9 +5,14 @@ use DSL::English::ClassificationWorkflows;
 # Shortcuts
 #-----------------------------------------------------------
 my $pCOMMAND = DSL::English::ClassificationWorkflows::Grammar;
+$pCOMMAND.set-resources(DSL::Entity::MachineLearning::resource-access-object());
 
 sub clcon-parse(Str:D $command, Str:D :$rule = 'TOP') {
     $pCOMMAND.parse($command, :$rule);
+}
+
+sub clcon-subparse(Str:D $command, Str:D :$rule = 'TOP') {
+    $pCOMMAND.subparse($command, :$rule);
 }
 
 sub clcon-interpret(Str:D $command,
@@ -21,12 +26,17 @@ sub clcon-interpret(Str:D $command,
 
 #use Grammar::Tracer;
 #say $pCOMMAND.parse( 'create classifier ensemble of 5 RandomForest classifiers', rule => 'ensemble-creation-num');
-#say $pCOMMAND.parse( 'create classifier ensemble with 5 of RandomForest classifiers', rule => 'classifier-ensemble-creation-command');
+#say $pCOMMAND.parse( 'create classifier ensemble with five of RandomForest classifiers', rule => 'classifier-ensemble-creation-command');
+#say ToClassificationWorkflowCode( 'create classifier ensemble with five of RandomForest classifiers');
+#say ToClassificationWorkflowCode( 'create ensemble of classifiers using 3 logistic regression classifiers');
 #say $pCOMMAND.parse( 'create classifier ensemble with 5 of RandomForest classifiers using 0.7 resampling', rule => 'classifier-ensemble-creation-command');
 #say $pCOMMAND.parse( 'create classifier ensemble with 5 of RandomForest classifiers using 70 % resampling', rule => 'classifier-ensemble-creation-command');
 #say $pCOMMAND.subparse( 'split data with ratio 0.8 and with label proportional method');
 
 
+say clcon-subparse( 'PPV,and TPR', rule => 'roc-functions-list' );
+
+#`[
 say "=" x 60;
 
 #my $commands = '
@@ -57,30 +67,33 @@ say "=" x 60;
 #create an ensemble using 15 random forest classifiers;
 #show classifier misclassified examples and least certain examples'
 #);
+#
+#my @testCommands = (
+#'DSL MODULE ClCon;
+#setup code;
+#use dfTitanic;
+#reduce dimension;
+#split data with split ratio 0.82 and validation fraction 0.2;
+#make gradient boosted trees classifier;
+#show classifier training time;
+#show classifier measurements;
+#show classifier confusion matrix plot, ROCCurve;
+#show top confusions, misclassified examples, least certain examples;
+#show pipeline value;
+#assign pipeline object to clObj120;'
+#);
 
 my @testCommands = (
 'DSL MODULE ClCon;
-setup code;
-use dfTitanic;
-reduce dimension;
-split data with split ratio 0.82 and validation fraction 0.2;
-make gradient boosted trees classifier;
-show classifier training time;
+use data dfTitanic;
+split data with fraction 0.8;
 show classifier measurements;
 show classifier confusion matrix plot, ROCCurve;
-show top confusions, misclassified examples, least certain examples;
-show pipeline value;
-assign pipeline object to clObj120;'
+show TruePositiveRate and FalsePositiveRate;
+show roc curve for TruePositiveRate vs FalsePositiveRate;
+show ROC plots;
+'
 );
-
-#@testCommands = (
-#'DSL MODULE ClCon;
-#use data dfTitanic;
-#split data with fraction 0.8;
-#show classifier measurements;
-#show classifier confusion matrix plot, ROCCurve;
-#'
-#);
 
 
 #my @targets = ('WL-ClCon', 'WL-System');
@@ -101,8 +114,9 @@ for @testCommands -> $c {
     }
 }
 
-#say clcon-parse( @testCommands[0], rule => 'workflow-commands-list' );
+#say clcon-parse( @testCommands[0], rule => 'workflow-command-list' );
 #say clcon-interpret(
 #        @testCommands[0],
 #        rule => 'workflow-commands-list',
 #        actions => DSL::English::ClassificationWorkflows::Actions::WL::ClCon.new);
+]
