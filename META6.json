@@ -2,7 +2,6 @@
   "name": "DSL::English::ClassificationWorkflows",
   "description": "Classification workflows building by natural language commands.",
   "version": "0.1.2",
-  "perl": "6.d",
   "authors": [
     "Anton Antonov"
   ],
@@ -25,7 +24,9 @@
     "DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases": "lib/DSL/English/ClassificationWorkflows/Grammar/ClassificationPhrases.rakumod",
     "DSL::English::ClassificationWorkflows::Grammarish": "lib/DSL/English/ClassificationWorkflows/Grammarish.rakumod"
   },
-  "resources": [],
+  "resources": [
+    "transform-to-proto-tokens-with-fuzzy-matching.sh"
+  ],
   "license": "GPL-3.0-or-later",
   "tags": [
     "classification",
@@ -37,5 +38,6 @@
     "pipeline"
   ],
   "api": "1",
-  "source-url": "https://github.com/antononcube/Raku-DSL-English-ClassificationWorkflows.git"
+  "source-url": "https://github.com/antononcube/Raku-DSL-English-ClassificationWorkflows.git",
+  "raku": "6.d"
 }
