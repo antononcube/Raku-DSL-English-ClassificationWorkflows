@@ -28,7 +28,6 @@
 #==============================================================================
 =end comment
 
-use v6;
 use DSL::English::ClassificationWorkflows::Grammar;
 
 use DSL::Shared::Actions::English::WL::PipelineCommand;

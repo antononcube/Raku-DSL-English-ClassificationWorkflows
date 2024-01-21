@@ -3,8 +3,6 @@
 ## WARNING : Obsolete file, left in this repository as a reference.
 ##=================================================================
 
-use v6;
-
 role DSL::English::ClassificationWorkflows::Grammar::ROCFunctions {
 
     rule roc-function {

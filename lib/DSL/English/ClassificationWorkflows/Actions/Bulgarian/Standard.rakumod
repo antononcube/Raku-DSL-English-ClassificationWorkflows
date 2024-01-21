@@ -28,8 +28,6 @@
 #==============================================================================
 =end comment
 
-use v6.d;
-
 use DSL::Shared::Actions::Bulgarian::Standard::PipelineCommand;
 use DSL::Shared::Actions::CommonStructures;
 use DSL::Shared::Actions::English::WL::PipelineCommand;

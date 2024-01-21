@@ -28,8 +28,6 @@
 #==============================================================================
 =end comment
 
-use v6.d;
-
 use DSL::Shared::Roles::PredicateSpecification;
 use DSL::Shared::Roles::ErrorHandling;
 use DSL::Entity::MachineLearning::Grammar::EntityNames;
