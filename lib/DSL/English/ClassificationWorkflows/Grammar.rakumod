@@ -18,7 +18,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #   Written by Anton Antonov,
-#   antononcube @ gmai l . c om,
+#   ʇǝu˙oǝʇsod@ǝqnɔuouoʇuɐ,
 #   Windermere, Florida, USA.
 #
 #==============================================================================
@@ -40,8 +40,9 @@ use DSL::Entity::MachineLearning::Grammar::EntityNames;
 grammar DSL::English::ClassificationWorkflows::Grammar
         does DSL::English::ClassificationWorkflows::Grammarish
         does DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
+        does DSL::Entity::MachineLearning::Grammar::EntityNames
         does DSL::Shared::Roles::ErrorHandling
-        does DSL::Entity::MachineLearning::Grammar::EntityNames {
+        does DSL::Shared::Roles::English::PipelineCommand {
 
     my DSL::Entity::MachineLearning::ResourceAccess $resources;
 

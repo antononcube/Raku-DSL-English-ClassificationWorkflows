@@ -2,8 +2,7 @@ use DSL::Shared::Roles::English::PipelineCommand;
 use DSL::Shared::Utilities::FuzzyMatching;
 
 # Data query specific phrases
-role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases
-        does DSL::Shared::Roles::English::PipelineCommand {
+role DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases {
     # Tokens
     token accuracy-noun { 'accuracy' }
     token accuracies-noun { 'accuracies' }
