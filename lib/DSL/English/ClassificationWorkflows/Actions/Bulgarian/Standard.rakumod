@@ -28,13 +28,10 @@
 #==============================================================================
 =end comment
 
-use DSL::Shared::Actions::Bulgarian::Standard::PipelineCommand;
-use DSL::Shared::Actions::CommonStructures;
-use DSL::Shared::Actions::English::WL::PipelineCommand;
+use DSL::Entity::MachineLearning::Actions::WL::System;
 
 class DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard
-        does DSL::Shared::Actions::Bulgarian::Standard::PipelineCommand
-        is DSL::Shared::Actions::CommonStructures {
+        is DSL::Entity::MachineLearning::Actions::WL::System {
 
     # Top
     method TOP($/) { make $/.values[0].made; }
@@ -103,6 +100,30 @@ class DSL::English::ClassificationWorkflows::Actions::Bulgarian::Standard
     # Classifier measurements command
     method classifier-measurements-command($/) { make $/.values[0].made; }
     method classifier-measurements-simple($/){ make 'покажи мерки на класификатора'; }
+
+    # Classifier testing command
+    method classifier-testing-command($/) { make $/.values[0].made; }
+    method classifier-testing-simple($/) {
+        make 'покажи мерките на класификатора';
+    }
+    method accuracies-by-variable-shuffling($/) { make 'намери мерките за акуратност чрез разбъркване на променливите'; }
+    method test-results($/) {
+        if $<test-measures-list> && $<test-classification-threshold> {
+            make "изчисли следните мерки на класификатора {$<test-measures-list>.made.join(',')} чрез праговата стойност {$<test-classification-threshold>.made}";
+        } elsif $<test-classification-threshold> {
+            make "изчисли прецизността на класификатора чрез праговата стойност {$<test-classification-threshold>.made}";
+        } elsif $<test-measures-list> {
+            make "изчисли следните мерки на класификатора: {$<test-measures-list>.made.join(',')}";
+        } else {
+            make "изчисли мерките на класификатора";
+        }
+    }
+    method test-classification-threshold($/){
+        make $<class-label>.made ~ ' -> ' ~ $<threshold>.made;
+    }
+    method test-measures-list($/) {
+        make $<entity-classifier-measurement-name>>>.made.join(', ');
+    }
 
     # ROC plots command
     method roc-plots-command($/) { make $/.values[0].made; }

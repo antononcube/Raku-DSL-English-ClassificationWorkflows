@@ -28,15 +28,10 @@
 #==============================================================================
 =end comment
 
-use DSL::English::ClassificationWorkflows::Grammar;
-
-use DSL::Shared::Actions::English::WL::PipelineCommand;
-use DSL::Shared::Actions::CommonStructures;
-use DSL::Shared::Actions::English::Standard::PipelineCommand;
+use DSL::Entity::MachineLearning::Actions::WL::System;
 
 class DSL::English::ClassificationWorkflows::Actions::English::Standard
-        does DSL::Shared::Actions::English::Standard::PipelineCommand
-        is DSL::Shared::Actions::CommonStructures {
+        is DSL::Entity::MachineLearning::Actions::WL::System {
 
     # Top
     method TOP($/) { make $/.values[0].made; }
@@ -106,7 +101,31 @@ class DSL::English::ClassificationWorkflows::Actions::English::Standard
     method classifier-measurements-command($/) { make $/.values[0].made; }
     method classifier-measurements-simple($/){ make 'show classifier measurements'; }
 
-    # ROC curves command
+    # Classifier testing command
+    method classifier-testing-command($/) { make $/.values[0].made; }
+    method classifier-testing-simple($/) {
+        make 'show classifier measurements';
+    }
+    method accuracies-by-variable-shuffling($/) { make 'find accuracies by variable shuffling'; }
+    method test-results($/) {
+        if $<test-measures-list> && $<test-classification-threshold> {
+            make "compute the classifier measures {$<test-measures-list>.made.join(',')} using the threshold {$<test-classification-threshold>.made}";
+        } elsif $<test-classification-threshold> {
+            make "compute the classifier precision using the threshold {$<test-classification-threshold>.made}";
+        } elsif $<test-measures-list> {
+            make "compute the classifier measures: {$<test-measures-list>.made.join(',')}";
+        } else {
+            make "compute the classifier measures";
+        }
+    }
+    method test-classification-threshold($/){
+        make $<class-label>.made ~ ' -> ' ~ $<threshold>.made;
+    }
+    method test-measures-list($/) {
+        make $<entity-classifier-measurement-name>>>.made.join(', ');
+    }
+
+    # ROC plots command
     method roc-plots-command($/) { make $/.values[0].made; }
     method roc-curves-simple($/){ make 'show Receiver Operating Characteristics (ROC) diagram'; }
     method roc-diagrams-command($/){ make 'show Receiver Operating Characteristics (ROC) diagram'; }
