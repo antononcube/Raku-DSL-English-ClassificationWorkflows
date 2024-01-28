@@ -25,6 +25,7 @@
     "DSL::English::ClassificationWorkflows::Actions::WL::ROCFunctions": "lib/DSL/English/ClassificationWorkflows/Actions/WL/ROCFunctions.rakumod",
     "DSL::English::ClassificationWorkflows::Actions::WL::System": "lib/DSL/English/ClassificationWorkflows/Actions/WL/System.rakumod",
     "DSL::English::ClassificationWorkflows::Grammar": "lib/DSL/English/ClassificationWorkflows/Grammar.rakumod",
+    "DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases": "lib/DSL/English/ClassificationWorkflows/Grammar/ClassificationPhrases.rakumod",
     "DSL::English::ClassificationWorkflows::Grammar::ClassifierMeasurements": "lib/DSL/English/ClassificationWorkflows/Grammar/ClassifierMeasurements.rakumod",
     "DSL::English::ClassificationWorkflows::Grammar::ClassifierProperties": "lib/DSL/English/ClassificationWorkflows/Grammar/ClassifierProperties.rakumod",
     "DSL::English::ClassificationWorkflows::Grammar::ROCFunctions": "lib/DSL/English/ClassificationWorkflows/Grammar/ROCFunctions.rakumod",
