@@ -22,13 +22,13 @@ implemented in WL, [AAp1], and WL's built-in commands.
 
 Zef ecosystem:
 
-```shell
+```
 zef install DSL::English::ClassificationWorkflows
 ```
 
 GitHub:
 
-```shell
+```
 zef install https://github.com/antononcube/Raku-DSL-English-ClassificationWorkflows.git
 ```
 
@@ -75,16 +75,7 @@ say $_.key, "\n", $_.value, "\n"  for ($_ => ToClassificationWorkflowCode($comma
 The package provides Command Line Interface (CLI) for its functionalities:
 
 ```shell
-> ToClassificationWorkflowCode --help
-# Usage:
-#   ToClassificationWorkflowCode <command> [--target=<Str>] [--language=<Str>] [--format=<Str>] -- Translates natural language commands into (machine learning) classification workflow programming code.
-#   ToClassificationWorkflowCode <target> <command> [--language=<Str>] [--format=<Str>] -- Both target and command as arguments.
-#   
-#     <command>           A string with one or many commands (separated by ';').
-#     --target=<Str>      Target (programming language with optional library spec.) [default: 'WL-ClCon']
-#     --language=<Str>    The natural language to translate from. [default: 'English']
-#     --format=<Str>      The format of the output, one of 'automatic', 'code', 'hash', or 'raku'. [default: 'automatic']
-#     <target>            Programming language.
+ToClassificationWorkflowCode --help
 ```
 
 ------------

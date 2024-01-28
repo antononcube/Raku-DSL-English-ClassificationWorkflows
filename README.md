@@ -22,13 +22,13 @@ implemented in WL, [AAp1], and WL's built-in commands.
 
 Zef ecosystem:
 
-```shell
+```
 zef install DSL::English::ClassificationWorkflows
 ```
 
 GitHub:
 
-```shell
+```
 zef install https://github.com/antononcube/Raku-DSL-English-ClassificationWorkflows.git
 ```
 
@@ -93,18 +93,24 @@ say $_.key, "\n", $_.value, "\n"  for ($_ => ToClassificationWorkflowCode($comma
 # използвай данните: dfTitanic 
 # раздели данните с тренировъчна част 0.73 
 # тренирай класификатор с метод: logistic regression  
+# изчисли следните мерки на класификатора: "Precision", "Recall" 
+# изчисли следните мерки на класификатора: "TopConfusions", "MisclassifiedExamples", "LeastCertainExamples" 
 # покажи диаграма с приемателните операционни характеристики (ROC)
 # 
 # English
 # use the data: dfTitanic 
 # split data with training part 0.73 
 # train classifier with method: logistic regression  
+# compute the classifier measures: "Precision", "Recall" 
+# compute the classifier measures: "TopConfusions", "MisclassifiedExamples", "LeastCertainExamples" 
 # show Receiver Operating Characteristics (ROC) diagram
 # 
 # Russian
 # использовать данные: dfTitanic 
 # разделить данные с тренировочная часть 0.73 
 # обучить классификатор методом: logistic regression  
+# вычислить следующие показатели классификатора: "Precision", "Recall" 
+# вычислить следующие показатели классификатора: "TopConfusions", "MisclassifiedExamples", "LeastCertainExamples" 
 # показать диаграмму рабочих характеристик приемника (RХП)
 ```
 
@@ -115,16 +121,34 @@ say $_.key, "\n", $_.value, "\n"  for ($_ => ToClassificationWorkflowCode($comma
 The package provides Command Line Interface (CLI) for its functionalities:
 
 ```shell
-> ToClassificationWorkflowCode --help
+ToClassificationWorkflowCode --help
+```
+```
+# Translates natural language commands into classification programming code.
 # Usage:
-#   ToClassificationWorkflowCode <command> [--target=<Str>] [--language=<Str>] [--format=<Str>] -- Translates natural language commands into (machine learning) classification workflow programming code.
-#   ToClassificationWorkflowCode <target> <command> [--language=<Str>] [--format=<Str>] -- Both target and command as arguments.
+#   ToClassificationWorkflowCode <command> [--target=<Str>] [--language=<Str>] [--format=<Str>] [-c|--clipboard-command=<Str>] -- Translates natural language commands into (machine learning) classification workflow programming code.
+#   ToClassificationWorkflowCode <target> <command> [--language=<Str>] [--format=<Str>] [-c|--clipboard-command=<Str>] -- Both target and command as arguments.
+#   ToClassificationWorkflowCode [<words> ...] [-t|--target=<Str>] [-l|--language=<Str>] [-f|--format=<Str>] [-c|--clipboard-command=<Str>] -- Command given as a sequence of words.
 #   
-#     <command>           A string with one or many commands (separated by ';').
-#     --target=<Str>      Target (programming language with optional library spec.) [default: 'WL-ClCon']
-#     --language=<Str>    The natural language to translate from. [default: 'English']
-#     --format=<Str>      The format of the output, one of 'automatic', 'code', 'hash', or 'raku'. [default: 'automatic']
-#     <target>            Programming language.
+#     <command>                       A string with one or many commands (separated by ';').
+#     --target=<Str>                  Target (programming language with optional library spec.) [default: 'WL-ClCon']
+#     --language=<Str>                The natural language to translate from. [default: 'English']
+#     --format=<Str>                  The format of the output, one of 'automatic', 'code', 'hash', or 'raku'. [default: 'automatic']
+#     -c|--clipboard-command=<Str>    Clipboard command to use. [default: 'Whatever']
+#     <target>                        Programming language.
+#     [<words> ...]                   Words of a data query.
+#     -t|--target=<Str>               Target (programming language with optional library spec.) [default: 'WL::ClCon']
+#     -l|--language=<Str>             The natural language to translate from. [default: 'English']
+#     -f|--format=<Str>               The format of the output, one of 'automatic', 'code', 'hash', or 'raku'. [default: 'automatic']
+# Details:
+#     If --clipboard-command is the empty string then no copying to the clipboard is done.
+#     If --clipboard-command is 'Whatever' then:
+#         1. It is attempted to use the environment variable CLIPBOARD_COPY_COMMAND.
+#             If CLIPBOARD_COPY_COMMAND is defined and it is the empty string then no copying to the clipboard is done.
+#         2. If the variable CLIPBOARD_COPY_COMMAND is not defined then:
+#             - 'pbcopy' is used on macOS
+#             - 'clip.exe' on Windows
+#             - 'xclip -sel clip' on Linux.
 ```
 
 ------------
