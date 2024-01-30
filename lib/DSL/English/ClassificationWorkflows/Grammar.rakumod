@@ -36,6 +36,7 @@ use DSL::English::ClassificationWorkflows::Grammar::ClassificationPhrases;
 use DSL::English::ClassificationWorkflows::Grammarish;
 
 use DSL::Entity::MachineLearning::Grammar::EntityNames;
+use DSL::Entity::MachineLearning::ResourceAccess;
 
 grammar DSL::English::ClassificationWorkflows::Grammar
         does DSL::English::ClassificationWorkflows::Grammarish
